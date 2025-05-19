@@ -1,1 +1,213 @@
+/* Custom CSS for LifeSync */
+
+/* Import Google Fonts (already in HTML head, but good practice to list) */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap'); */
+
+/* CSS Variables (defined in HTML head for Tailwind access, but listed here for clarity) */
+/*
+:root {
+    --ls-primary: #4F46E5;
+    --ls-primary-light: #818CF8;
+    --ls-secondary: #EC4899;
+    --ls-accent1: #10B981;
+    --ls-accent2: #F59E0B;
+    --ls-dark: #1F2937;
+    --ls-light: #F9FAFB;
+    --ls-success: #059669;
+    --ls-warning: #D97706;
+    --ls-info: #3B82F6;
+    --ls-danger: #EF4444;
+}
+*/
+
+/* Basic body and font styles (defined in HTML head, but listed here for clarity) */
+/*
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--ls-light);
+    color: var(--ls-dark);
+    overflow: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Montserrat', sans-serif;
+}
+*/
+
+/* Horizontal Scroll Container */
+.main-container {
+    /* Styles defined in HTML head <style> block for immediate application */
+}
+
+/* Individual Sections */
+.main-section {
+    /* Styles defined in HTML head <style> block for immediate application */
+}
+
+/* Hide scrollbar for sections */
+.main-section::-webkit-scrollbar {
+    display: none;
+}
+
+.main-section {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hero Section Specifics */
+.ls-gradient {
+     /* Styles defined in HTML head <style> block */
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--ls-primary);
+    color: var(--ls-primary);
+    background-color: transparent;
+}
+.btn-outline-primary:hover {
+    background-color: var(--ls-primary);
+    color: white;
+}
+
+/* Floating animation for hero section elements */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100; /* High z-index to be on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if content is too long */
+    background-color: rgba(0,0,0,0.6); /* Semi-transparent black background */
+    align-items: center; /* Center modal vertically */
+    justify-content: center; /* Center modal horizontally */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto; /* Auto margin for centering */
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Max width for modals */
+    max-height: 90vh; /* Max height to allow scrolling if content is tall */
+    overflow-y: auto; /* Enable vertical scrolling within modal content */
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--ls-dark);
+}
+
+/* Assessment Section Styles */
+#assessmentSection {
+    /* Styles defined in HTML head <style> block */
+}
+
+#assessmentContainer {
+     /* Styles defined in HTML head <style> block */
+}
+
+.question-input-area {
+     /* Styles defined in HTML head <style> block */
+}
+
+.cumulative-feedback {
+    /* Styles defined in HTML head <style> block */
+}
+
+/* Report Section Styles */
+#reportSection {
+     /* Styles defined in HTML head <style> block */
+}
+
+#reportContainer {
+     /* Styles defined in HTML head <style> block */
+}
+
+.report-summary {
+     /* Styles defined in HTML head <style> block */
+}
+
+.report-answers {
+     /* Styles defined in HTML head <style> block */
+}
+
+.report-answers h4 {
+     /* Styles defined in HTML head <style> block */
+}
+
+.report-answer-item {
+     /* Styles defined in HTML head <style> block */
+}
+
+.report-answer-item strong {
+     /* Styles defined in HTML head <style> block */
+}
+
+
+/* Responsive adjustments using Tailwind's utility-first approach and custom CSS */
+@media (max-width: 767px) {
+    .main-section {
+        padding: 1.5rem; /* Reduce padding on smaller screens */
+    }
+
+    .section-title {
+        font-size: 2rem; /* Adjust title size */
+    }
+
+    .section-subtitle {
+        font-size: 1rem; /* Adjust subtitle size */
+    }
+
+    .modal-content {
+        padding: 1.5rem; /* Reduce modal padding */
+    }
+}
+
 
