@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSync - Connecting Lives, Deepening Bonds</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+        :root {
+            --primary: #6366F1; /* Indigo 500 */
+            --primary-light: #A5B4FC; /* Indigo 300 */
+            --secondary: #F59E0B; /* Yellow 500 */
+            --accent1: #EC4899; /* Pink 500 */
+            --accent2: #10B981; /* Emerald 500 */
+            --dark: #1E293B; /* Gray 800 */
+            --light: #F9FAFB; /* Gray 50 */
+            --success: #22C55E; /* Green 500 */
+            --warning: #EAB308; /* Yellow 400 */
+            --info: #3AB0FF; /* Sky 500 */
+            --danger: #DC2626; /* Red 500 */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow: hidden; /* Prevent body scroll, manage scroll within sections */
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .bg-primary { background-color: var(--primary); }
+        .bg-secondary { background-color: var(--secondary); }
+        .bg-accent1 { background-color: var(--accent1); }
+        .bg-accent2 { background-color: var(--accent2); }
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-secondary { background-color: var(--secondary); color: white; }
+        .btn-secondary:hover { background-color: #FACC15; /* Yellow 400 */ transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-outline-primary { border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline-primary:hover { background-color: var(--primary); color: white; }
+
+        .main-container {
+            display: flex;
+            width: 200%; /* Placeholder for now, will adjust based on the number of sections */
+            height: 100vh;
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth elastic scroll */
+        }
+
+        .main-section {
+            width: 100vw; /* Each section takes full viewport width */
+            height: 100%;
+            overflow-y: auto; /* Allow scroll within section if content overflows */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Hide scrollbar for sections but allow scrolling */
+        .main-section::-webkit-scrollbar { display: none; }
+        .main-section { -ms-overflow-style: none; scrollbar-width: none; }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Tailwind's shadow-md */
+            position: sticky;
+            top: 0;
+            z-50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem; /* Tailwind's text-xl */
+            margin-right: 0.5rem; /* Tailwind's mr-2 */
+            color: white;
+        }
+
+        .nav-links {
+            display: none; /* Hidden by default, shown on larger screens */
+        }
+
+        @media (min-width: 768px) { /* Tailwind's md breakpoint */
+            .nav-links {
+                display: flex;
+                space-x: 1.5rem; /* Tailwind's space-x-6 */
+            }
+        }
+
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-button {
+            display: block; /* Shown on smaller screens */
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-button {
+                display: none;
+            }
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Tailwind's shadow-md */
+            padding: 1rem;
+            z-index: 10;
+        }
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--dark);
+            text-decoration: none;
+            border-bottom: 1px solid #e5e7eb; /* Tailwind's border-gray-200 */
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="logo-container">
+                    <div class="logo-icon bg-primary">LS</div>
+                    <a href="#" class="font-bold text-xl text-dark">LifeSync</a>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link" data-section="0">Welcome</a>
+                    <a href="#" class="nav-link" data-section="1">Guest Assessment</a>
+                    <a href="#" class="nav-link" data-section="2">Report</a>
+                    </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="btn btn-outline-primary">Log In</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+                <button class="mobile-menu-button md:hidden focus:outline-none">
+                    <i class="fas fa-bars text-xl text-dark"></i>
+                </button>
+            </div>
+            <div class="mobile-menu">
+                <a href="#" class="nav-link" data-section="0">Welcome</a>
+                <a href="#" class="nav-link" data-section="1">Guest Assessment</a>
+                <a href="#" class="nav-link" data-section="2">Report</a>
+                <button class="btn btn-outline-primary w-full mt-2">Log In</button>
+                <button class="btn btn-primary w-full mt-2">Sign Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mainContainer" class="main-container">
+        <section class="main-section bg-gray-100">
+            <h1>Welcome to LifeSync</h1>
+            <p>Your journey to deeper connections starts here.</p>
+            <button class="btn btn-primary mt-4" onclick="navigateToSection(1)">Take Guest Assessment</button>
+        </section>
+
+        <section id="guestAssessmentSection" class="main-section bg-white">
+            <h2>Guest Assessment</h2>
+            <div id="questionContainer">
+                </div>
+            <div id="feedbackContainer" class="mt-4 text-info">
+                </div>
+            <button id="nextButton" class="btn btn-primary mt-4" onclick="nextQuestion()">Next</button>
+            <button id="completeButton" class="btn btn-success mt-4 hidden" onclick="completeAssessment()">Complete Assessment</button>
+        </section>
+
+        <section id="reportSection" class="main-section bg-gray-100">
+            <h2>Your Guest Report</h2>
+            <div id="reportContent">
+                </div>
+        </section>
+
+        </div>
+
+    <script>
+        const mainContainer = document.getElementById('mainContainer');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.main-section');
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        let currentSection = 0;
+
+        function navigateToSection(sectionIndex) {
+            if (sectionIndex >= 0 && sectionIndex < sections.length) {
+                mainContainer.style.transform = `translateX(-${sectionIndex * 100}vw)`;
+                currentSection = sectionIndex;
+                updateNavLinks();
+                closeMobileMenu();
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionIndex = parseInt(e.target.dataset.section);
+                navigateToSection(sectionIndex);
+            });
+        });
+
+        function updateNavLinks() {
+            navLinks.forEach(link => link.classList.remove('active'));
+            navLinks[currentSection].classList.add('active');
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+        }
+
+        function closeMobileMenu() {
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+            }
+        }
+
+        // Initial navigation to the first section
+        navigateToSection(0);
+
+        // Basic placeholder functions for assessment (will be implemented later)
+        let questions = [];
+        let currentQuestionIndex = 0;
+        const questionContainer = document.getElementById('questionContainer');
+        const feedbackContainer = document.getElementById('feedbackContainer');
+        const nextButton = document.getElementById('nextButton');
+        const completeButton = document.getElementById('completeButton');
+        const reportSection = document.getElementById('reportSection');
+        const reportContent = document.getElementById('reportContent');
+        let userAnswers = {};
+
+        function loadQuestions() {
+            // This will fetch questions from the backend later
+            questions = [
+                { id: 1, text: "Question 1 about your values?", type: "radio", options: ["Option A", "Option B"] },
+                { id: 2, text: "Question 2 about your lifestyle?", type: "text" },
+                { id: 3, text: "Question 3 about your aspirations?", type: "scale", min: 1, max: 5 }
+            ];
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                questionContainer.innerHTML = `<h3>${question.text}</h3>`;
+                feedbackContainer.textContent = ""; // Clear previous feedback
+
+                if (question.type === "radio") {
+                    question.options.forEach((option, index) => {
+                        questionContainer.innerHTML += `
+                            <label><input type="radio" name="answer" value="${option}"> ${option}</label><br>
+                        `;
+                    });
+                } else if (question.type === "text") {
+                    questionContainer.innerHTML += `<textarea name="answer"></textarea>`;
+                } else if (question.type === "scale") {
+                    questionContainer.innerHTML += `<input type="range" name="answer" min="${question.min}" max="${question.max}">`;
+                }
+
+                if (currentQuestionIndex === questions.length - 1) {
+                    nextButton.classList.add('hidden');
+                    completeButton.classList.remove('hidden');
+                } else {
+                    nextButton.classList.remove('hidden');
+                    completeButton.classList.add('hidden');
+                }
+            } else {
+                // Assessment finished (this part will be handled by completeAssessment)
+            }
+        }
+
+        function nextQuestion() {
+            const answer = getAnswer();
+            if (answer) {
+                userAnswers[questions[currentQuestionIndex].id] = answer;
+                currentQuestionIndex++;
+                displayQuestion();
+                // Here you would also call the backend to get feedback
+                feedbackContainer.textContent = "Getting feedback...";
+                setTimeout(() => {
+                    feedbackContainer.textContent = "Feedback: Keep going!"; // Placeholder feedback
+                }, 500);
+            } else {
+                alert("Please provide an answer.");
+            }
+        }
+
+        function getAnswer() {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (currentQuestion.type === "radio") {
+                const selectedOption = document.querySelector('input[name="answer"]:checked');
+                return selectedOption ? selectedOption.value : null;
+            } else if (currentQuestion.type === "text") {
+                const textarea = document.querySelector('textarea[name="answer"]');
+                return textarea ? textarea.value : null;
+            } else if (currentQuestion.type === "scale") {
+                const range = document.querySelector('input[name="answer"]');
+                return range ? range.value : null;
+            }
+            return null;
+        }
+
+        function completeAssessment() {
+            const answer = getAnswer();
+            if (answer) {
+                userAnswers[questions[currentQuestionIndex].id] = answer;
+                console.log("All Answers:", userAnswers);
+                // Here you would send all answers to the backend and receive the report
+                reportContent.innerHTML = "<h3>Thank you for completing the assessment!</h3><p>Your report summary will be displayed here soon...</p>";
+                navigateToSection(2);
+            } else {
+                alert("Please provide an answer for the last question.");
+            }
+        }
+
+        // Load questions when the assessment section is potentially in view (for this basic example)
+        if (window.location.hash === '#guestAssessment') {
+            loadQuestions();
+        }
+    </script>
+</body>
+</html>
