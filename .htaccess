@@ -1,1 +1,71 @@
+# .htaccess file for LifeSync application in a subdirectory on Namecheap Stellar Plus
+
+# Ensure the RewriteEngine is on
+RewriteEngine On
+
+# Set the base URL for redirects and rewrites
+# Replace '/LifeSync/' with the actual subdirectory path if different
+RewriteBase /LifeSync/
+
+# Redirect requests for non-existent files/directories to index.html
+# This is crucial for single-page applications (SPAs) like React or
+# for routing requests to your backend API handler.
+
+# Rule 1: Redirect requests for files that DO NOT exist
+# If the requested path is NOT a file (-f) and NOT a directory (-d)...
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# ...and the requested path does NOT start with /api/ (to exclude backend API calls)...
+# Adjust this condition if your API endpoint path is different
+RewriteCond %{REQUEST_URI} !^/LifeSync/api/
+# ...then rewrite the request to index.html
+RewriteRule ^(.*)$ index.html [L]
+
+# Rule 2: Route API requests to the backend entry point
+# If the requested path starts with /api/
+# Adjust this condition if your API endpoint path is different
+RewriteRule ^api/(.*)$ ../backend/api_handler.php/$1 [L,PT]
+# Note: This assumes your backend entry point is at /backend/api_handler.php
+# relative to the public_html directory. Adjust the path as necessary.
+# [L] - Last rule, stop processing
+# [PT] - Pass Through, pass the rewritten URL to the next handler (PHP)
+
+# Example for a Node.js backend running on a specific port (more complex for shared hosting)
+# This often requires a different approach, potentially using Passenger or a process manager.
+# If Node.js is supported via Passenger on Namecheap:
+# PassengerAppRoot /home/yourusername/LifeSync/backend
+# PassengerStartupFile server.js
+# <Directory /home/yourusername/LifeSync/public_html/LifeSync>
+#   PassengerBaseUri /LifeSync
+#   PassengerAppRoot /home/yourusername/LifeSync/backend
+# </Directory>
+# This .htaccess would primarily handle routing static files and possibly proxying to Node.js via Passenger.
+# The provided Rule 2 is for a PHP backend setup as indicated in the updated file structure.
+# If using Node.js on shared hosting without explicit Passenger support, you might need to run it
+# as a background process and proxy requests using RewriteRule, which can be unreliable.
+# The current .htaccess assumes a setup where requests to /api/ are handled by a PHP script
+# located outside the web root, which then interacts with your Node.js API (less common setup)
+# OR it assumes a simplified scenario where the backend is hosted elsewhere and the frontend
+# just makes cross-origin requests to that external API_BASE_URL.
+# GIVEN THE MVP FOCUS ON HTML/CSS/JS AND DEPLOYMENT ON NAMECHEAP SHARED HOSTING,
+# THE MOST LIKELY SCENARIO IS THE FRONTEND MAKING CORS REQUESTS TO AN API HOSTED ELSEWHERE.
+# The RewriteRule for /api/ might not be needed if the API is external.
+# Let's simplify the .htaccess for a static frontend making external API calls.
+
+# Simplified .htaccess for static HTML/CSS/JS frontend making external API calls:
+# Ensure the RewriteEngine is on
+# RewriteEngine On
+# Set the base URL for redirects and rewrites
+# RewriteBase /LifeSync/
+# Redirect requests for non-existent files/directories to index.html
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ index.html [L]
+
+# The first set of rules is more general and might be needed if you plan to
+# host the backend API on the same server but outside public_html and route to it.
+# Let's stick with the first version as it allows for routing API calls if needed later,
+# assuming the backend is accessible relative to public_html.
+# **IMPORTANT:** Verify the correct path to your backend entry point (`../backend/api_handler.php`)
+# based on your actual file structure on the Namecheap server.
 
