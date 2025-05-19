@@ -3,377 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeSync - Connecting Lives, Deepening Bonds</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>LifeSync - Deepening Connections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
-
+        /* Custom CSS variables for LifeSync theme */
         :root {
-            --primary: #6366F1; /* Indigo 500 */
-            --primary-light: #A5B4FC; /* Indigo 300 */
-            --secondary: #F59E0B; /* Yellow 500 */
-            --accent1: #EC4899; /* Pink 500 */
-            --accent2: #10B981; /* Emerald 500 */
-            --dark: #1E293B; /* Gray 800 */
-            --light: #F9FAFB; /* Gray 50 */
-            --success: #22C55E; /* Green 500 */
-            --warning: #EAB308; /* Yellow 400 */
-            --info: #3AB0FF; /* Sky 500 */
-            --danger: #DC2626; /* Red 500 */
+            --ls-primary: #4F46E5; /* Indigo */
+            --ls-primary-light: #818CF8;
+            --ls-secondary: #EC4899; /* Pink */
+            --ls-accent1: #10B981; /* Emerald */
+            --ls-accent2: #F59E0B; /* Amber */
+            --ls-dark: #1F2937; /* Dark Gray */
+            --ls-light: #F9FAFB; /* Light Gray */
+            --ls-success: #059669; /* Green */
+            --ls-warning: #D97706; /* Orange */
+            --ls-info: #3B82F6; /* Blue */
+            --ls-danger: #EF4444; /* Red */
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ls-light);
+            color: var(--ls-dark);
             overflow: hidden; /* Prevent body scroll, manage scroll within sections */
         }
 
         h1, h2, h3, h4, h5 {
-            font-family: 'Ubuntu', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .bg-primary { background-color: var(--primary); }
-        .bg-secondary { background-color: var(--secondary); }
-        .bg-accent1 { background-color: var(--accent1); }
-        .bg-accent2 { background-color: var(--accent2); }
-        .text-primary { color: var(--primary); }
-        .text-secondary { color: var(--secondary); }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem; /* Tailwind's rounded-md */
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        .ls-gradient {
+            background: linear-gradient(135deg, var(--ls-primary) 0%, var(--ls-secondary) 100%);
         }
-        .btn-primary { background-color: var(--primary); color: white; }
-        .btn-primary:hover { background-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .btn-secondary { background-color: var(--secondary); color: white; }
-        .btn-secondary:hover { background-color: #FACC15; /* Yellow 400 */ transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .btn-outline-primary { border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline-primary:hover { background-color: var(--primary); color: white; }
 
+        .bg-ls-primary { background-color: var(--ls-primary); }
+        .bg-ls-secondary { background-color: var(--ls-secondary); }
+        .text-ls-primary { color: var(--ls-primary); }
+        .text-ls-secondary { color: var(--ls-secondary); }
+
+        /* Ensure the main container and sections handle horizontal layout */
         .main-container {
             display: flex;
-            width: 200%; /* Placeholder for now, will adjust based on the number of sections */
-            height: 100vh;
+            width: 100%; /* Will be adjusted by JS based on number of sections */
+            height: calc(100vh - 68px); /* Full height minus nav height */
             transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth elastic scroll */
         }
 
         .main-section {
             width: 100vw; /* Each section takes full viewport width */
+            flex-shrink: 0; /* Prevent shrinking */
             height: 100%;
-            overflow-y: auto; /* Allow scroll within section if content overflows */
+            overflow-y: auto; /* Allow vertical scroll within section if content overflows */
             padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
+
         /* Hide scrollbar for sections but allow scrolling */
         .main-section::-webkit-scrollbar { display: none; }
         .main-section { -ms-overflow-style: none; scrollbar-width: none; }
 
-        nav {
-            background-color: white;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Tailwind's shadow-md */
-            position: sticky;
-            top: 0;
-            z-50;
+        /* Specific styles for the assessment section */
+        #assessmentSection {
+            justify-content: flex-start; /* Align content to top */
+            padding-top: 4rem;
         }
 
-        .container {
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.375rem; /* Tailwind's rounded-md */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.25rem; /* Tailwind's text-xl */
-            margin-right: 0.5rem; /* Tailwind's mr-2 */
-            color: white;
-        }
-
-        .nav-links {
-            display: none; /* Hidden by default, shown on larger screens */
-        }
-
-        @media (min-width: 768px) { /* Tailwind's md breakpoint */
-            .nav-links {
-                display: flex;
-                space-x: 1.5rem; /* Tailwind's space-x-6 */
-            }
-        }
-
-        .nav-link {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease-in-out;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .mobile-menu-button {
-            display: block; /* Shown on smaller screens */
-        }
-
-        @media (min-width: 768px) {
-            .mobile-menu-button {
-                display: none;
-            }
-        }
-
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
+        #assessmentContainer {
             width: 100%;
+            max-width: 700px; /* Max width for assessment content */
             background-color: white;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Tailwind's shadow-md */
-            padding: 1rem;
-            z-index: 10;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(31, 41, 55, 0.1);
         }
 
-        .mobile-menu.open {
-            display: block;
+        #reportSection {
+             justify-content: flex-start; /* Align content to top */
+             padding-top: 4rem;
         }
 
-        .mobile-menu a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: var(--dark);
-            text-decoration: none;
-            border-bottom: 1px solid #e5e7eb; /* Tailwind's border-gray-200 */
-        }
+         #reportContainer {
+            width: 100%;
+            max-width: 800px; /* Max width for report content */
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(31, 41, 55, 0.1);
+         }
 
-        .mobile-menu a:last-child {
-            border-bottom: none;
-        }
+         .question-input-area {
+             margin-top: 1.5rem;
+             margin-bottom: 1.5rem;
+         }
+
+         .cumulative-feedback {
+             margin-top: 1.5rem;
+             padding: 1rem;
+             border-left: 4px solid var(--ls-info);
+             background-color: rgba(59, 130, 246, 0.1); /* Light blue */
+             color: var(--ls-info);
+             border-radius: 4px;
+             font-style: italic;
+         }
+
+         .report-summary {
+             margin-top: 1.5rem;
+             padding: 1.5rem;
+             border: 1px solid var(--ls-accent1);
+             background-color: rgba(16, 185, 129, 0.1); /* Light emerald */
+             color: var(--ls-dark);
+             border-radius: 8px;
+         }
+
+         .report-answers {
+             margin-top: 2rem;
+         }
+
+         .report-answers h4 {
+             margin-bottom: 1rem;
+             color: var(--ls-primary);
+         }
+
+         .report-answer-item {
+             margin-bottom: 1rem;
+             padding-bottom: 1rem;
+             border-bottom: 1px dashed #eee;
+         }
+
+         .report-answer-item strong {
+             color: var(--ls-dark);
+         }
+
+        /* Add more custom styles here as needed */
+
     </style>
 </head>
 <body>
-    <nav>
+    <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
-                <div class="logo-container">
-                    <div class="logo-icon bg-primary">LS</div>
-                    <a href="#" class="font-bold text-xl text-dark">LifeSync</a>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-ls-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mr-2">LS</div>
+                    <span class="font-bold text-xl" data-translate-key="nav.title">LifeSync</span>
                 </div>
-                <div class="nav-links">
-                    <a href="#" class="nav-link" data-section="0">Welcome</a>
-                    <a href="#" class="nav-link" data-section="1">Guest Assessment</a>
-                    <a href="#" class="nav-link" data-section="2">Report</a>
+                <div class="hidden md:flex items-center space-x-3 lg:space-x-6">
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="0" data-translate-key="nav.home">Home</a>
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="1" data-translate-key="nav.guest_assessment">Guest Assessment</a>
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="2" data-translate-key="nav.guest_report" style="display: none;">Guest Report</a> <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="3" data-translate-key="nav.features">Features</a>
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="4" data-translate-key="nav.about">About Us</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                     <div class="language-selector">
+                        <select id="languageSwitcher" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ls-primary focus:border-ls-primary p-2">
+                            <option value="en">English</option>
+                            <option value="af">Afrikaans</option>
+                            <option value="zu">isiZulu</option>
+                            <option value="xh">isiXhosa</option>
+                            <option value="st">Sesotho</option>
+                            <option value="tn">Setswana</option>
+                            <option value="nr">isiNdebele</option>
+                            <option value="ss">siSwati</option>
+                            <option value="ve">Tshivenda</option>
+                            <option value="ts">Xitsonga</option>
+                            <option value="fr">Français</option>
+                            <option value="pt">Português</option>
+                            <option value="sn">chiShona</option>
+                            <option value="sw">Kiswahili</option>
+                            <option value="ja">日本語</option>
+                            <option value="zh">中文</option>
+                        </select>
                     </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <button class="btn btn-outline-primary">Log In</button>
-                    <button class="btn btn-primary">Sign Up</button>
+                    <button class="btn btn-outline-primary hidden sm:inline-flex" onclick="openModal('loginModal')" data-translate-key="nav.login">Log In</button>
+                    <button class="btn bg-ls-primary text-white hover:bg-ls-primary-light" onclick="openModal('signupModal')" data-translate-key="nav.signup">Sign Up</button>
                 </div>
-                <button class="mobile-menu-button md:hidden focus:outline-none">
-                    <i class="fas fa-bars text-xl text-dark"></i>
-                </button>
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-ls-dark focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
             </div>
-            <div class="mobile-menu">
-                <a href="#" class="nav-link" data-section="0">Welcome</a>
-                <a href="#" class="nav-link" data-section="1">Guest Assessment</a>
-                <a href="#" class="nav-link" data-section="2">Report</a>
-                <button class="btn btn-outline-primary w-full mt-2">Log In</button>
-                <button class="btn btn-primary w-full mt-2">Sign Up</button>
+            <div id="mobileMenu" class="hidden md:hidden mt-2 py-2 bg-white rounded-lg shadow-xl">
+                <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="0" data-translate-key="nav.home">Home</a>
+                <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="1" data-translate-key="nav.guest_assessment">Guest Assessment</a>
+                 <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="2" data-translate-key="nav.guest_report" style="display: none;">Guest Report</a> <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="3" data-translate-key="nav.features">Features</a>
+                <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="4" data-translate-key="nav.about">About Us</a>
+                <button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" onclick="openModal('loginModal')" data-translate-key="nav.login">Log In</button>
             </div>
         </div>
     </nav>
 
     <div id="mainContainer" class="main-container">
+
+        <section class="main-section ls-gradient text-white">
+            <div class="container mx-auto px-4 text-center">
+                <div class="flex flex-col md:flex-row items-center justify-around">
+                    <div class="md:w-1/2 mb-10 md:mb-0 md:text-left">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-6" data-translate-key="hero.title">Sync Your Lives, Deepen Your Connection</h1>
+                        <p class="text-lg mb-8" data-translate-key="hero.subtitle">LifeSync provides structured, data-driven compatibility insights to help couples build stronger, more transparent relationships, navigating crucial topics with confidence.</p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                            <button class="btn bg-white text-ls-primary font-medium hover:bg-gray-100" onclick="navigateToSection(1)" data-translate-key="hero.cta.assessment">
+                                <i class="fas fa-heart mr-2"></i>Take Guest Assessment
+                            </button>
+                            <button class="btn bg-ls-secondary text-white font-medium hover:opacity-90" onclick="openModal('signupModal')" data-translate-key="hero.cta.signup">
+                               <i class="fas fa-user-plus mr-2"></i>Sign Up for Full Access
+                            </button>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 relative">
+                         <div class="bg-white/20 backdrop-blur-md rounded-xl p-6 shadow-lg relative z-10 max-w-sm mx-auto">
+                            <div class="flex items-center justify-center mb-4">
+                                <i class="fas fa-sync-alt text-6xl text-white animate-spin-slow"></i>
+                            </div>
+                            <h3 class="text-white font-bold text-xl mb-2" data-translate-key="hero.card.title">Discover Your Compatibility</h3>
+                            <p class="text-sm text-white/80 mb-4" data-translate-key="hero.card.subtitle">Explore key areas like values, lifestyle, and finances.</p>
+                             <button class="btn bg-white text-ls-primary font-medium hover:bg-gray-100 w-full" onclick="navigateToSection(1)" data-translate-key="hero.card.cta">Start Assessment</button>
+                        </div>
+                         <div class="absolute top-10 -right-10 w-20 h-20 bg-ls-accent1/30 rounded-full animate-float" style="animation-delay: 0s;"></div>
+                         <div class="absolute bottom-0 -left-10 w-16 h-16 bg-ls-accent2/30 rounded-full animate-float" style="animation-delay: 2s"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-section bg-gray-50" id="assessmentSection">
+            <div class="container mx-auto px-4 text-center">
+                <i class="fas fa-clipboard-question text-5xl text-ls-primary mb-4"></i>
+                <h2 class="section-title" data-translate-key="assessment.title">Guest Compatibility Assessment</h2>
+                <p class="section-subtitle" data-translate-key="assessment.subtitle">Answer a few questions to get a glimpse of your compatibility insights. No registration required!</p>
+
+                <div id="assessmentContainer" class="text-left">
+                     <div id="loadingQuestions" class="text-center text-gray-600">
+                         <i class="fas fa-spinner fa-spin text-3xl text-ls-primary mb-3"></i>
+                         <p data-translate-key="assessment.loading">Loading questions...</p>
+                     </div>
+                     <div id="assessmentContent" style="display: none;">
+                         <div class="mb-4 text-gray-600">
+                             <span id="questionCounter" data-translate-key="assessment.question_counter">Question 1 of 10</span>
+                         </div>
+                         <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                             <div id="progressBar" class="bg-ls-primary h-2.5 rounded-full" style="width: 0%"></div>
+                         </div>
+
+                         <h3 id="questionText" class="text-xl font-semibold mb-4">Question text will load here...</h3>
+
+                         <div id="questionInputArea" class="question-input-area">
+                             <p data-translate-key="assessment.loading_input">Loading input...</p>
+                         </div>
+
+                         <div id="cumulativeFeedback" class="cumulative-feedback" style="display: none;">
+                             </div>
+
+                         <div class="text-right mt-6">
+                             <button id="nextQuestionBtn" class="btn bg-ls-primary text-white hover:bg-ls-primary-light" data-translate-key="assessment.next">
+                                 Next <i class="fas fa-arrow-right ml-2"></i>
+                             </button>
+                             <button id="completeAssessmentBtn" class="btn bg-ls-success text-white hover:bg-green-600" style="display: none;" data-translate-key="assessment.complete">
+                                 Complete Assessment <i class="fas fa-check-circle ml-2"></i>
+                             </button>
+                         </div>
+                     </div>
+                     <div id="assessmentError" class="text-center text-ls-danger" style="display: none;">
+                          <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+                          <p data-translate-key="assessment.error">Failed to load assessment. Please try again later.</p>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+         <section class="main-section bg-white" id="reportSection">
+            <div class="container mx-auto px-4 text-center">
+                <i class="fas fa-chart-pie text-5xl text-ls-secondary mb-4"></i>
+                <h2 class="section-title" data-translate-key="report.title">Your Guest Compatibility Report</h2>
+                <p class="section-subtitle" data-translate-key="report.subtitle">Here's a summary of your assessment insights. Register to unlock full features and share with a partner.</p>
+
+                 <div id="reportContainer" class="text-left">
+                     <div id="loadingReport" class="text-center text-gray-600">
+                         <i class="fas fa-spinner fa-spin text-3xl text-ls-secondary mb-3"></i>
+                         <p data-translate-key="report.loading">Loading report...</p>
+                     </div>
+                     <div id="reportContent" style="display: none;">
+                         <div class="report-summary">
+                              <h3 class="text-xl font-bold mb-2" data-translate-key="report.summary_title">Summary of Insights:</h3>
+                              <p id="reportSummaryText" data-translate-key="report.summary_placeholder">Your compatibility summary will appear here based on your answers...</p>
+                         </div>
+
+                         <div class="report-answers">
+                             <h4 class="text-xl font-semibold mb-3" data-translate-key="report.your_answers_title">Your Answers:</h4>
+                             <div id="userAnswersList">
+                                 <p data-translate-key="report.answers_placeholder">Your answers will appear here...</p>
+                             </div>
+                         </div>
+
+                         <div class="mt-8 text-center">
+                             <p class="text-lg font-semibold mb-4" data-translate-key="report.cta_text">Ready to explore deeper compatibility with a partner?</p>
+                             <button class="btn bg-ls-primary text-white hover:bg-ls-primary-light text-lg px-8 py-3" onclick="openModal('signupModal')" data-translate-key="report.cta_button">
+                                 <i class="fas fa-user-plus mr-2"></i>Sign Up for Full Access
+                             </button>
+                             <p class="text-sm text-gray-600 mt-3" data-translate-key="report.expiry_warning">Your guest report is temporary and will expire after 7 days.</p>
+                         </div>
+                     </div>
+                      <div id="reportError" class="text-center text-ls-danger" style="display: none;">
+                          <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+                          <p id="reportErrorMessage" data-translate-key="report.error">Failed to load report or report expired.</p>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
         <section class="main-section bg-gray-100">
-            <h1>Welcome to LifeSync</h1>
-            <p>Your journey to deeper connections starts here.</p>
-            <button class="btn btn-primary mt-4" onclick="navigateToSection(1)">Take Guest Assessment</button>
+             <div class="container mx-auto px-4 text-center">
+                <i class="fas fa-cogs text-5xl text-ls-accent1 mb-4"></i>
+                <h2 class="section-title" data-translate-key="features.title">Core Features (Coming Soon!)</h2>
+                <p class="section-subtitle" data-translate-key="features.subtitle">LifeSync offers a suite of powerful features for registered couples to build stronger, more transparent relationships.</p>
+
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                         <i class="fas fa-users text-ls-primary text-4xl mb-3"></i>
+                         <h3 class="text-xl font-bold mb-2" data-translate-key="features.tile1.title">In-depth Assessments</h3>
+                         <p class="text-gray-600 text-sm" data-translate-key="features.tile1.desc">Explore compatibility across finances, values, lifestyle, and more, including culturally relevant topics.</p>
+                     </div>
+                      <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                         <i class="fas fa-chart-line text-ls-secondary text-4xl mb-3"></i>
+                         <h3 class="text-xl font-bold mb-2" data-translate-key="features.tile2.title">Compatibility Insights</h3>
+                         <p class="text-gray-600 text-sm" data-translate-key="features.tile2.desc">See detailed analysis of alignment and differences with your partner.</p>
+                     </div>
+                      <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                         <i class="fas fa-lock text-ls-accent1 text-4xl mb-3"></i>
+                         <h3 class="text-xl font-bold mb-2" data-translate-key="features.tile3.title">Secure & Private</h3>
+                         <p class="text-gray-600 text-sm" data-translate-key="features.tile3.desc">Your data is protected with robust security and privacy controls.</p>
+                     </div>
+                      <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                         <i class="fas fa-handshake text-ls-accent2 text-4xl mb-3"></i>
+                         <h3 class="text-xl font-bold mb-2" data-translate-key="features.tile4.title">Foster Communication</h3>
+                         <p class="text-gray-600 text-sm" data-translate-key="features.tile4.desc">Insights provide prompts for open and honest discussions.</p>
+                     </div>
+                      <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                         <i class="fas fa-sync-alt text-ls-primary text-4xl mb-3"></i>
+                         <h3 class="text-xl font-bold mb-2" data-translate-key="features.tile5.title">Track Your Journey</h3>
+                         <p class="text-gray-600 text-sm" data-translate-key="features.tile5.desc">See how your compatibility evolves over time with ongoing assessments.</p>
+                     </div>
+                     <div class="bg-white rounded-xl p-6 shadow-md text-center">
+                         <i class="fas fa-globe text-ls-secondary text-4xl mb-3"></i>
+                         <h3 class="text-xl font-bold mb-2" data-translate-key="features.tile6.title">Culturally Relevant</h3>
+                         <p class="text-gray-600 text-sm" data-translate-key="features.tile6.desc">Designed to understand and respect diverse cultural backgrounds, including South African nuances.</p>
+                     </div>
+                 </div>
+             </div>
         </section>
 
-        <section id="guestAssessmentSection" class="main-section bg-white">
-            <h2>Guest Assessment</h2>
-            <div id="questionContainer">
-                </div>
-            <div id="feedbackContainer" class="mt-4 text-info">
-                </div>
-            <button id="nextButton" class="btn btn-primary mt-4" onclick="nextQuestion()">Next</button>
-            <button id="completeButton" class="btn btn-success mt-4 hidden" onclick="completeAssessment()">Complete Assessment</button>
+         <section class="main-section ls-gradient text-white">
+             <div class="container mx-auto px-4 text-center">
+                <i class="fas fa-info-circle text-5xl mb-4"></i>
+                <h2 class="section-title" data-translate-key="about.title">About LifeSync</h2>
+                <p class="section-subtitle" data-translate-key="about.subtitle">Our mission is to empower couples with the knowledge and tools to build lasting, transparent relationships.</p>
+
+                 <div class="max-w-3xl mx-auto text-left text-lg space-y-6">
+                     <p data-translate-key="about.paragraph1">Founded with the belief that true compatibility goes beyond initial attraction, LifeSync was created to provide a structured way for couples to explore the fundamental aspects of their partnership. We understand that open conversations about topics like finances, values, and family expectations can be challenging, but they are essential for a strong foundation.</p>
+                     <p data-translate-key="about.paragraph2">We are particularly passionate about addressing the unique dynamics and cultural considerations present in diverse societies, including the rich tapestry of South Africa. Our assessments are designed to be sensitive, inclusive, and relevant, helping couples navigate these important aspects with mutual respect and understanding.</p>
+                     <p data-translate-key="about.paragraph3">Whether you're just starting out or have been together for years, LifeSync provides the insights you need to deepen your connection and make informed decisions about your future together. Join us on this journey towards more transparent and fulfilling relationships.</p>
+                 </div>
+             </div>
         </section>
 
-        <section id="reportSection" class="main-section bg-gray-100">
-            <h2>Your Guest Report</h2>
-            <div id="reportContent">
+    </div> <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('loginModal')">&times;</span>
+            <h3 class="text-2xl font-bold mb-4 text-center" data-translate-key="auth.login.title">Login to LifeSync</h3>
+            <form>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="login-email" data-translate-key="auth.form.email">
+                        Email
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="login-email" type="email" placeholder="Email">
                 </div>
-        </section>
-
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="login-password" data-translate-key="auth.form.password">
+                        Password
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="login-password" type="password" placeholder="******************">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="btn bg-ls-primary text-white hover:bg-ls-primary-light w-full" type="button" data-translate-key="auth.login.button">
+                        Log In
+                    </button>
+                </div>
+            </form>
+             <p class="text-center text-gray-600 text-xs mt-4" data-translate-key="auth.login.signup_prompt">
+                Don't have an account? <a href="#" class="text-ls-primary hover:underline" onclick="closeModal('loginModal'); openModal('signupModal');">Sign up</a>
+            </p>
         </div>
+    </div>
 
-    <script>
-        const mainContainer = document.getElementById('mainContainer');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('.main-section');
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const mobileMenu = document.querySelector('.mobile-menu');
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('signupModal')">&times;</span>
+            <h3 class="text-2xl font-bold mb-4 text-center" data-translate-key="auth.signup.title">Create Your LifeSync Account</h3>
+            <form>
+                 <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="signup-name" data-translate-key="auth.form.name">
+                        Your Name
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="signup-name" type="text" placeholder="Your Name">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="signup-email" data-translate-key="auth.form.email">
+                        Email
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="signup-email" type="email" placeholder="Email">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="signup-password" data-translate-key="auth.form.password">
+                        Password
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="signup-password" type="password" placeholder="******************">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="btn bg-ls-primary text-white hover:bg-ls-primary-light w-full" type="button" data-translate-key="auth.signup.button">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+             <p class="text-center text-gray-600 text-xs mt-4" data-translate-key="auth.signup.login_prompt">
+                Already have an account? <a href="#" class="text-ls-primary hover:underline" onclick="closeModal('signupModal'); openModal('loginModal');">Log in</a>
+            </p>
+        </div>
+    </div>
 
-        let currentSection = 0;
+    <div id="messageModal" class="modal">
+        <div class="modal-content max-w-sm text-center">
+            <span class="modal-close" onclick="closeModal('messageModal')">&times;</span>
+            <div id="messageModalIcon" class="text-4xl mb-3 text-ls-info"></div>
+            <h3 id="messageModalTitle" class="text-xl font-bold mb-2">Message Title</h3>
+            <p id="messageModalBody" class="text-gray-700 mb-4">Message body text.</p>
+            <button class="btn bg-ls-primary text-white hover:bg-ls-primary-light" onclick="closeModal('messageModal')" data-translate-key="common.ok">OK</button>
+        </div>
+    </div>
 
-        function navigateToSection(sectionIndex) {
-            if (sectionIndex >= 0 && sectionIndex < sections.length) {
-                mainContainer.style.transform = `translateX(-${sectionIndex * 100}vw)`;
-                currentSection = sectionIndex;
-                updateNavLinks();
-                closeMobileMenu();
-            }
-        }
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const sectionIndex = parseInt(e.target.dataset.section);
-                navigateToSection(sectionIndex);
-            });
-        });
-
-        function updateNavLinks() {
-            navLinks.forEach(link => link.classList.remove('active'));
-            navLinks[currentSection].classList.add('active');
-        }
-
-        if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('open');
-            });
-        }
-
-        function closeMobileMenu() {
-            if (mobileMenu && mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-            }
-        }
-
-        // Initial navigation to the first section
-        navigateToSection(0);
-
-        // Basic placeholder functions for assessment (will be implemented later)
-        let questions = [];
-        let currentQuestionIndex = 0;
-        const questionContainer = document.getElementById('questionContainer');
-        const feedbackContainer = document.getElementById('feedbackContainer');
-        const nextButton = document.getElementById('nextButton');
-        const completeButton = document.getElementById('completeButton');
-        const reportSection = document.getElementById('reportSection');
-        const reportContent = document.getElementById('reportContent');
-        let userAnswers = {};
-
-        function loadQuestions() {
-            // This will fetch questions from the backend later
-            questions = [
-                { id: 1, text: "Question 1 about your values?", type: "radio", options: ["Option A", "Option B"] },
-                { id: 2, text: "Question 2 about your lifestyle?", type: "text" },
-                { id: 3, text: "Question 3 about your aspirations?", type: "scale", min: 1, max: 5 }
-            ];
-            displayQuestion();
-        }
-
-        function displayQuestion() {
-            if (currentQuestionIndex < questions.length) {
-                const question = questions[currentQuestionIndex];
-                questionContainer.innerHTML = `<h3>${question.text}</h3>`;
-                feedbackContainer.textContent = ""; // Clear previous feedback
-
-                if (question.type === "radio") {
-                    question.options.forEach((option, index) => {
-                        questionContainer.innerHTML += `
-                            <label><input type="radio" name="answer" value="${option}"> ${option}</label><br>
-                        `;
-                    });
-                } else if (question.type === "text") {
-                    questionContainer.innerHTML += `<textarea name="answer"></textarea>`;
-                } else if (question.type === "scale") {
-                    questionContainer.innerHTML += `<input type="range" name="answer" min="${question.min}" max="${question.max}">`;
-                }
-
-                if (currentQuestionIndex === questions.length - 1) {
-                    nextButton.classList.add('hidden');
-                    completeButton.classList.remove('hidden');
-                } else {
-                    nextButton.classList.remove('hidden');
-                    completeButton.classList.add('hidden');
-                }
-            } else {
-                // Assessment finished (this part will be handled by completeAssessment)
-            }
-        }
-
-        function nextQuestion() {
-            const answer = getAnswer();
-            if (answer) {
-                userAnswers[questions[currentQuestionIndex].id] = answer;
-                currentQuestionIndex++;
-                displayQuestion();
-                // Here you would also call the backend to get feedback
-                feedbackContainer.textContent = "Getting feedback...";
-                setTimeout(() => {
-                    feedbackContainer.textContent = "Feedback: Keep going!"; // Placeholder feedback
-                }, 500);
-            } else {
-                alert("Please provide an answer.");
-            }
-        }
-
-        function getAnswer() {
-            const currentQuestion = questions[currentQuestionIndex];
-            if (currentQuestion.type === "radio") {
-                const selectedOption = document.querySelector('input[name="answer"]:checked');
-                return selectedOption ? selectedOption.value : null;
-            } else if (currentQuestion.type === "text") {
-                const textarea = document.querySelector('textarea[name="answer"]');
-                return textarea ? textarea.value : null;
-            } else if (currentQuestion.type === "scale") {
-                const range = document.querySelector('input[name="answer"]');
-                return range ? range.value : null;
-            }
-            return null;
-        }
-
-        function completeAssessment() {
-            const answer = getAnswer();
-            if (answer) {
-                userAnswers[questions[currentQuestionIndex].id] = answer;
-                console.log("All Answers:", userAnswers);
-                // Here you would send all answers to the backend and receive the report
-                reportContent.innerHTML = "<h3>Thank you for completing the assessment!</h3><p>Your report summary will be displayed here soon...</p>";
-                navigateToSection(2);
-            } else {
-                alert("Please provide an answer for the last question.");
-            }
-        }
-
-        // Load questions when the assessment section is potentially in view (for this basic example)
-        if (window.location.hash === '#guestAssessment') {
-            loadQuestions();
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
