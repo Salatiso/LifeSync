@@ -9,17 +9,17 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS variables for LifeSync theme */
+        /* Custom CSS variables for LifeSync theme (Distinct Palette) */
         :root {
-            --ls-primary: #4F46E5; /* Indigo */
-            --ls-primary-light: #818CF8;
-            --ls-secondary: #EC4899; /* Pink */
-            --ls-accent1: #10B981; /* Emerald */
-            --ls-accent2: #F59E0B; /* Amber */
-            --ls-dark: #1F2937; /* Dark Gray */
+            --ls-primary: #1D4ED8; /* Darker Blue */
+            --ls-primary-light: #60A5FA; /* Lighter Blue */
+            --ls-secondary: #F97316; /* Orange */
+            --ls-accent1: #059669; /* Green */
+            --ls-accent2: #8B5CF6; /* Violet */
+            --ls-dark: #111827; /* Very Dark Gray */
             --ls-light: #F9FAFB; /* Light Gray */
-            --ls-success: #059669; /* Green */
-            --ls-warning: #D97706; /* Orange */
+            --ls-success: #10B981; /* Emerald */
+            --ls-warning: #F59E0B; /* Amber */
             --ls-info: #3B82F6; /* Blue */
             --ls-danger: #EF4444; /* Red */
         }
@@ -36,6 +36,7 @@
         }
 
         .ls-gradient {
+            /* Using the new primary and secondary colors */
             background: linear-gradient(135deg, var(--ls-primary) 0%, var(--ls-secondary) 100%);
         }
 
@@ -43,6 +44,9 @@
         .bg-ls-secondary { background-color: var(--ls-secondary); }
         .text-ls-primary { color: var(--ls-primary); }
         .text-ls-secondary { color: var(--ls-secondary); }
+        .text-ls-accent1 { color: var(--ls-accent1); }
+        .text-ls-accent2 { color: var(--ls-accent2); }
+
 
         /* Ensure the main container and sections handle horizontal layout */
         .main-container {
@@ -80,7 +84,7 @@
             background-color: white;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(31, 41, 55, 0.1);
+            box-shadow: 0 8px 16px rgba(17, 24, 39, 0.1); /* Using ls-dark */
         }
 
         #reportSection {
@@ -94,7 +98,7 @@
             background-color: white;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(31, 41, 55, 0.1);
+            box-shadow: 0 8px 16px rgba(17, 24, 39, 0.1); /* Using ls-dark */
          }
 
          .question-input-area {
@@ -116,7 +120,7 @@
              margin-top: 1.5rem;
              padding: 1.5rem;
              border: 1px solid var(--ls-accent1);
-             background-color: rgba(16, 185, 129, 0.1); /* Light emerald */
+             background-color: rgba(5, 150, 105, 0.1); /* Light green */
              color: var(--ls-dark);
              border-radius: 8px;
          }
@@ -140,7 +144,37 @@
              color: var(--ls-dark);
          }
 
-        /* Add more custom styles here as needed */
+         /* Styles for the new Other Tools section tiles */
+         .tool-tile {
+             background-color: white;
+             border-radius: 12px;
+             padding: 1.5rem;
+             box-shadow: 0 4px 8px rgba(17, 24, 39, 0.05);
+             transition: all 0.3s ease;
+             cursor: pointer;
+             text-align: center;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+         }
+         .tool-tile:hover {
+             transform: translateY(-5px) scale(1.02);
+             box-shadow: 0 8px 16px rgba(17, 24, 39, 0.1);
+         }
+         .tool-tile i {
+             font-size: 3rem;
+             margin-bottom: 1rem;
+         }
+         .tool-tile h3 {
+             font-size: 1.25rem;
+             font-weight: 600;
+             margin-bottom: 0.5rem;
+         }
+         .tool-tile p {
+             font-size: 0.9rem;
+             color: #4B5563; /* Gray 600 */
+         }
+
 
     </style>
 </head>
@@ -155,8 +189,9 @@
                 <div class="hidden md:flex items-center space-x-3 lg:space-x-6">
                     <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="0" data-translate-key="nav.home">Home</a>
                     <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="1" data-translate-key="nav.guest_assessment">Guest Assessment</a>
-                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="2" data-translate-key="nav.guest_report" style="display: none;">Guest Report</a> <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="3" data-translate-key="nav.features">Features</a>
-                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="4" data-translate-key="nav.about">About Us</a>
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="2" data-translate-key="nav.guest_report" style="display: none;">Guest Report</a> <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="3" data-translate-key="nav.other_tools">Other Tools</a>
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="4" data-translate-key="nav.features">Features</a>
+                    <a href="#" class="nav-link hover:text-ls-primary transition-colors" data-section="5" data-translate-key="nav.about">About Us</a>
                 </div>
                 <div class="flex items-center space-x-4">
                      <div class="language-selector">
@@ -191,8 +226,9 @@
             <div id="mobileMenu" class="hidden md:hidden mt-2 py-2 bg-white rounded-lg shadow-xl">
                 <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="0" data-translate-key="nav.home">Home</a>
                 <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="1" data-translate-key="nav.guest_assessment">Guest Assessment</a>
-                 <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="2" data-translate-key="nav.guest_report" style="display: none;">Guest Report</a> <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="3" data-translate-key="nav.features">Features</a>
-                <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="4" data-translate-key="nav.about">About Us</a>
+                 <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="2" data-translate-key="nav.guest_report" style="display: none;">Guest Report</a> <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="3" data-translate-key="nav.other_tools">Other Tools</a>
+                <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="4" data-translate-key="nav.features">Features</a>
+                <a href="#" class="nav-link block px-4 py-2 text-sm hover:bg-gray-100" data-section="5" data-translate-key="nav.about">About Us</a>
                 <button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" onclick="openModal('loginModal')" data-translate-key="nav.login">Log In</button>
             </div>
         </div>
@@ -208,9 +244,9 @@
                         <p class="text-lg mb-8" data-translate-key="hero.subtitle">LifeSync provides structured, data-driven compatibility insights to help couples build stronger, more transparent relationships, navigating crucial topics with confidence.</p>
                         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
                             <button class="btn bg-white text-ls-primary font-medium hover:bg-gray-100" onclick="navigateToSection(1)" data-translate-key="hero.cta.assessment">
-                                <i class="fas fa-heart mr-2"></i>Take Guest Assessment
+                                <i class="fas fa-heartbeat mr-2"></i>Take Guest Assessment
                             </button>
-                            <button class="btn bg-ls-secondary text-white font-medium hover:opacity-90" onclick="openModal('signupModal')" data-translate-key="hero.cta.signup">
+                            <button class="btn bg-ls-secondary text-white hover:opacity-90" onclick="openModal('signupModal')" data-translate-key="hero.cta.signup">
                                <i class="fas fa-user-plus mr-2"></i>Sign Up for Full Access
                             </button>
                         </div>
@@ -270,7 +306,7 @@
                      </div>
                      <div id="assessmentError" class="text-center text-ls-danger" style="display: none;">
                           <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
-                          <p data-translate-key="assessment.error">Failed to load assessment. Please try again later.</p>
+                          <p id="assessmentErrorMessage" data-translate-key="assessment.error">Failed to load assessment. Please try again later.</p>
                      </div>
                 </div>
             </div>
@@ -315,6 +351,48 @@
                  </div>
             </div>
         </section>
+
+        <section class="main-section bg-gray-50">
+            <div class="container mx-auto px-4 text-center">
+                <i class="fas fa-toolbox text-5xl text-ls-accent2 mb-4"></i>
+                <h2 class="section-title" data-translate-key="other_tools.title">Explore Other Compatibility Tools</h2>
+                <p class="section-subtitle" data-translate-key="other_tools.subtitle">Discover different perspectives on compatibility and relationships.</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="tool-tile" onclick="showMessageModal(translate('other_tools.astrology.title', 'Astrology Compatibility'), translate('other_tools.coming_soon', 'This feature is coming soon! Stay tuned for insights based on zodiac signs and birth charts.'), 'fas fa-star', 'text-yellow-500')">
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <h3 data-translate-key="other_tools.astrology.title">Astrology Compatibility</h3>
+                        <p data-translate-key="other_tools.astrology.desc">Explore connections based on zodiac signs and birth charts.</p>
+                    </div>
+                     <div class="tool-tile" onclick="showMessageModal(translate('other_tools.religion.title', 'Religious Compatibility'), translate('other_tools.coming_soon', 'This feature is coming soon! Explore how shared beliefs and practices align.'), 'fas fa-church', 'text-blue-500')">
+                        <i class="fas fa-church text-blue-500"></i>
+                        <h3 data-translate-key="other_tools.religion.title">Religious Compatibility</h3>
+                        <p data-translate-key="other_tools.religion.desc">Understand alignment in religious beliefs and practices.</p>
+                    </div>
+                     <div class="tool-tile" onclick="showMessageModal(translate('other_tools.ideology.title', 'Values & Ideology Sync'), translate('other_tools.coming_soon', 'This feature is coming soon! Compare perspectives on social issues, feminism, and other ideologies.'), 'fas fa-balance-scale-right', 'text-ls-accent1')">
+                        <i class="fas fa-balance-scale-right text-ls-accent1"></i>
+                        <h3 data-translate-key="other_tools.ideology.title">Values & Ideology Sync</h3>
+                        <p data-translate-key="other_tools.ideology.desc">Compare perspectives on social issues and ideologies.</p>
+                    </div>
+                    <div class="tool-tile" onclick="showMessageModal(translate('other_tools.personality.title', 'Personality Type Sync'), translate('other_tools.coming_soon', 'This feature is coming soon! See how different personality types complement each other.'), 'fas fa-puzzle-piece', 'text-pink-500')">
+                        <i class="fas fa-puzzle-piece text-pink-500"></i>
+                        <h3 data-translate-key="other_tools.personality.title">Personality Type Sync</h3>
+                        <p data-translate-key="other_tools.personality.desc">Understand how different personality types align.</p>
+                    </div>
+                     <div class="tool-tile" onclick="showMessageModal(translate('other_tools.communication.title', 'Communication Style Sync'), translate('other_tools.coming_soon', 'This feature is coming soon! Analyze how you and your partner communicate best.'), 'fas fa-comments', 'text-purple-500')">
+                        <i class="fas fa-comments text-purple-500"></i>
+                        <h3 data-translate-key="other_tools.communication.title">Communication Style Sync</h3>
+                        <p data-translate-key="other_tools.communication.desc">Analyze and compare communication preferences.</p>
+                    </div>
+                    <div class="tool-tile" onclick="showMessageModal(translate('other_tools.finance.title', 'Financial Philosophy Sync'), translate('other_tools.coming_soon', 'This feature is coming soon! Compare your approaches to saving, spending, and financial goals.'), 'fas fa-wallet', 'text-green-700')">
+                        <i class="fas fa-wallet text-green-700"></i>
+                        <h3 data-translate-key="other_tools.finance.title">Financial Philosophy Sync</h3>
+                        <p data-translate-key="other_tools.finance.desc">Compare approaches to money and financial goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <section class="main-section bg-gray-100">
              <div class="container mx-auto px-4 text-center">
@@ -395,7 +473,7 @@
                 </div>
             </form>
              <p class="text-center text-gray-600 text-xs mt-4" data-translate-key="auth.login.signup_prompt">
-                Don't have an account? <a href="#" class="text-ls-primary hover:underline" onclick="closeModal('loginModal'); openModal('signupModal');">Sign up</a>
+                Don't have an account? <a href="#" class="text-ls-primary hover:underline" onclick="closeModal('loginModal'); openModal('signupModal');" data-translate-key="auth.login.signup_link">Sign up</a>
             </p>
         </div>
     </div>
@@ -403,7 +481,7 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('signupModal')">&times;</span>
-            <h3 class="text-2xl font-bold mb-4 text-center" data-translate-key="auth.signup.title">Create Your LifeSync Account</h3>
+            <h3 class="text-2xl font-bold mb-6 text-center" data-translate-key="auth.signup.title">Create Your LifeSync Account</h3>
             <form>
                  <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="signup-name" data-translate-key="auth.form.name">
@@ -425,12 +503,30 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <button class="btn bg-ls-primary text-white hover:bg-ls-primary-light w-full" type="button" data-translate-key="auth.signup.button">
-                        Sign Up
+                        Sign Up with Email
                     </button>
                 </div>
             </form>
-             <p class="text-center text-gray-600 text-xs mt-4" data-translate-key="auth.signup.login_prompt">
-                Already have an account? <a href="#" class="text-ls-primary hover:underline" onclick="closeModal('signupModal'); openModal('loginModal');">Log in</a>
+
+            <div class="mt-6 text-center text-gray-600" data-translate-key="auth.signup.or">OR</div>
+
+            <div class="mt-6 space-y-3">
+                <button class="btn w-full bg-red-600 text-white hover:bg-red-700">
+                    <i class="fab fa-google mr-2"></i> <span data-translate-key="auth.signup.google">Sign Up with Google</span>
+                </button>
+                 <button class="btn w-full bg-gray-800 text-white hover:bg-gray-900">
+                    <i class="fab fa-apple mr-2"></i> <span data-translate-key="auth.signup.apple">Sign Up with Apple</span>
+                </button>
+                 <button class="btn w-full bg-blue-600 text-white hover:bg-blue-700">
+                    <i class="fab fa-facebook-f mr-2"></i> <span data-translate-key="auth.signup.facebook">Sign Up with Facebook</span>
+                </button>
+                 <button class="btn w-full bg-black text-white hover:bg-gray-800">
+                    <i class="fab fa-twitter mr-2"></i> <span data-translate-key="auth.signup.x">Sign Up with X</span>
+                </button>
+            </div>
+
+             <p class="text-center text-gray-600 text-xs mt-6" data-translate-key="auth.signup.login_prompt">
+                Already have an account? <a href="#" class="text-ls-primary hover:underline" onclick="closeModal('signupModal'); openModal('loginModal');" data-translate-key="auth.signup.login_link">Log in</a>
             </p>
         </div>
     </div>
