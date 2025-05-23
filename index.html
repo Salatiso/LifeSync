@@ -7,27 +7,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/i18next@23.15.1/dist/umd/i18next.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@8.0.0/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
     <style>
         :root {
-            --bg-dark: #1A202C; /* Dark Navy/Gray */
-            --bg-content: rgba(45, 55, 72, 0.92); /* Grayish Blue */
-            --border-color: rgba(74, 85, 104, 0.7);
-            --text-primary: #E2E8F0; /* Light Gray */
-            --text-secondary: #A0AEC0; /* Gray */
-            --accent-teal: #4FD1C5;
-            --accent-coral: #F687B3;
-            --accent-white: #FFFFFF;
+            --bg-dark-purple: #301934; /* Deep, sophisticated purple */
+            --bg-content-purple: rgba(60, 30, 70, 0.95); /* Lighter, semi-transparent purple for content cards */
+            --bg-content-purple-opaque: rgb(60, 30, 70);
+            --text-primary-light: #F5F5F5; /* White Smoke - for main text on dark backgrounds */
+            --text-secondary-lavender: #D8BFD8; /* Thistle - light purple-grey for secondary text */
+            --accent-pink-vibrant: #E75480; /* Dark Pink - for strong CTAs, feminine touch */
+            --accent-purple-medium: #9370DB; /* MediumPurple - for highlights, icons, interactive elements */
+            --accent-teal-bright: #48D1CC; /* MediumTurquoise - for contrast, balance, refreshing feel */
+            --border-color-lavender: rgba(147, 112, 219, 0.4); /* MediumPurple, semi-transparent border */
+            --border-color-strong: rgba(147, 112, 219, 0.7);
+
             --font-main: 'Poppins', sans-serif;
             --font-heading: 'Ubuntu', sans-serif;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
+            background-color: var(--bg-dark-purple);
+            color: var(--text-primary-light);
             font-family: var(--font-main);
             margin: 0;
             overflow: hidden; /* Prevent main body vertical scroll */
@@ -41,7 +42,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -10;
-            filter: brightness(0.35);
+            filter: brightness(0.25) contrast(1.1); /* Adjusted for darker purple theme */
         }
 
         nav {
@@ -49,55 +50,85 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 12px 35px; /* Increased padding */
+            padding: 12px 35px;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(17, 24, 39, 0.7);
+            background-color: rgba(30, 10, 40, 0.7); /* Darker purple, more transparent */
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color-lavender);
         }
 
         nav a.nav-brand {
-            font-size: 1.6rem; /* Increased size */
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--accent-white);
+            color: var(--text-primary-light);
             font-family: var(--font-heading);
-            text-shadow: 0 0 5px var(--accent-teal); /* Subtle glow */
+            text-shadow: 0 0 8px var(--accent-teal-bright);
+        }
+        nav a.nav-brand i {
+            margin-right: 8px;
+            color: var(--accent-teal-bright);
         }
 
-        nav .nav-links button {
+        nav .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .nav-links button, nav .nav-links .auth-button {
             background: none;
             border: none;
-            padding: 8px 15px; /* Increased padding */
-            margin-left: 5px; /* Increased margin */
+            padding: 8px 15px;
+            margin-left: 8px;
             cursor: pointer;
-            font-size: 1rem; /* Increased size */
-            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
-            color: var(--text-secondary);
+            font-size: 1rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease, border-bottom-color 0.3s ease;
+            color: var(--text-secondary-lavender);
             font-family: var(--font-main);
+            border-bottom: 2px solid transparent;
         }
 
         nav .nav-links button .fa-solid,
         nav .nav-links button .fa-brands {
-            margin-right: 8px; /* Increased margin */
-            width: 20px; /* Align icons */
+            margin-right: 8px;
+            width: 20px;
             text-align: center;
         }
 
-        nav .nav-links button:hover {
-            color: var(--accent-white);
-            text-shadow: 0 0 10px var(--accent-coral);
-            transform: translateY(-2px); /* Slight lift on hover */
+        nav .nav-links button:hover, nav .nav-links .auth-button:hover {
+            color: var(--text-primary-light);
+            text-shadow: 0 0 10px var(--accent-pink-vibrant);
+            transform: translateY(-2px);
         }
          nav .nav-links button.active-nav {
-             color: var(--accent-teal);
+             color: var(--accent-teal-bright);
              font-weight: 600;
-             text-shadow: 0 0 8px rgba(79, 209, 197, 0.7);
-             border-bottom: 2px solid var(--accent-teal); /* Add underline */
-             border-radius: 2px; /* Slight roundness */
+             text-shadow: 0 0 8px rgba(72, 209, 204, 0.7);
+             border-bottom: 2px solid var(--accent-teal-bright);
          }
+         nav .nav-links .auth-button {
+            padding: 6px 12px;
+            border: 1px solid var(--accent-pink-vibrant);
+            color: var(--accent-pink-vibrant);
+            border-radius: 20px; /* Pill shape */
+            font-size: 0.9rem;
+         }
+         nav .nav-links .auth-button:hover {
+            background-color: var(--accent-pink-vibrant);
+            color: var(--bg-dark-purple);
+            text-shadow: none;
+         }
+         nav .nav-links .auth-button.login-btn {
+            border-color: var(--accent-purple-medium);
+            color: var(--accent-purple-medium);
+         }
+         nav .nav-links .auth-button.login-btn:hover {
+            background-color: var(--accent-purple-medium);
+            color: var(--bg-dark-purple);
+         }
+
 
         .page-container {
             display: flex;
@@ -108,17 +139,16 @@
         }
 
         .content-overlay {
-            flex-grow: 1; /* Take up available space */
+            flex-grow: 1;
             display: flex;
-            overflow-x: scroll; /* Allow horizontal scroll */
-            overflow-y: hidden; /* Prevent vertical scroll */
-            scroll-snap-type: x mandatory; /* Snap scrolling */
-            scroll-behavior: smooth; /* Smooth scrolling via JS */
+            overflow-x: scroll;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
             width: 100%;
-            height: calc(100% - 110px); /* Adjust based on nav and footer height */
+            height: calc(100% - 110px); /* Nav + Footer height */
         }
 
-        /* Hide scrollbar */
         .content-overlay::-webkit-scrollbar { display: none; }
         .content-overlay { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -126,21 +156,19 @@
             width: 100vw;
             height: 100%;
             flex-shrink: 0;
-            padding: 2.5rem 3rem; /* Increased padding */
+            padding: 2.5rem 3rem;
             border-radius: 0.75rem;
-            overflow-y: auto; /* Allow VERTICAL scroll WITHIN the section */
-            scroll-snap-align: start; /* Snap each section */
-            background-color: var(--bg-content);
-            border: 1px solid var(--border-color);
-            margin: 10px; /* Add some margin between sections */
+            overflow-y: auto;
+            scroll-snap-align: start;
+            background-color: var(--bg-content-purple);
+            border: 1px solid var(--border-color-lavender);
+            margin: 10px;
             box-sizing: border-box;
             opacity: 0;
-            animation: fadeIn 0.8s forwards; /* Use forwards to keep state */
-            color: var(--text-primary);
-            max-height: 100%; /* Ensure sections don't exceed overlay height */
+            animation: fadeIn 0.8s forwards;
+            color: var(--text-primary-light);
+            max-height: 100%;
         }
-
-        /* Add a delay for subsequent sections for a staggered effect (optional) */
         .content-section:nth-child(2) { animation-delay: 0.1s; }
         .content-section:nth-child(3) { animation-delay: 0.2s; }
         .content-section:nth-child(4) { animation-delay: 0.3s; }
@@ -154,40 +182,40 @@
 
         h1, h2, h3 {
             font-family: var(--font-heading);
-            color: var(--accent-white);
+            color: var(--text-primary-light);
             margin-bottom: 1.5rem;
         }
-         h1 { font-size: 2.5rem; }
+         h1 { font-size: 2.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
          h2 { font-size: 1.8rem; }
-         h3 { font-size: 1.4rem; color: var(--accent-teal); }
+         h3 { font-size: 1.4rem; color: var(--accent-teal-bright); }
 
         p {
             line-height: 1.7;
-            color: var(--text-secondary);
+            color: var(--text-secondary-lavender);
             margin-bottom: 1rem;
         }
 
         /* Timeline Styles */
         #timeline {
-            background-color: rgba(17, 24, 39, 0.95); /* Darker background */
+            background-color: rgba(30, 10, 40, 0.95); /* Darker purple */
         }
         .timeline-container {
             display: flex;
             overflow-x: auto;
             padding: 20px 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color-lavender);
+            border-bottom: 1px solid var(--border-color-lavender);
         }
          .timeline-container::-webkit-scrollbar { height: 5px; }
-         .timeline-container::-webkit-scrollbar-thumb { background: var(--accent-teal); border-radius: 5px;}
-         .timeline-container::-webkit-scrollbar-track { background: var(--border-color); }
+         .timeline-container::-webkit-scrollbar-thumb { background: var(--accent-purple-medium); border-radius: 5px;}
+         .timeline-container::-webkit-scrollbar-track { background: var(--border-color-lavender); }
 
         .timeline-event {
-            flex: 0 0 250px; /* Fixed width for each event */
+            flex: 0 0 250px;
             margin: 0 15px;
             padding: 20px;
-            background-color: var(--bg-content);
-            border: 1px solid var(--border-color);
+            background-color: var(--bg-content-purple-opaque);
+            border: 1px solid var(--border-color-strong);
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -197,51 +225,38 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
-        .timeline-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        .timeline-icon.good { color: var(--accent-teal); }
-        .timeline-icon.bad { color: var(--accent-coral); }
-        .timeline-date {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-        }
-        .timeline-title {
-            font-weight: 600;
-            color: var(--accent-white);
-            margin-bottom: 10px;
-        }
+        .timeline-icon { font-size: 2rem; margin-bottom: 10px; }
+        .timeline-icon.good { color: var(--accent-teal-bright); }
+        .timeline-icon.bad { color: var(--accent-pink-vibrant); }
+        .timeline-date { font-size: 0.8rem; color: var(--text-secondary-lavender); margin-bottom: 5px; }
+        .timeline-title { font-weight: 600; color: var(--text-primary-light); margin-bottom: 10px; }
         .timeline-details {
-            display: none; /* Hidden by default */
+            display: none;
             font-size: 0.9rem;
-            color: var(--text-primary);
+            color: var(--text-primary-light);
             margin-top: 15px;
             text-align: left;
-            border-top: 1px dashed var(--border-color);
+            border-top: 1px dashed var(--border-color-lavender);
             padding-top: 10px;
         }
-        .timeline-event.active .timeline-details {
-            display: block; /* Shown when active */
-        }
+        .timeline-event.active .timeline-details { display: block; }
 
         /* LifeSync Guest Assessment Styles */
-         #lifesync-tool {
-             background: linear-gradient(135deg, var(--bg-dark), var(--bg-content));
+         #lifesync { /* Renamed from lifesync-tool for clarity */
+             background: linear-gradient(135deg, var(--bg-dark-purple), var(--bg-content-purple-opaque));
              display: flex;
              justify-content: center;
              align-items: center;
          }
         .assessment-container {
-            background-color: rgba(17, 24, 39, 0.8);
+            background-color: rgba(30, 10, 40, 0.85);
             padding: 30px 40px;
             border-radius: 12px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
             width: 100%;
             max-width: 600px;
             text-align: center;
-            border: 1px solid var(--accent-teal);
+            border: 1px solid var(--accent-purple-medium);
         }
         .assessment-question { margin-bottom: 25px; }
         .assessment-options button {
@@ -249,37 +264,96 @@
             width: 100%;
             padding: 15px;
             margin-bottom: 10px;
-            background-color: var(--bg-content);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
+            background-color: var(--bg-content-purple-opaque);
+            border: 1px solid var(--border-color-lavender);
+            color: var(--text-primary-light);
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
             font-size: 1rem;
         }
         .assessment-options button:hover {
-            background-color: var(--accent-teal);
-            border-color: var(--accent-teal);
-            color: var(--bg-dark);
+            background-color: var(--accent-teal-bright);
+            border-color: var(--accent-teal-bright);
+            color: var(--bg-dark-purple);
         }
         .assessment-feedback {
             margin-top: 20px;
             font-style: italic;
-            color: var(--accent-coral);
+            color: var(--accent-pink-vibrant);
             min-height: 25px;
         }
         .progress-bar {
             width: 100%;
-            background-color: var(--border-color);
+            background-color: var(--border-color-lavender);
             border-radius: 5px;
             overflow: hidden;
             margin-top: 20px;
         }
         .progress-bar-fill {
             height: 10px;
-            width: 0%; /* Starts at 0 */
-            background-color: var(--accent-teal);
+            width: 0%;
+            background-color: var(--accent-teal-bright);
             transition: width 0.5s ease-in-out;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Adjust as needed */
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: var(--bg-content-purple-opaque);
+            padding: 1rem;
+            border: 1px solid var(--border-color-strong);
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 300px; /* Adjust as needed */
+            margin-bottom: 1rem;
+            border-radius: 6px;
+        }
+        .carousel-slide h4 {
+            color: var(--accent-teal-bright);
+            margin-bottom: 0.5rem;
+        }
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
+            pointer-events: none; /* Allow clicks to pass through to buttons */
+        }
+        .carousel-controls button {
+            background-color: rgba(30, 10, 40, 0.7);
+            color: var(--text-primary-light);
+            border: 1px solid var(--accent-purple-medium);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            pointer-events: all; /* Make buttons clickable */
+            font-size: 1.2rem;
+        }
+        .carousel-controls button:hover {
+            background-color: var(--accent-purple-medium);
         }
 
 
@@ -290,52 +364,97 @@
             left: 0;
             width: 100%;
             padding: 15px 35px;
-            background-color: rgba(17, 24, 39, 0.8);
-            border-top: 1px solid var(--border-color);
+            background-color: rgba(30, 10, 40, 0.8); /* Darker purple */
+            border-top: 1px solid var(--border-color-lavender);
             text-align: center;
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--text-secondary-lavender);
             z-index: 1000;
             backdrop-filter: blur(5px);
         }
          footer a {
-             color: var(--accent-teal);
+             color: var(--accent-teal-bright);
              text-decoration: none;
              transition: color 0.3s;
          }
          footer a:hover {
-             color: var(--accent-white);
+             color: var(--text-primary-light);
          }
 
          /* Utility */
          .btn {
              padding: 10px 25px;
-             border-radius: 5px;
+             border-radius: 25px; /* More rounded */
              text-decoration: none;
              font-weight: 600;
              transition: all 0.3s ease;
              cursor: pointer;
              display: inline-block;
              margin-top: 1rem;
+             border: 1px solid transparent;
+             text-transform: uppercase;
+             letter-spacing: 0.5px;
+             font-size: 0.9rem;
          }
          .btn-primary {
-             background-color: var(--accent-teal);
-             color: var(--bg-dark);
-             border: 1px solid var(--accent-teal);
+             background-color: var(--accent-teal-bright);
+             color: var(--bg-dark-purple);
+             border-color: var(--accent-teal-bright);
          }
          .btn-primary:hover {
              background-color: transparent;
-             color: var(--accent-teal);
+             color: var(--accent-teal-bright);
+             box-shadow: 0 0 10px var(--accent-teal-bright);
          }
           .btn-secondary {
-             background-color: var(--accent-coral);
-             color: var(--bg-dark);
-             border: 1px solid var(--accent-coral);
+             background-color: var(--accent-pink-vibrant);
+             color: var(--text-primary-light);
+             border-color: var(--accent-pink-vibrant);
          }
          .btn-secondary:hover {
              background-color: transparent;
-             color: var(--accent-coral);
+             color: var(--accent-pink-vibrant);
+             box-shadow: 0 0 10px var(--accent-pink-vibrant);
          }
+
+         /* Modal Styles (Basic - for Login/Register placeholders) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--bg-content-purple-opaque);
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid var(--border-color-strong);
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: var(--text-secondary-lavender);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--accent-pink-vibrant);
+            text-decoration: none;
+        }
 
     </style>
 </head>
@@ -351,8 +470,11 @@
         <div class="nav-links">
             <button class="active-nav" data-section="about"><i class="fa-solid fa-user-friends"></i>About</button>
             <button data-section="lifesync"><i class="fa-solid fa-heart-pulse"></i>Guest Assessment</button>
-            <button data-section="family"><i class="fa-solid fa-people-roof"></i>Our Vision</button>
+            <button data-section="vision"><i class="fa-solid fa-people-roof"></i>Our Vision</button>
+            <button data-section="timeline"><i class="fa-solid fa-calendar-alt"></i>Roadmap</button>
             <button data-section="contact"><i class="fa-solid fa-envelope"></i>Contact</button>
+            <button class="auth-button login-btn" id="loginBtn"><i class="fa-solid fa-sign-in-alt"></i> Login</button>
+            <button class="auth-button" id="registerBtn"><i class="fa-solid fa-user-plus"></i> Register</button>
         </div>
     </nav>
 
@@ -362,24 +484,24 @@
             <section id="about" class="content-section">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
-                        <h1 class="text-4xl font-bold mb-4">Welcome to <span style="color:var(--accent-teal)">LifeSync</span></h1>
-                        <h3 class="text-xl font-semibold mb-6" style="color:var(--accent-coral)">Building Stronger Connections Through Transparency</h3>
-                        <p class="text-lg">In a world full of connections, LifeSync offers clarity. We believe modern relationships thrive on understanding, trust, and open communication[cite: 301]. Our platform moves beyond superficial matches, providing tools to explore the deeper aspects of compatibility[cite: 3].</p>
-                        <p>Whether you're starting a new journey or strengthening a long-term bond, LifeSync empowers you to navigate finances, values, lifestyle choices, and future dreams together, with confidence[cite: 3, 309].</p>
+                        <h1 class="text-4xl font-bold mb-4">Welcome to <span style="color:var(--accent-teal-bright)">LifeSync</span></h1>
+                        <h3 class="text-xl font-semibold mb-6" style="color:var(--accent-pink-vibrant)">Building Stronger Connections Through Transparency</h3>
+                        <p class="text-lg">In a world full of connections, LifeSync offers clarity. We believe modern relationships thrive on understanding, trust, and open communication. Our platform moves beyond superficial matches, providing tools to explore the deeper aspects of compatibility.</p>
+                        <p>Whether you're starting a new journey or strengthening a long-term bond, LifeSync empowers you to navigate finances, values, lifestyle choices, and future dreams together, with confidence.</p>
                          <p>Join us in fostering relationships built on a foundation of genuine understanding and mutual respect.</p>
                         <a href="#" class="btn btn-primary" onclick="showSection('lifesync')">Try the Guest Assessment <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                      <div class="text-center">
-                        <i class="fa-solid fa-hand-holding-heart text-9xl" style="color: var(--accent-teal); opacity: 0.8; text-shadow: 0 0 20px var(--accent-coral);"></i>
-                        <p class="mt-4 italic">"The essential 'app after the dating app.'" [cite: 52]</p>
+                        <i class="fa-solid fa-hand-holding-heart text-9xl" style="color: var(--accent-purple-medium); opacity: 0.8; text-shadow: 0 0 20px var(--accent-pink-vibrant);"></i>
+                        <p class="mt-4 italic">"The essential 'app after the dating app.'"</p>
                     </div>
                 </div>
             </section>
 
             <section id="lifesync" class="content-section">
                  <div class="assessment-container">
-                     <h2><i class="fa-solid fa-clipboard-question"></i> Quick Compatibility Check</h2>
-                     <p>Answer a few questions to get a glimpse of your alignment. This provides instant feedback! [cite: 4, 14, 21]</p>
+                     <h2><i class="fa-solid fa-clipboard-question" style="color: var(--accent-purple-medium);"></i> Quick Compatibility Check</h2>
+                     <p>Answer a few questions to get a glimpse of your alignment. This provides instant feedback!</p>
                      <div id="assessment-area">
                          <div class="assessment-question">
                              <h3 id="question-text">How important is spending quality time together?</h3>
@@ -392,15 +514,15 @@
                          </div>
                      </div>
                       <div id="assessment-result" style="display: none;">
-                          <h2><i class="fa-solid fa-check-circle"></i> Assessment Complete!</h2>
+                          <h2><i class="fa-solid fa-check-circle" style="color: var(--accent-teal-bright);"></i> Assessment Complete!</h2>
                           <p>Based on your answers, here's a quick look:</p>
-                          <p id="final-feedback" class="text-xl font-bold" style="color: var(--accent-teal);">You value open communication and shared goals!</p>
-                          <p>This is just a preview. Register for free to unlock in-depth assessments covering finances, values, lifestyle, cultural practices, and more! [cite: 44, 45, 151]</p>
-                          <a href="#" class="btn btn-secondary">Register Now (Coming Soon)</a>
+                          <p id="final-feedback" class="text-xl font-bold" style="color: var(--accent-teal-bright);">You value open communication and shared goals!</p>
+                          <p>This is just a preview. Register for free to unlock in-depth assessments covering finances, values, lifestyle, cultural practices, and more!</p>
+                          <a href="#" class="btn btn-secondary" onclick="document.getElementById('registerModal').style.display='block'">Register Now</a>
                           <button class="btn btn-primary" onclick="resetAssessment()">Try Again</button>
                       </div>
                      <div class="assessment-feedback" id="feedback-area">
-                         Your cumulative feedback will appear here... [cite: 4, 21, 56]
+                         Your cumulative feedback will appear here...
                      </div>
                      <p class="text-sm mt-4">Question <span id="question-counter">1</span> of <span id="total-questions">5</span></p>
                      <div class="progress-bar">
@@ -409,116 +531,170 @@
                  </div>
             </section>
 
-            <section id="family" class="content-section">
-                <h2 class="text-3xl font-bold mb-4"><i class="fa-solid fa-binoculars"></i> Our Vision for LifeSync</h2>
-                <p>LifeSync aims to be more than just an assessment tool; it's a companion for your relationship journey[cite: 302]. We envision a platform that:</p>
-                <ul class="list-disc list-inside space-y-3 text-lg pl-4">
-                    <li><i class="fa-solid fa-handshake-angle text-teal-400 mr-2"></i>**Empowers Couples:** Provides a structured, safe space for discussing sensitive topics like finances (including cultural aspects like lobola), values, and past experiences[cite: 3, 7, 30].</li>
-                    <li><i class="fa-solid fa-lock text-coral-400 mr-2"></i>**Prioritizes Privacy:** Implements robust security and granular, consent-based sharing, ensuring you control your data[cite: 11, 17, 34, 49].</li>
-                    <li><i class="fa-solid fa-chart-line text-teal-400 mr-2"></i>**Tracks Growth:** Allows you to see how your compatibility evolves over time, adapting to different relationship stages[cite: 6, 11].</li>
-                    <li><i class="fa-solid fa-globe text-coral-400 mr-2"></i>**Is Culturally Aware:** Includes assessments and insights relevant to diverse backgrounds, with a special focus on contexts like South Africa[cite: 3, 30, 43].</li>
-                    <li><i class="fa-solid fa-book-open text-teal-400 mr-2"></i>**Offers Resources:** Provides access to expert advice and content tailored to your unique relationship dynamics[cite: 19].</li>
-                    <li><i class="fa-solid fa-infinity text-coral-400 mr-2"></i>**Supports Long-Term:** Aims to be the "app after the dating app," supporting you through commitment and beyond[cite: 52].</li>
-                </ul>
-                <p class="mt-6">We believe that by fostering transparency and understanding, we can help couples build stronger, more resilient, and fulfilling partnerships.</p>
+            <section id="vision" class="content-section">
+                <h2 class="text-3xl font-bold mb-4 text-center"><i class="fa-solid fa-binoculars" style="color:var(--accent-purple-medium)"></i> Our Vision for LifeSync</h2>
+                <p class="text-center mb-8">LifeSync aims to be more than just an assessment tool; it's a companion for your relationship journey. We envision a platform that:</p>
+
+                <div class="carousel-container">
+                    <div class="carousel-track" id="visionCarouselTrack">
+                        <div class="carousel-slide">
+                            <i class="fa-solid fa-handshake-angle text-5xl mb-4" style="color: var(--accent-teal-bright);"></i>
+                            <h4>Empowers Couples</h4>
+                            <p>Provides a structured, safe space for discussing sensitive topics like finances (including cultural aspects like lobola), values, and past experiences.</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <i class="fa-solid fa-lock text-5xl mb-4" style="color: var(--accent-pink-vibrant);"></i>
+                            <h4>Prioritizes Privacy</h4>
+                            <p>Implements robust security and granular, consent-based sharing, ensuring you control your data.</p>
+                        </div>
+                        <div class="carousel-slide">
+                             <i class="fa-solid fa-chart-line text-5xl mb-4" style="color: var(--accent-teal-bright);"></i>
+                            <h4>Tracks Growth</h4>
+                            <p>Allows you to see how your compatibility evolves over time, adapting to different relationship stages.</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <i class="fa-solid fa-globe text-5xl mb-4" style="color: var(--accent-pink-vibrant);"></i>
+                            <h4>Is Culturally Aware</h4>
+                            <p>Includes assessments and insights relevant to diverse backgrounds, with a special focus on contexts like South Africa.</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <i class="fa-solid fa-book-open text-5xl mb-4" style="color: var(--accent-teal-bright);"></i>
+                            <h4>Offers Resources</h4>
+                            <p>Provides access to expert advice and content tailored to your unique relationship dynamics.</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <i class="fa-solid fa-infinity text-5xl mb-4" style="color: var(--accent-pink-vibrant);"></i>
+                            <h4>Supports Long-Term</h4>
+                            <p>Aims to be the "app after the dating app," supporting you through commitment and beyond.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button id="visionPrevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button id="visionNextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                 <p class="text-center mt-8">We believe that by fostering transparency and understanding, we can help couples build stronger, more resilient, and fulfilling partnerships.</p>
+            </section>
+
+            <section id="timeline" class="content-section">
+                 <h2 class="text-3xl font-bold mb-6 text-center"><i class="fa-solid fa-calendar-alt" style="color:var(--accent-purple-medium)"></i> Our Journey & Key Milestones</h2>
+                 <div class="timeline-container" id="timeline-container">
+                    <div class="timeline-event">
+                        <div class="timeline-icon good"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div class="timeline-date">Q1 2024</div>
+                        <div class="timeline-title">Concept Born</div>
+                        <div class="timeline-details">The initial idea for LifeSync sparked - addressing the need for deeper compatibility tools.</div>
+                    </div>
+                     <div class="timeline-event">
+                        <div class="timeline-icon good"><i class="fa-solid fa-file-alt"></i></div>
+                        <div class="timeline-date">Q2 2024</div>
+                        <div class="timeline-title">Vision & Docs</div>
+                        <div class="timeline-details">Detailed planning, pitch documents, and technical specifications drafted.</div>
+                    </div>
+                     <div class="timeline-event">
+                        <div class="timeline-icon bad"><i class="fa-solid fa-code-branch"></i></div>
+                        <div class="timeline-date">Q3 2024</div>
+                        <div class="timeline-title">Tech Pivot</div>
+                        <div class="timeline-details">Decision made to build the initial MVP with HTML/CSS/JS for rapid deployment.</div>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-icon good"><i class="fa-solid fa-users"></i></div>
+                        <div class="timeline-date">Q4 2024</div>
+                        <div class="timeline-title">Guest MVP</div>
+                        <div class="timeline-details">Focus on building the core Guest Assessment and report functionality.</div>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-icon good"><i class="fa-solid fa-rocket"></i></div>
+                        <div class="timeline-date">Q1 2025</div>
+                        <div class="timeline-title">MVP Launch</div>
+                        <div class="timeline-details">Planned launch of the HTML-based MVP on salatiso.com.</div>
+                    </div>
+                     <div class="timeline-event">
+                        <div class="timeline-icon bad"><i class="fa-solid fa-bug"></i></div>
+                        <div class="timeline-date">Ongoing</div>
+                        <div class="timeline-title">Challenges Met</div>
+                        <div class="timeline-details">Navigating hosting limitations and ensuring robust security are key ongoing challenges.</div>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-icon good"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+                        <div class="timeline-date">Future</div>
+                        <div class="timeline-title">Full Platform</div>
+                        <div class="timeline-details">Phased development towards the full vision, including registered users, mobile apps, and advanced features.</div>
+                    </div>
+                 </div>
+                 <p class="text-center mt-4 text-sm text-gray-400">Click on an event to see more details.</p>
             </section>
 
             <section id="contact" class="content-section">
-                 <h2 class="text-3xl font-bold mb-6 text-center"><i class="fa-solid fa-paper-plane"></i> Get in Touch</h2>
+                 <h2 class="text-3xl font-bold mb-6 text-center"><i class="fa-solid fa-paper-plane" style="color:var(--accent-purple-medium)"></i> Get in Touch</h2>
                  <p class="text-center mb-10">Have questions, feedback, or want to explore partnership opportunities? We'd love to hear from you!</p>
-                 <div class="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg border border-gray-700">
+                 <div class="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg border border-gray-700" style="background-color: var(--bg-content-purple-opaque); border-color: var(--border-color-strong);">
                     <form action="#" method="POST">
                         <div class="mb-4">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Your Name</label>
-                            <input type="text" id="name" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="John Doe" required>
+                            <input type="text" id="name" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="John Doe" required style="background-color: var(--bg-dark-purple); border-color: var(--border-color-lavender); color: var(--text-primary-light);">
                         </div>
                         <div class="mb-4">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Your Email</label>
-                            <input type="email" id="email" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="john.doe@example.com" required>
+                            <input type="email" id="email" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="john.doe@example.com" required style="background-color: var(--bg-dark-purple); border-color: var(--border-color-lavender); color: var(--text-primary-light);">
                         </div>
                          <div class="mb-6">
                             <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Your Message</label>
-                            <textarea id="message" rows="4" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="Let us know what's on your mind..."></textarea>
+                            <textarea id="message" rows="4" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="Let us know what's on your mind..." style="background-color: var(--bg-dark-purple); border-color: var(--border-color-lavender); color: var(--text-primary-light);"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary w-full">Send Message</button>
                     </form>
                  </div>
             </section>
 
-            <section id="timeline" class="content-section">
-                 <h2 class="text-3xl font-bold mb-6 text-center"><i class="fa-solid fa-calendar-alt"></i> Our Journey & Key Milestones</h2>
-                 <div class="timeline-container" id="timeline-container">
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-lightbulb"></i></div>
-                        <div class="timeline-date">Q1 2024</div>
-                        <div class="timeline-title">Concept Born</div>
-                        <div class="timeline-details">The initial idea for LifeSync sparked - addressing the need for deeper compatibility tools[cite: 1].</div>
-                    </div>
-                     <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-file-alt"></i></div>
-                        <div class="timeline-date">Q2 2024</div>
-                        <div class="timeline-title">Vision & Docs</div>
-                        <div class="timeline-details">Detailed planning, pitch documents, and technical specifications drafted[cite: 1, 53, 98, 232].</div>
-                    </div>
-                     <div class="timeline-event">
-                        <div class="timeline-icon bad"><i class="fa-solid fa-code-branch"></i></div>
-                        <div class="timeline-date">Q3 2024</div>
-                        <div class="timeline-title">Tech Pivot</div>
-                        <div class="timeline-details">Decision made to build the initial MVP with HTML/CSS/JS for rapid deployment[cite: 271, 275].</div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-users"></i></div>
-                        <div class="timeline-date">Q4 2024</div>
-                        <div class="timeline-title">Guest MVP</div>
-                        <div class="timeline-details">Focus on building the core Guest Assessment and report functionality[cite: 99, 280].</div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-rocket"></i></div>
-                        <div class="timeline-date">Q1 2025</div>
-                        <div class="timeline-title">MVP Launch</div>
-                        <div class="timeline-details">Planned launch of the HTML-based MVP on salatiso.com[cite: 99, 290].</div>
-                    </div>
-                     <div class="timeline-event">
-                        <div class="timeline-icon bad"><i class="fa-solid fa-bug"></i></div>
-                        <div class="timeline-date">Ongoing</div>
-                        <div class="timeline-title">Challenges Met</div>
-                        <div class="timeline-details">Navigating hosting limitations and ensuring robust security are key ongoing challenges[cite: 118, 120].</div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
-                        <div class="timeline-date">Future</div>
-                        <div class="timeline-title">Full Platform</div>
-                        <div class="timeline-details">Phased development towards the full vision, including registered users, mobile apps, and advanced features[cite: 111, 112].</div>
-                    </div>
-                 </div>
-                 <p class="text-center mt-4 text-sm text-gray-400">Click on an event to see more details.</p>
-            </section>
-
         </div>
 
         <footer>
-            &copy; 2025 Mdeni Family Enterprise. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | Built with <i class="fa-solid fa-heart" style="color: var(--accent-coral)"></i> for LifeSync.
+            &copy; 2025 Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | Built with <i class="fa-solid fa-heart" style="color: var(--accent-pink-vibrant)"></i> for LifeSync.
         </footer>
     </div>
 
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+            <h2><i class="fa-solid fa-sign-in-alt" style="color:var(--accent-purple-medium)"></i> Login</h2>
+            <p>Login functionality coming soon!</p>
+            <p>Registered users will access their profiles, detailed assessments, and couple dashboards here.</p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="document.getElementById('registerModal').style.display='none'">&times;</span>
+            <h2><i class="fa-solid fa-user-plus" style="color:var(--accent-pink-vibrant)"></i> Register</h2>
+            <p>Registration functionality coming soon!</p>
+            <p>Create your LifeSync account to unlock the full potential of compatibility tracking and relationship insights.</p>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const navButtons = document.querySelectorAll('.nav-links button');
+            const navButtons = document.querySelectorAll('.nav-links button[data-section]');
             const contentOverlay = document.getElementById('content-overlay');
             const sections = document.querySelectorAll('.content-section');
             const timelineEvents = document.querySelectorAll('.timeline-event');
+
+            // Modals
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const closeButtons = document.querySelectorAll('.close-button');
 
             // --- Navigation ---
             function showSection(sectionId) {
                 const targetSection = document.getElementById(sectionId);
                 if (targetSection) {
-                    // Scroll the overlay to the target section
                     contentOverlay.scrollTo({
                         left: targetSection.offsetLeft - 10, // Account for margin
                         behavior: 'smooth'
                     });
-
-                    // Update active button
                     navButtons.forEach(btn => {
                         btn.classList.remove('active-nav');
                         if (btn.dataset.section === sectionId) {
@@ -527,6 +703,7 @@
                     });
                 }
             }
+            window.showSection = showSection; // Expose globally
 
             navButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -534,17 +711,12 @@
                 });
             });
 
-             // Expose showSection globally if needed by other elements
-             window.showSection = showSection;
-
             // --- Timeline ---
             timelineEvents.forEach(event => {
                 event.addEventListener('click', function() {
-                    // Remove 'active' from all others first
                     timelineEvents.forEach(e => {
                         if (e !== this) e.classList.remove('active');
                     });
-                    // Toggle 'active' on the clicked one
                     this.classList.toggle('active');
                 });
             });
@@ -557,14 +729,16 @@
             const feedbackArea = document.getElementById('feedback-area');
             const progressBar = document.getElementById('progress-bar');
             const questionCounter = document.getElementById('question-counter');
+            const totalQuestionsDisplay = document.getElementById('total-questions');
 
             const questions = [
-                { q: "How important is spending quality time together?", o: ["Not very", "Somewhat", "Very", "Essential"], f: "Shared time seems important." },
-                { q: "How do you prefer to handle disagreements?", o: ["Avoid them", "Discuss calmly", "Need space first", "Address immediately"], f: "Communication style noted." },
-                { q: "What's your general approach to saving vs. spending?", o: ["Big Saver", "Mostly Save", "Balanced", "Mostly Spend"], f: "Financial outlook is a key factor." },
-                { q: "How significant are cultural traditions in your life?", o: ["Not really", "A little", "Quite a bit", "Very"], f: "Cultural views add depth." },
-                { q: "How important is personal growth within a relationship?", o: ["Not vital", "Good to have", "Important", "Crucial"], f: "Growth alignment is insightful." }
+                { q: "How important is spending quality time together?", o: ["Not very", "Somewhat", "Very", "Essential"], f: "Shared time seems important for connection." },
+                { q: "How do you prefer to handle disagreements?", o: ["Avoid them", "Discuss calmly", "Need space first", "Address immediately"], f: "Conflict resolution style is key." },
+                { q: "What's your general approach to saving vs. spending?", o: ["Big Saver", "Mostly Save", "Balanced", "Mostly Spend"], f: "Financial outlook is a common discussion point." },
+                { q: "How significant are cultural traditions in your life?", o: ["Not really", "A little", "Quite a bit", "Very"], f: "Cultural views shape many life aspects." },
+                { q: "How important is personal growth within a relationship?", o: ["Not vital", "Good to have", "Important", "Crucial"], f: "Growth alignment can foster a dynamic partnership." }
             ];
+            totalQuestionsDisplay.textContent = questions.length;
 
             let currentQuestionIndex = 0;
             let userAnswers = [];
@@ -590,7 +764,7 @@
 
             function handleAnswer(answer, feedback) {
                 userAnswers.push({ q: questions[currentQuestionIndex].q, a: answer });
-                cumulativeFeedback = feedback; // Simplified cumulative feedback for MVP
+                cumulativeFeedback = feedback;
                 currentQuestionIndex++;
                 loadQuestion(currentQuestionIndex);
             }
@@ -599,16 +773,14 @@
                  const progressPercent = (currentQuestionIndex / questions.length) * 100;
                  progressBar.style.width = `${progressPercent}%`;
                  questionCounter.textContent = currentQuestionIndex + 1 > questions.length ? questions.length : currentQuestionIndex + 1;
-                 document.getElementById('total-questions').textContent = questions.length;
             }
 
             function showResults() {
                 assessmentArea.style.display = 'none';
                 resultArea.style.display = 'block';
                 progressBar.style.width = `100%`;
-                // More complex feedback could be generated here based on userAnswers
                 document.getElementById('final-feedback').textContent = "You've completed the preview! Register for deeper insights.";
-                 console.log("User Answers:", userAnswers); // In a real app, send this to backend
+                // console.log("User Answers:", userAnswers);
             }
 
             window.resetAssessment = function() {
@@ -619,10 +791,64 @@
                 resultArea.style.display = 'none';
                 loadQuestion(currentQuestionIndex);
             }
+            loadQuestion(currentQuestionIndex);
+
+            // --- Vision Carousel ---
+            const visionTrack = document.getElementById('visionCarouselTrack');
+            const visionSlides = Array.from(visionTrack.children);
+            const visionNextButton = document.getElementById('visionNextBtn');
+            const visionPrevButton = document.getElementById('visionPrevBtn');
+            let visionCurrentIndex = 0;
+
+            const visionSlideWidth = visionSlides[0].getBoundingClientRect().width;
+
+            function moveToVisionSlide(index) {
+                visionTrack.style.transform = 'translateX(-' + visionSlideWidth * index + 'px)';
+                visionCurrentIndex = index;
+            }
+
+            visionNextButton.addEventListener('click', () => {
+                const newIndex = visionCurrentIndex + 1;
+                if (newIndex < visionSlides.length) {
+                    moveToVisionSlide(newIndex);
+                } else {
+                    moveToVisionSlide(0); // Loop to start
+                }
+            });
+
+            visionPrevButton.addEventListener('click', () => {
+                const newIndex = visionCurrentIndex - 1;
+                if (newIndex >= 0) {
+                    moveToVisionSlide(newIndex);
+                } else {
+                    moveToVisionSlide(visionSlides.length - 1); // Loop to end
+                }
+            });
+            // Initial position
+            moveToVisionSlide(0);
+
+
+            // --- Modal Handling ---
+            loginBtn.onclick = function() { loginModal.style.display = "block"; }
+            registerBtn.onclick = function() { registerModal.style.display = "block"; }
+
+            closeButtons.forEach(button => {
+                button.onclick = function() {
+                    loginModal.style.display = "none";
+                    registerModal.style.display = "none";
+                }
+            });
+
+            window.onclick = function(event) {
+                if (event.target == loginModal) {
+                    loginModal.style.display = "none";
+                }
+                if (event.target == registerModal) {
+                    registerModal.style.display = "none";
+                }
+            }
 
             // Initial Load
-            loadQuestion(currentQuestionIndex);
-            // Set initial active button on load (optional, defaults to first)
             showSection('about');
 
         }); // End DOMContentLoaded
