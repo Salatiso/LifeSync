@@ -3,855 +3,1191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salatiso Lonwabo Mdeni - LifeSync - Mdeni Family Enterprise</title>
+    <title data-i18n="siteTitle">Tee & Me - Our Story</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector@7.1.0/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+    <script src="xh_translations.js"></script>
+
     <style>
         :root {
-            --bg-dark-purple: #301934; /* Deep, sophisticated purple */
-            --bg-content-purple: rgba(60, 30, 70, 0.95); /* Lighter, semi-transparent purple for content cards */
-            --bg-content-purple-opaque: rgb(60, 30, 70);
-            --text-primary-light: #F5F5F5; /* White Smoke - for main text on dark backgrounds */
-            --text-secondary-lavender: #D8BFD8; /* Thistle - light purple-grey for secondary text */
-            --accent-pink-vibrant: #E75480; /* Dark Pink - for strong CTAs, feminine touch */
-            --accent-purple-medium: #9370DB; /* MediumPurple - for highlights, icons, interactive elements */
-            --accent-teal-bright: #48D1CC; /* MediumTurquoise - for contrast, balance, refreshing feel */
-            --border-color-lavender: rgba(147, 112, 219, 0.4); /* MediumPurple, semi-transparent border */
-            --border-color-strong: rgba(147, 112, 219, 0.7);
-
+            /* LifeSync Inspired Palette */
+            --bg-dark-purple: #301934;
+            --bg-content-purple: rgba(45, 25, 55, 0.95); /* Slightly adjusted for content area */
+            --bg-content-purple-opaque: rgb(45, 25, 55);
+            --bg-card-purple: rgba(60, 30, 70, 0.9); /* For cards within sections */
+            --text-primary-light: #FDE7F3; /* Soft Pinkish White */
+            --text-secondary-lavender: #E9D5FF; /* Lighter Lavender */
+            --accent-pink-vibrant: #DB2777; /* Fuchsia - Tailwind Fuchsia 600 */
+            --accent-purple-medium: #A855F7; /* Tailwind Purple 500 */
+            --accent-teal-bright: #2DD4BF; /* Tailwind Teal 400 */
+            --border-color-lavender: rgba(168, 85, 247, 0.3); /* Purple 500, semi-transparent */
+            --border-color-strong: rgba(168, 85, 247, 0.6);
             --font-main: 'Poppins', sans-serif;
             --font-heading: 'Ubuntu', sans-serif;
         }
 
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-main);
             background-color: var(--bg-dark-purple);
             color: var(--text-primary-light);
-            font-family: var(--font-main);
-            margin: 0;
-            overflow: hidden; /* Prevent main body vertical scroll */
         }
 
-        #video-background {
+        #videoBackground {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -10;
-            filter: brightness(0.25) contrast(1.1); /* Adjusted for darker purple theme */
+            z-index: -1;
+            filter: brightness(0.2) contrast(1.1) blur(5px); /* Darker, more subtle */
         }
 
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 12px 35px;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(30, 10, 40, 0.7); /* Darker purple, more transparent */
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color-lavender);
-        }
-
-        nav a.nav-brand {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-primary-light);
-            font-family: var(--font-heading);
-            text-shadow: 0 0 8px var(--accent-teal-bright);
-        }
-        nav a.nav-brand i {
-            margin-right: 8px;
-            color: var(--accent-teal-bright);
-        }
-
-        nav .nav-links {
-            display: flex;
-            align-items: center;
-        }
-
-        nav .nav-links button, nav .nav-links .auth-button {
-            background: none;
-            border: none;
-            padding: 8px 15px;
-            margin-left: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease, border-bottom-color 0.3s ease;
-            color: var(--text-secondary-lavender);
-            font-family: var(--font-main);
-            border-bottom: 2px solid transparent;
-        }
-
-        nav .nav-links button .fa-solid,
-        nav .nav-links button .fa-brands {
-            margin-right: 8px;
-            width: 20px;
-            text-align: center;
-        }
-
-        nav .nav-links button:hover, nav .nav-links .auth-button:hover {
-            color: var(--text-primary-light);
-            text-shadow: 0 0 10px var(--accent-pink-vibrant);
-            transform: translateY(-2px);
-        }
-         nav .nav-links button.active-nav {
-             color: var(--accent-teal-bright);
-             font-weight: 600;
-             text-shadow: 0 0 8px rgba(72, 209, 204, 0.7);
-             border-bottom: 2px solid var(--accent-teal-bright);
-         }
-         nav .nav-links .auth-button {
-            padding: 6px 12px;
-            border: 1px solid var(--accent-pink-vibrant);
-            color: var(--accent-pink-vibrant);
-            border-radius: 20px; /* Pill shape */
-            font-size: 0.9rem;
-         }
-         nav .nav-links .auth-button:hover {
-            background-color: var(--accent-pink-vibrant);
-            color: var(--bg-dark-purple);
-            text-shadow: none;
-         }
-         nav .nav-links .auth-button.login-btn {
-            border-color: var(--accent-purple-medium);
-            color: var(--accent-purple-medium);
-         }
-         nav .nav-links .auth-button.login-btn:hover {
-            background-color: var(--accent-purple-medium);
-            color: var(--bg-dark-purple);
-         }
-
-
-        .page-container {
+        .app-container {
             display: flex;
             flex-direction: column;
             height: 100vh;
-            padding-top: 65px; /* Adjust based on nav height */
-            box-sizing: border-box;
-        }
-
-        .content-overlay {
-            flex-grow: 1;
-            display: flex;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            width: 100%;
-            height: calc(100% - 110px); /* Nav + Footer height */
-        }
-
-        .content-overlay::-webkit-scrollbar { display: none; }
-        .content-overlay { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .content-section {
             width: 100vw;
-            height: 100%;
-            flex-shrink: 0;
-            padding: 2.5rem 3rem;
-            border-radius: 0.75rem;
-            overflow-y: auto;
-            scroll-snap-align: start;
-            background-color: var(--bg-content-purple);
-            border: 1px solid var(--border-color-lavender);
-            margin: 10px;
-            box-sizing: border-box;
-            opacity: 0;
-            animation: fadeIn 0.8s forwards;
-            color: var(--text-primary-light);
-            max-height: 100%;
-        }
-        .content-section:nth-child(2) { animation-delay: 0.1s; }
-        .content-section:nth-child(3) { animation-delay: 0.2s; }
-        .content-section:nth-child(4) { animation-delay: 0.3s; }
-        .content-section:nth-child(5) { animation-delay: 0.4s; }
-
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        h1, h2, h3 {
-            font-family: var(--font-heading);
-            color: var(--text-primary-light);
-            margin-bottom: 1.5rem;
-        }
-         h1 { font-size: 2.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-         h2 { font-size: 1.8rem; }
-         h3 { font-size: 1.4rem; color: var(--accent-teal-bright); }
-
-        p {
-            line-height: 1.7;
-            color: var(--text-secondary-lavender);
-            margin-bottom: 1rem;
-        }
-
-        /* Timeline Styles */
-        #timeline {
-            background-color: rgba(30, 10, 40, 0.95); /* Darker purple */
-        }
-        .timeline-container {
-            display: flex;
-            overflow-x: auto;
-            padding: 20px 0;
-            border-top: 1px solid var(--border-color-lavender);
+        header#appHeader {
+            background-color: rgba(30, 10, 40, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 0.6rem 1.25rem; /* Adjusted padding */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
             border-bottom: 1px solid var(--border-color-lavender);
         }
-         .timeline-container::-webkit-scrollbar { height: 5px; }
-         .timeline-container::-webkit-scrollbar-thumb { background: var(--accent-purple-medium); border-radius: 5px;}
-         .timeline-container::-webkit-scrollbar-track { background: var(--border-color-lavender); }
-
-        .timeline-event {
-            flex: 0 0 250px;
-            margin: 0 15px;
-            padding: 20px;
-            background-color: var(--bg-content-purple-opaque);
-            border: 1px solid var(--border-color-strong);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-        .timeline-event:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
-        .timeline-icon { font-size: 2rem; margin-bottom: 10px; }
-        .timeline-icon.good { color: var(--accent-teal-bright); }
-        .timeline-icon.bad { color: var(--accent-pink-vibrant); }
-        .timeline-date { font-size: 0.8rem; color: var(--text-secondary-lavender); margin-bottom: 5px; }
-        .timeline-title { font-weight: 600; color: var(--text-primary-light); margin-bottom: 10px; }
-        .timeline-details {
-            display: none;
-            font-size: 0.9rem;
-            color: var(--text-primary-light);
-            margin-top: 15px;
-            text-align: left;
-            border-top: 1px dashed var(--border-color-lavender);
-            padding-top: 10px;
-        }
-        .timeline-event.active .timeline-details { display: block; }
-
-        /* LifeSync Guest Assessment Styles */
-         #lifesync { /* Renamed from lifesync-tool for clarity */
-             background: linear-gradient(135deg, var(--bg-dark-purple), var(--bg-content-purple-opaque));
-             display: flex;
-             justify-content: center;
-             align-items: center;
-         }
-        .assessment-container {
-            background-color: rgba(30, 10, 40, 0.85);
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-            border: 1px solid var(--accent-purple-medium);
-        }
-        .assessment-question { margin-bottom: 25px; }
-        .assessment-options button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            background-color: var(--bg-content-purple-opaque);
-            border: 1px solid var(--border-color-lavender);
-            color: var(--text-primary-light);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-            font-size: 1rem;
-        }
-        .assessment-options button:hover {
-            background-color: var(--accent-teal-bright);
-            border-color: var(--accent-teal-bright);
-            color: var(--bg-dark-purple);
-        }
-        .assessment-feedback {
-            margin-top: 20px;
-            font-style: italic;
-            color: var(--accent-pink-vibrant);
-            min-height: 25px;
-        }
-        .progress-bar {
-            width: 100%;
-            background-color: var(--border-color-lavender);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-        .progress-bar-fill {
-            height: 10px;
-            width: 0%;
-            background-color: var(--accent-teal-bright);
-            transition: width 0.5s ease-in-out;
-        }
-
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px; /* Adjust as needed */
-            margin: 2rem auto;
-            overflow: hidden;
-            border-radius: 8px;
-            background-color: var(--bg-content-purple-opaque);
-            padding: 1rem;
-            border: 1px solid var(--border-color-strong);
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .carousel-slide {
-            min-width: 100%;
-            box-sizing: border-box;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        .carousel-slide img {
-            max-width: 100%;
-            max-height: 300px; /* Adjust as needed */
-            margin-bottom: 1rem;
-            border-radius: 6px;
-        }
-        .carousel-slide h4 {
+        header#appHeader h1 {
+            font-family: var(--font-heading);
             color: var(--accent-teal-bright);
-            margin-bottom: 0.5rem;
+            text-shadow: 0 0 6px var(--accent-teal-bright);
+            font-size: 1.25rem; /* Adjusted size */
         }
-        .carousel-controls {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10px;
-            box-sizing: border-box;
-            pointer-events: none; /* Allow clicks to pass through to buttons */
-        }
-        .carousel-controls button {
-            background-color: rgba(30, 10, 40, 0.7);
-            color: var(--text-primary-light);
-            border: 1px solid var(--accent-purple-medium);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            pointer-events: all; /* Make buttons clickable */
-            font-size: 1.2rem;
-        }
-        .carousel-controls button:hover {
-            background-color: var(--accent-purple-medium);
-        }
-
-
-        /* Footer Styles */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px 35px;
-            background-color: rgba(30, 10, 40, 0.8); /* Darker purple */
-            border-top: 1px solid var(--border-color-lavender);
-            text-align: center;
-            font-size: 0.85rem;
+        header#appHeader .language-switcher button {
+            background-color: transparent;
             color: var(--text-secondary-lavender);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
+            border: 1px solid var(--accent-purple-medium);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            padding: 0.25rem 0.6rem; /* Smaller lang buttons */
+            font-size: 0.7rem;
+            border-radius: 1rem;
         }
-         footer a {
-             color: var(--accent-teal-bright);
-             text-decoration: none;
-             transition: color 0.3s;
-         }
-         footer a:hover {
-             color: var(--text-primary-light);
-         }
+         header#appHeader .language-switcher button:hover,
+         header#appHeader .language-switcher button.active-lang {
+            background-color: var(--accent-pink-vibrant);
+            border-color: var(--accent-pink-vibrant);
+            color: var(--text-primary-light);
+        }
 
-         /* Utility */
-         .btn {
-             padding: 10px 25px;
-             border-radius: 25px; /* More rounded */
-             text-decoration: none;
-             font-weight: 600;
-             transition: all 0.3s ease;
-             cursor: pointer;
-             display: inline-block;
-             margin-top: 1rem;
-             border: 1px solid transparent;
-             text-transform: uppercase;
-             letter-spacing: 0.5px;
-             font-size: 0.9rem;
-         }
-         .btn-primary {
-             background-color: var(--accent-teal-bright);
-             color: var(--bg-dark-purple);
-             border-color: var(--accent-teal-bright);
-         }
-         .btn-primary:hover {
-             background-color: transparent;
-             color: var(--accent-teal-bright);
-             box-shadow: 0 0 10px var(--accent-teal-bright);
-         }
-          .btn-secondary {
-             background-color: var(--accent-pink-vibrant);
-             color: var(--text-primary-light);
-             border-color: var(--accent-pink-vibrant);
-         }
-         .btn-secondary:hover {
-             background-color: transparent;
-             color: var(--accent-pink-vibrant);
-             box-shadow: 0 0 10px var(--accent-pink-vibrant);
-         }
-
-         /* Modal Styles (Basic - for Login/Register placeholders) */
-        .modal {
-            display: none; /* Hidden by default */
+        nav#mainNav {
+            background-color: rgba(40, 15, 50, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 0.4rem 0.5rem; /* Compact nav */
             position: fixed;
-            z-index: 2000;
             left: 0;
-            top: 0;
+            width: 100%;
+            z-index: 999;
+            border-bottom: 1px solid var(--border-color-lavender);
+            /* top will be set by JS */
+        }
+        nav#mainNav .nav-tab-container { /* Added for better scrollbar handling */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        nav#mainNav .nav-tab-container::-webkit-scrollbar { display: none; /* Chrome, Safari, Opera */ }
+
+        nav#mainNav .nav-tab {
+            color: var(--text-secondary-lavender);
+            border-bottom: 2px solid transparent; /* Thinner underline */
+            transition: color 0.25s, border-bottom-color 0.25s;
+            white-space: nowrap;
+            padding: 0.5rem 0.75rem; /* Adjusted padding */
+            font-size: 0.8rem; /* Slightly smaller */
+            font-weight: 500;
+            cursor: pointer;
+        }
+        nav#mainNav .nav-tab:hover {
+            color: var(--text-primary-light);
+            border-bottom-color: var(--accent-pink-vibrant);
+        }
+        nav#mainNav .nav-tab.active-nav {
+            color: var(--accent-teal-bright);
+            border-bottom-color: var(--accent-teal-bright);
+            font-weight: 600;
+        }
+
+        .content-area-wrapper {
+            flex-grow: 1;
+            padding: 0.5rem; /* Reduced padding */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* padding-top will be set by JS */
+        }
+
+        .content-area {
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            max-width: 1920px; /* Allow wider for large screens */
+            background-color: var(--bg-content-purple);
+            border-radius: 0.75rem; /* Slightly smaller radius */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
-        .modal-content {
-            background-color: var(--bg-content-purple-opaque);
-            margin: 15% auto;
-            padding: 30px;
-            border: 1px solid var(--border-color-strong);
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
+
+        .content-section {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .content-section.active { display: flex; }
+
+        .section-header {
+            padding: 0.6rem 1rem; /* Compact header */
             text-align: center;
-            position: relative;
+            border-bottom: 1px solid var(--border-color-lavender);
+            flex-shrink: 0;
         }
-        .close-button {
-            color: var(--text-secondary-lavender);
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close-button:hover,
-        .close-button:focus {
+        .section-header h2 {
+            font-size: 1.3rem; /* Compact title */
+            font-weight: 600;
             color: var(--accent-pink-vibrant);
-            text-decoration: none;
+            margin-bottom: 0;
         }
+
+        .sub-nav-tabs {
+            display: flex;
+            justify-content: center;
+            padding: 0.4rem 0;
+            background-color: rgba(30, 10, 40, 0.6);
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--border-color-lavender);
+        }
+        .sub-nav-tabs .sub-nav-tab {
+            padding: 0.3rem 0.75rem; /* Compact sub-tabs */
+            margin: 0 0.2rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text-secondary-lavender);
+            font-size: 0.75rem; /* Smaller sub-tab text */
+            font-weight: 500;
+        }
+        .sub-nav-tabs .sub-nav-tab:hover { color: var(--text-primary-light); }
+        .sub-nav-tabs .sub-nav-tab.active-sub-nav { color: var(--accent-teal-bright); border-bottom-color: var(--accent-teal-bright); }
+        
+        .section-content-wrapper {
+            flex-grow: 1;
+            overflow-y: auto; /* Scroll content within this wrapper */
+            padding: 0.75rem; /* Padding for content */
+        }
+        .sub-content { display: none; }
+        .sub-content.active-sub-content { display: block; animation: subContentFadeIn 0.3s ease-out; }
+        @keyframes subContentFadeIn { from { opacity: 0.3; } to { opacity: 1; } }
+
+        /* Overview Specific: Dashboard & Timeline Container */
+        #overview .section-content-wrapper { display: flex; flex-direction: column; }
+        .overview-main-content { flex-grow: 1; display: grid; grid-template-columns: repeat(12, 1fr); gap: 0.75rem; overflow-y: auto; padding-bottom: 0.5rem;}
+        .overview-left-column { grid-column: span 12 / span 12; lg:grid-column: span 5 / span 5; display: flex; flex-direction: column; gap: 0.75rem; }
+        .overview-right-column { grid-column: span 12 / span 12; lg:grid-column: span 7 / span 7; display: flex; flex-direction: column; gap: 0.75rem; }
+        
+        #overviewTimelineContainer {
+            height: 150px; /* More compact timeline */
+            background-color: rgba(30,10,40,0.6); /* Darker, distinct background */
+            border-top: 1px solid var(--border-color-strong);
+            padding: 0.75rem;
+            overflow-x: auto;
+            display: flex;
+            flex-shrink: 0; /* Important: prevent shrinking */
+            margin-top: 0.75rem; /* Space above timeline */
+        }
+        .timeline-event-card {
+            flex: 0 0 200px; /* Slightly narrower cards */
+            margin-right: 0.75rem;
+            padding: 0.6rem;
+            background-color: var(--bg-card-purple);
+            border: 1px solid var(--border-color-lavender);
+            border-radius: 6px;
+            color: var(--text-secondary-lavender);
+            font-size: 0.75rem; /* Smaller text */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .timeline-event-card h4 { color: var(--accent-teal-bright); font-size: 0.8rem; margin-bottom: 0.2rem;}
+        .timeline-event-card .date { font-size: 0.65rem; color: var(--accent-purple-medium); margin-bottom: 0.2rem;}
+        .timeline-event-card p { font-size: 0.7rem; line-height: 1.3; }
+
+
+        /* Dashboard Styles */
+        .dashboard-card {
+            background-color: var(--bg-card-purple);
+            padding: 0.75rem 1rem; /* Adjusted padding */
+            border-radius: 8px;
+            border: 1px solid var(--border-color-lavender); /* Softer border */
+            box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+        }
+        .dashboard-card h3 { color: var(--accent-teal-bright); margin-bottom: 0.4rem; font-size: 0.9rem; font-weight: 600; }
+        .dashboard-metric-display { font-size: 1.5rem; font-weight: 700; color: var(--text-primary-light); }
+        .chart-placeholder { min-height: 180px; /* Ensure chart has space */ display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.15); border-radius: 6px; }
+        #overviewImageCarouselContainer { position: relative; width: 100%; height: 200px; lg:height: 100%; overflow: hidden; border-radius: 0.5rem; background-color: rgba(0,0,0,0.2); }
+        #overviewImageCarousel .carousel-item img { width:100%; height: 100%; object-fit: cover; }
+
+        /* Modal Styles */
+        .modal-content { background-color: var(--bg-content-purple); border: 1px solid var(--border-color-strong); color: var(--text-primary-light); }
+        .modal-content h3 { color: var(--accent-pink-vibrant); }
+        .close-modal { color: var(--text-secondary-lavender); }
+        .close-modal:hover { color: var(--accent-pink-vibrant); }
+
+        /* Table Styles */
+        .data-table th { background-color: rgba(30,10,40,0.7); color: var(--accent-teal-bright); }
+        .data-table td { color: var(--text-secondary-lavender); }
+        .data-table tbody tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
+        .data-table tbody tr:hover { background-color: rgba(168, 85, 247, 0.1); } /* Purple hover */
+        .contribution-table th, .contribution-table td { padding: 0.3rem 0.5rem; font-size: 0.75rem; }
+        .contribution-table th { background-color: rgba(var(--accent-pink-vibrant-rgb), 0.1); color: var(--accent-pink-vibrant); } /* Pinkish header */
+
+        /* Form elements */
+        .input-field, .textarea-field, .select-field {
+            background-color: rgba(30,10,40,0.6); border: 1px solid var(--border-color-lavender); color: var(--text-primary-light);
+            font-size: 0.85rem; padding: 0.5rem 0.75rem;
+        }
+        .input-field::placeholder, .textarea-field::placeholder { color: var(--text-secondary-lavender); opacity: 0.6; }
+        .input-field:focus, .textarea-field:focus, .select-field:focus { border-color: var(--accent-teal-bright); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2); }
+        
+        .action-button {
+             background-color: var(--accent-pink-vibrant); color: var(--text-primary-light); border-color: var(--accent-pink-vibrant);
+             font-size: 0.75rem; padding: 0.5rem 1rem;
+        }
+        .action-button:hover { background-color: transparent; color: var(--accent-pink-vibrant); box-shadow: 0 0 8px var(--accent-pink-vibrant); }
+        .action-button.secondary { background-color: var(--accent-purple-medium); border-color: var(--accent-purple-medium); }
+        .action-button.secondary:hover { color: var(--accent-purple-medium); box-shadow: 0 0 8px var(--accent-purple-medium); }
+
+        /* Ensure Chart.js charts are styled for dark theme if needed */
+        canvas { display: block; max-width: 100%; }
+        .chart-container { position: relative; width:100%; height:100%; min-height: 150px; padding: 0.5rem; background-color: rgba(0,0,0,0.1); border-radius: 6px;}
+
 
     </style>
 </head>
-<body class="font-sans">
-
-    <video id="video-background" autoplay muted loop playsinline>
-        <source src="https://www.coverr.co/s3/mp4/Abstract_Plexus.mp4" type="video/mp4">
+<body>
+    <video id="videoBackground" autoplay loop muted playsinline>
+        <source src="assets/videos/background.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <nav>
-        <a href="#" class="nav-brand"><i class="fa-solid fa-sync-alt"></i> LifeSync</a>
-        <div class="nav-links">
-            <button class="active-nav" data-section="about"><i class="fa-solid fa-user-friends"></i>About</button>
-            <button data-section="lifesync"><i class="fa-solid fa-heart-pulse"></i>Guest Assessment</button>
-            <button data-section="vision"><i class="fa-solid fa-people-roof"></i>Our Vision</button>
-            <button data-section="timeline"><i class="fa-solid fa-calendar-alt"></i>Roadmap</button>
-            <button data-section="contact"><i class="fa-solid fa-envelope"></i>Contact</button>
-            <button class="auth-button login-btn" id="loginBtn"><i class="fa-solid fa-sign-in-alt"></i> Login</button>
-            <button class="auth-button" id="registerBtn"><i class="fa-solid fa-user-plus"></i> Register</button>
-        </div>
-    </nav>
-
-    <div class="page-container">
-        <div class="content-overlay" id="content-overlay">
-
-            <section id="about" class="content-section">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <h1 class="text-4xl font-bold mb-4">Welcome to <span style="color:var(--accent-teal-bright)">LifeSync</span></h1>
-                        <h3 class="text-xl font-semibold mb-6" style="color:var(--accent-pink-vibrant)">Building Stronger Connections Through Transparency</h3>
-                        <p class="text-lg">In a world full of connections, LifeSync offers clarity. We believe modern relationships thrive on understanding, trust, and open communication. Our platform moves beyond superficial matches, providing tools to explore the deeper aspects of compatibility.</p>
-                        <p>Whether you're starting a new journey or strengthening a long-term bond, LifeSync empowers you to navigate finances, values, lifestyle choices, and future dreams together, with confidence.</p>
-                         <p>Join us in fostering relationships built on a foundation of genuine understanding and mutual respect.</p>
-                        <a href="#" class="btn btn-primary" onclick="showSection('lifesync')">Try the Guest Assessment <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                     <div class="text-center">
-                        <i class="fa-solid fa-hand-holding-heart text-9xl" style="color: var(--accent-purple-medium); opacity: 0.8; text-shadow: 0 0 20px var(--accent-pink-vibrant);"></i>
-                        <p class="mt-4 italic">"The essential 'app after the dating app.'"</p>
-                    </div>
+    <div class="app-container">
+        <header id="appHeader">
+            <div class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+                <h1 class="text-lg sm:text-xl font-bold" data-i18n="siteTitle">Tee & Me - Our Story</h1>
+                <div class="language-switcher">
+                    <button id="langEN" class="px-2 py-1 text-xs rounded-md" data-i18n="langEN">EN</button>
+                    <button id="langXH" class="px-2 py-1 text-xs rounded-md ml-1" data-i18n="langXH">XH</button>
                 </div>
-            </section>
+            </div>
+        </header>
 
-            <section id="lifesync" class="content-section">
-                 <div class="assessment-container">
-                     <h2><i class="fa-solid fa-clipboard-question" style="color: var(--accent-purple-medium);"></i> Quick Compatibility Check</h2>
-                     <p>Answer a few questions to get a glimpse of your alignment. This provides instant feedback!</p>
-                     <div id="assessment-area">
-                         <div class="assessment-question">
-                             <h3 id="question-text">How important is spending quality time together?</h3>
-                         </div>
-                         <div class="assessment-options" id="options-area">
-                             <button data-value="1">Not very important</button>
-                             <button data-value="2">Somewhat important</button>
-                             <button data-value="3">Very important</button>
-                             <button data-value="4">Absolutely essential</button>
-                         </div>
-                     </div>
-                      <div id="assessment-result" style="display: none;">
-                          <h2><i class="fa-solid fa-check-circle" style="color: var(--accent-teal-bright);"></i> Assessment Complete!</h2>
-                          <p>Based on your answers, here's a quick look:</p>
-                          <p id="final-feedback" class="text-xl font-bold" style="color: var(--accent-teal-bright);">You value open communication and shared goals!</p>
-                          <p>This is just a preview. Register for free to unlock in-depth assessments covering finances, values, lifestyle, cultural practices, and more!</p>
-                          <a href="#" class="btn btn-secondary" onclick="document.getElementById('registerModal').style.display='block'">Register Now</a>
-                          <button class="btn btn-primary" onclick="resetAssessment()">Try Again</button>
-                      </div>
-                     <div class="assessment-feedback" id="feedback-area">
-                         Your cumulative feedback will appear here...
-                     </div>
-                     <p class="text-sm mt-4">Question <span id="question-counter">1</span> of <span id="total-questions">5</span></p>
-                     <div class="progress-bar">
-                        <div class="progress-bar-fill" id="progress-bar"></div>
-                     </div>
-                 </div>
-            </section>
+        <nav id="mainNav" class="py-1.5"> <div class="nav-tab-container container mx-auto px-1 sm:px-2 flex justify-center items-center">
+                <button class="nav-tab" data-section="overview" data-i18n="navOverview">Overview</button>
+                <button class="nav-tab" data-section="analysis" data-i18n="navAnalysis">Analysis Hub</button>
+                <button class="nav-tab" data-section="media" data-i18n="navMedia">Media & Travel</button>
+                <button class="nav-tab" data-section="connect" data-i18n="navConnect">Connect & Resolve</button>
+                <button class="nav-tab" data-section="lifesyncFun" data-i18n="navLifeSync">LifeSync & Fun</button>
+            </div>
+        </nav>
+        
+        <div class="content-area-wrapper" id="contentAreaWrapper">
+            <main class="content-area">
+                <section id="overview" class="content-section">
+                    <div class="section-header"> <h2 data-i18n="overview.title">Our Journey Snapshot</h2> </div>
+                    <div class="section-content-wrapper flex flex-col"> {/* Make this flex-col */}
+                        <div class="overview-main-content flex-grow"> {/* This grid will take available space */}
+                            <div class="overview-left-column space-y-3">
+                                <div class="dashboard-card flex-shrink-0">
+                                    <h3 data-i18n="overview.dashboardTitle" class="text-center"></h3>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.affectionLevel" class="!text-xs"></h3> <p id="affection-metric" class="dashboard-metric-display !text-lg">--</p> </div>
+                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.supportScore" class="!text-xs"></h3> <p id="support-metric" class="dashboard-metric-display !text-lg">--</p> </div>
+                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.foodContribution" class="!text-xs"></h3> <p id="food-metric" class="dashboard-metric-display !text-lg">--</p> </div>
+                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.safetyFeeling" class="!text-xs"></h3> <p id="safety-metric" class="dashboard-metric-display !text-lg">--</p> </div>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card text-center flex-shrink-0">
+                                    <h3 data-i18n="overview.ourSong"></h3>
+                                    <p id="specialSongTitle" class="text-xs mb-1">"Thank You Baby! (For Makin' Someday Come So Soon)"</p>
+                                    <a href="#" id="ourSongLink" target="_blank" class="action-button !text-xs !py-1 !px-2.5"> <i class="fas fa-headphones-alt mr-1"></i> <span data-i18n="overview.listenToSong">Listen</span> </a>
+                                </div>
+                                <div class="dashboard-card flex-grow">
+                                    <h3 data-i18n="overview.dashboardTitle">Relationship Trends</h3>
+                                     <select id="dashboardMetricSelect" class="select-field !w-full !py-1 !text-xs mb-2">
+                                        </select>
+                                    <div class="chart-container relative h-40 md:h-full"> <canvas id="dashboardChart"></canvas> </div>
+                                </div>
+                            </div>
+                            <div class="overview-right-column">
+                                <div id="overviewImageCarouselContainer" class="relative h-full w-full rounded-lg shadow-lg overflow-hidden">
+                                    <div id="overviewImageCarousel" class="h-full"></div> {/* JS will populate this */}
+                                    <button id="overview-img-prev" class="carousel-nav-btn prev absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/60 p-2 rounded-full z-10"><i class="fas fa-chevron-left text-white"></i></button>
+                                    <button id="overview-img-next" class="carousel-nav-btn next absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/60 p-2 rounded-full z-10"><i class="fas fa-chevron-right text-white"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="overviewTimelineContainer" class="flex-shrink-0">
+                            <div class="timeline-event-card"><h4>Event 1</h4><p class="date">Date</p><p>Details...</p></div>
+                             <div class="timeline-event-card"><h4>Event 2</h4><p class="date">Date</p><p>Details...</p></div>
+                             <div class="timeline-event-card"><h4>Event 3</h4><p class="date">Date</p><p>Details...</p></div>
+                        </div>
+                    </div>
+                </section>
 
-            <section id="vision" class="content-section">
-                <h2 class="text-3xl font-bold mb-4 text-center"><i class="fa-solid fa-binoculars" style="color:var(--accent-purple-medium)"></i> Our Vision for LifeSync</h2>
-                <p class="text-center mb-8">LifeSync aims to be more than just an assessment tool; it's a companion for your relationship journey. We envision a platform that:</p>
+                <section id="analysis" class="content-section">
+                    <div class="section-header"> <h2 data-i18n="navAnalysis">Analysis Hub</h2> </div>
+                    <div class="sub-nav-tabs">
+                        <button class="sub-nav-tab" data-subtarget="analysis-tracking" data-i18n="tabTracking">Tracking</button>
+                        <button class="sub-nav-tab" data-subtarget="analysis-contributions" data-i18n="tabContributions">Contributions</button>
+                        <button class="sub-nav-tab" data-subtarget="analysis-reinforcement" data-i18n="tabReinforcement">Reinforcement</button>
+                    </div>
+                    <div class="section-content-wrapper">
+                        <div id="analysis-tracking" class="sub-content">
+                            <div class="mb-3 text-center">
+                                <label for="trackingMetricSelect" class="mr-2 font-medium text-sm" data-i18n="tracking.selectAspect">Track Aspect:</label>
+                                <select id="trackingMetricSelect" class="select-field !w-auto !inline-block !py-1.5 !text-sm"></select>
+                            </div>
+                            <div class="chart-placeholder h-64 md:h-96"><canvas id="trackingChart"></canvas></div>
+                        </div>
+                        <div id="analysis-contributions" class="sub-content">
+                            <div class="mb-3 text-center">
+                                <label for="contributionFilterWeek" class="mr-2 font-medium text-sm" data-i18n="contributions.filterWeek">Filter by Week:</label>
+                                <select id="contributionFilterWeek" class="select-field !w-auto !inline-block !py-1.5 !text-sm"></select>
+                            </div>
+                            <div class="table-wrapper"><table class="data-table"><thead><tr><th data-i18n="parameter">Parameter</th><th data-i18n="salatiso">Salatiso</th><th data-i18n="tee">Tee</th><th data-i18n="notes">Details</th></tr></thead><tbody id="contributionsTableBody"></tbody></table></div>
+                        </div>
+                        <div id="analysis-reinforcement" class="sub-content">
+                            <div class="table-wrapper"><table class="data-table"><thead><tr><th data-i18n="wordAction">Word/Action</th><th data-i18n="purpose">Purpose</th><th data-i18n="salatiso">Salatiso (Wks)</th><th data-i18n="tee">Tee (Wks)</th><th data-i18n="joint">Joint (Wks)</th></tr></thead><tbody id="reinforcementTableBody"></tbody></table></div>
+                        </div>
+                    </div>
+                </section>
 
-                <div class="carousel-container">
-                    <div class="carousel-track" id="visionCarouselTrack">
-                        <div class="carousel-slide">
-                            <i class="fa-solid fa-handshake-angle text-5xl mb-4" style="color: var(--accent-teal-bright);"></i>
-                            <h4>Empowers Couples</h4>
-                            <p>Provides a structured, safe space for discussing sensitive topics like finances (including cultural aspects like lobola), values, and past experiences.</p>
-                        </div>
-                        <div class="carousel-slide">
-                            <i class="fa-solid fa-lock text-5xl mb-4" style="color: var(--accent-pink-vibrant);"></i>
-                            <h4>Prioritizes Privacy</h4>
-                            <p>Implements robust security and granular, consent-based sharing, ensuring you control your data.</p>
-                        </div>
-                        <div class="carousel-slide">
-                             <i class="fa-solid fa-chart-line text-5xl mb-4" style="color: var(--accent-teal-bright);"></i>
-                            <h4>Tracks Growth</h4>
-                            <p>Allows you to see how your compatibility evolves over time, adapting to different relationship stages.</p>
-                        </div>
-                        <div class="carousel-slide">
-                            <i class="fa-solid fa-globe text-5xl mb-4" style="color: var(--accent-pink-vibrant);"></i>
-                            <h4>Is Culturally Aware</h4>
-                            <p>Includes assessments and insights relevant to diverse backgrounds, with a special focus on contexts like South Africa.</p>
-                        </div>
-                        <div class="carousel-slide">
-                            <i class="fa-solid fa-book-open text-5xl mb-4" style="color: var(--accent-teal-bright);"></i>
-                            <h4>Offers Resources</h4>
-                            <p>Provides access to expert advice and content tailored to your unique relationship dynamics.</p>
-                        </div>
-                        <div class="carousel-slide">
-                            <i class="fa-solid fa-infinity text-5xl mb-4" style="color: var(--accent-pink-vibrant);"></i>
-                            <h4>Supports Long-Term</h4>
-                            <p>Aims to be the "app after the dating app," supporting you through commitment and beyond.</p>
-                        </div>
+                <section id="media" class="content-section">
+                    <div class="section-header"> <h2 data-i18n="navMedia">Media & Travel</h2> </div>
+                    <div class="sub-nav-tabs">
+                        <button class="sub-nav-tab" data-subtarget="media-songs" data-i18n="tabSongs">Shared Songs</button>
+                        <button class="sub-nav-tab" data-subtarget="media-photos" data-i18n="tabPhotos">Photo Moments</button>
+                        <button class="sub-nav-tab" data-subtarget="travel-visited" data-i18n="tabVisited">Visited Places</button>
+                        <button class="sub-nav-tab" data-subtarget="travel-desired" data-i18n="tabDream">Dream Trips</button>
                     </div>
-                    <div class="carousel-controls">
-                        <button id="visionPrevBtn"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button id="visionNextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="section-content-wrapper">
+                        <div id="media-songs" class="sub-content"><div id="songListContainer" class="space-y-2"></div></div>
+                        <div id="media-photos" class="sub-content"><div id="photoGalleryContainer" class="media-gallery-grid"></div></div>
+                        <div id="travel-visited" class="sub-content"><div id="visitedPlacesContainer" class="space-y-3"></div></div>
+                        <div id="travel-desired" class="sub-content"><div id="desiredPlacesContainer" class="space-y-3"></div></div>
                     </div>
-                </div>
-                 <p class="text-center mt-8">We believe that by fostering transparency and understanding, we can help couples build stronger, more resilient, and fulfilling partnerships.</p>
-            </section>
+                </section>
 
-            <section id="timeline" class="content-section">
-                 <h2 class="text-3xl font-bold mb-6 text-center"><i class="fa-solid fa-calendar-alt" style="color:var(--accent-purple-medium)"></i> Our Journey & Key Milestones</h2>
-                 <div class="timeline-container" id="timeline-container">
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-lightbulb"></i></div>
-                        <div class="timeline-date">Q1 2024</div>
-                        <div class="timeline-title">Concept Born</div>
-                        <div class="timeline-details">The initial idea for LifeSync sparked - addressing the need for deeper compatibility tools.</div>
+                <section id="connect" class="content-section">
+                    <div class="section-header"> <h2 data-i18n="navConnect">Connect & Resolve</h2> </div>
+                     <div class="sub-nav-tabs">
+                        <button class="sub-nav-tab" data-subtarget="connect-feedback" data-i18n="tabFeedback">Feedback</button>
+                        <button class="sub-nav-tab" data-subtarget="connect-actions" data-i18n="tabActions">Actions</button>
+                        <button class="sub-nav-tab" data-subtarget="connect-logs" data-i18n="tabLogs">Logs</button>
                     </div>
-                     <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-file-alt"></i></div>
-                        <div class="timeline-date">Q2 2024</div>
-                        <div class="timeline-title">Vision & Docs</div>
-                        <div class="timeline-details">Detailed planning, pitch documents, and technical specifications drafted.</div>
+                    <div class="section-content-wrapper grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div id="connect-feedback" class="sub-content space-y-4">
+                            <div class="dashboard-card">
+                                <h3 data-i18n="feedback.giveFeedback"></h3>
+                                <form id="feedbackForm" class="space-y-3">
+                                    <div><label for="feedbackSender" class="block text-xs font-medium" data-i18n="feedback.sender"></label><select id="feedbackSender" class="select-field"></select></div>
+                                    <div><label for="feedbackRecipient" class="block text-xs font-medium" data-i18n="feedback.recipient"></label><select id="feedbackRecipient" class="select-field"></select></div>
+                                    <div><label for="feedbackMessage" class="block text-xs font-medium" data-i18n="feedback.message"></label><textarea id="feedbackMessage" rows="3" class="textarea-field" data-i18n-placeholder="feedbackPlaceholder"></textarea></div>
+                                    <button type="submit" id="sendFeedbackBtn" class="action-button w-full" data-i18n="sendFeedback">Send</button>
+                                </form>
+                            </div>
+                             <div class="dashboard-card flex-grow flex flex-col">
+                                <h3 data-i18n="feedback.receivedFeedback" class="flex-shrink-0"></h3>
+                                <div id="feedbackLogContainer" class="flex-grow overflow-y-auto space-y-2 text-xs"></div>
+                            </div>
+                        </div>
+                        <div id="connect-actions" class="sub-content space-y-3">
+                            <div class="relationship-action-form dashboard-card"> <h4 data-i18n="relationshipActions.apology.title"></h4> <select id="apologyFrom" class="select-field !text-xs !py-1 mb-1"></select> <textarea id="apologyMessage" class="textarea-field !min-h-[40px] !text-xs" data-i18n-placeholder="relationshipActions.apology.messagePlaceholder"></textarea> <button id="sendApologyBtn" class="action-button mt-0.5 w-full !text-xs !py-1" data-i18n="relationshipActions.apology.sendButton"></button> </div>
+                            </div>
+                        <div id="connect-logs" class="sub-content dashboard-card md:col-span-2 flex flex-col">
+                             <h3 data-i18n="relationshipActions.logTitleShort" class="flex-shrink-0"></h3>
+                             <div id="relationshipActionLogContainer" class="flex-grow overflow-y-auto space-y-2 text-xs"></div>
+                        </div>
                     </div>
-                     <div class="timeline-event">
-                        <div class="timeline-icon bad"><i class="fa-solid fa-code-branch"></i></div>
-                        <div class="timeline-date">Q3 2024</div>
-                        <div class="timeline-title">Tech Pivot</div>
-                        <div class="timeline-details">Decision made to build the initial MVP with HTML/CSS/JS for rapid deployment.</div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-users"></i></div>
-                        <div class="timeline-date">Q4 2024</div>
-                        <div class="timeline-title">Guest MVP</div>
-                        <div class="timeline-details">Focus on building the core Guest Assessment and report functionality.</div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-rocket"></i></div>
-                        <div class="timeline-date">Q1 2025</div>
-                        <div class="timeline-title">MVP Launch</div>
-                        <div class="timeline-details">Planned launch of the HTML-based MVP on salatiso.com.</div>
-                    </div>
-                     <div class="timeline-event">
-                        <div class="timeline-icon bad"><i class="fa-solid fa-bug"></i></div>
-                        <div class="timeline-date">Ongoing</div>
-                        <div class="timeline-title">Challenges Met</div>
-                        <div class="timeline-details">Navigating hosting limitations and ensuring robust security are key ongoing challenges.</div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-icon good"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
-                        <div class="timeline-date">Future</div>
-                        <div class="timeline-title">Full Platform</div>
-                        <div class="timeline-details">Phased development towards the full vision, including registered users, mobile apps, and advanced features.</div>
-                    </div>
-                 </div>
-                 <p class="text-center mt-4 text-sm text-gray-400">Click on an event to see more details.</p>
-            </section>
+                </section>
 
-            <section id="contact" class="content-section">
-                 <h2 class="text-3xl font-bold mb-6 text-center"><i class="fa-solid fa-paper-plane" style="color:var(--accent-purple-medium)"></i> Get in Touch</h2>
-                 <p class="text-center mb-10">Have questions, feedback, or want to explore partnership opportunities? We'd love to hear from you!</p>
-                 <div class="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg border border-gray-700" style="background-color: var(--bg-content-purple-opaque); border-color: var(--border-color-strong);">
-                    <form action="#" method="POST">
-                        <div class="mb-4">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Your Name</label>
-                            <input type="text" id="name" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="John Doe" required style="background-color: var(--bg-dark-purple); border-color: var(--border-color-lavender); color: var(--text-primary-light);">
+                <section id="lifesyncFun" class="content-section">
+                    <div class="section-header"> <h2 data-i18n="navLifeSync">LifeSync & Fun</h2> </div>
+                    <div class="sub-nav-tabs">
+                        <button class="sub-nav-tab" data-subtarget="fun-compatibility" data-i18n="tabCompatibility">Compatibility</button>
+                        <button class="sub-nav-tab" data-subtarget="fun-quizzes" data-i18n="tabQuizzes">Quizzes</button>
+                        <button class="sub-nav-tab" data-subtarget="lifesync-reports" data-i18n="tabReports">LifeSync Reports</button>
+                    </div>
+                    <div class="section-content-wrapper">
+                        <div id="fun-compatibility" class="sub-content space-y-4">
+                            <div class="dashboard-card">
+                                <h3 data-i18n="astrologyTitle"></h3>
+                                <div class="grid grid-cols-2 gap-2 mb-2">
+                                    <div><label for="salatisoBirthday" class="block text-xs">Salatiso's Birthday:</label><input id="salatisoBirthday" type="date" class="input-field !text-xs"></div>
+                                    <div><label for="teeBirthday" class="block text-xs">Tee's Birthday:</label><input id="teeBirthday" type="date" class="input-field !text-xs"></div>
+                                </div>
+                                <button id="checkCompatibility" class="action-button secondary !text-xs !py-1" data-i18n="checkCompatibility">Check</button>
+                                <p id="compatibilityResult" class="text-sm mt-2 min-h-[20px]"></p>
+                            </div>
+                            <div class="dashboard-card text-center">
+                                <h3 data-i18n="valuesAlignment"></h3>
+                                <button class="action-button !text-xs !py-1 compatibility-test-btn" data-test="values" data-i18n="startTest">Start Test</button>
+                                <p class="text-xs mt-1" data-i18n="comingSoon"></p>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Your Email</label>
-                            <input type="email" id="email" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="john.doe@example.com" required style="background-color: var(--bg-dark-purple); border-color: var(--border-color-lavender); color: var(--text-primary-light);">
+                        <div id="fun-quizzes" class="sub-content text-center"><p data-i18n="comingSoon"></p></div>
+                        <div id="lifesync-reports" class="sub-content text-center">
+                            <select id="reportPeriod" class="select-field !w-auto !inline-block !py-1.5 !text-sm mr-2"></select>
+                            <select id="reportMetrics" class="select-field !w-auto !inline-block !py-1.5 !text-sm mr-2" multiple></select>
+                            <button id="generateReport" class="action-button !text-sm" data-i18n="generateReport">Generate</button>
+                            <div id="reportPreview" class="mt-4 text-left"></div>
                         </div>
-                         <div class="mb-6">
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Your Message</label>
-                            <textarea id="message" rows="4" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="Let us know what's on your mind..." style="background-color: var(--bg-dark-purple); border-color: var(--border-color-lavender); color: var(--text-primary-light);"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-full">Send Message</button>
-                    </form>
-                 </div>
-            </section>
-
+                    </div>
+                </section>
+            </main>
         </div>
 
-        <footer>
-            &copy; 2025 Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | Built with <i class="fa-solid fa-heart" style="color: var(--accent-pink-vibrant)"></i> for LifeSync.
+        <footer class="py-3 text-center text-xs fixed bottom-0 left-0 w-full" style="background-color: rgba(30, 10, 40, 0.8); border-top: 1px solid var(--border-color-lavender); color: var(--text-secondary-lavender); backdrop-filter: blur(5px);">
+            © <span id="currentYear"></span> Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#" class="hover:text-primary-light" style="color: var(--accent-teal-bright);">Privacy Policy</a> | <a href="#" class="hover:text-primary-light" style="color: var(--accent-teal-bright);">Terms of Service</a>
         </footer>
     </div>
 
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
-            <h2><i class="fa-solid fa-sign-in-alt" style="color:var(--accent-purple-medium)"></i> Login</h2>
-            <p>Login functionality coming soon!</p>
-            <p>Registered users will access their profiles, detailed assessments, and couple dashboards here.</p>
-        </div>
-    </div>
+    <div id="detailsModal" class="modal"><div class="modal-content"><span class="close-modal" id="closeDetailsModal">×</span><h3 id="modalTitle" class="text-xl font-semibold mb-3" style="color:var(--accent-pink-vibrant);"></h3><div id="modalBody" class="text-sm max-h-[70vh] overflow-y-auto"></div></div></div>
+    <div id="alertModal" class="modal"><div class="modal-content !max-w-md"><span class="close-modal" id="closeAlertModal">×</span><h3 id="alertModalTitle" class="text-lg font-semibold mb-2" style="color:var(--accent-pink-vibrant);"></h3><p id="alertModalMessage" class="mb-4 text-sm"></p><button id="alertModalOk" class="action-button">OK</button></div></div>
+    <div id="playlistModal" class="modal"><div class="modal-content"><span class="close-modal" id="closePlaylistModalBtn">×</span><h3 data-i18n="playlist.title" class="text-xl font-semibold mb-3" style="color:var(--accent-pink-vibrant);"></h3><iframe id="playlistFrame" width="100%" height="315" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe><p class="mt-2 text-xs" data-i18n="playlist.note"></p></div></div>
 
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="document.getElementById('registerModal').style.display='none'">&times;</span>
-            <h2><i class="fa-solid fa-user-plus" style="color:var(--accent-pink-vibrant)"></i> Register</h2>
-            <p>Registration functionality coming soon!</p>
-            <p>Create your LifeSync account to unlock the full potential of compatibility tracking and relationship insights.</p>
-        </div>
-    </div>
-
+    <button id="playlistButton" title="Our Playlist" class="text-xl"> <i class="fas fa-music"></i> </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navButtons = document.querySelectorAll('.nav-links button[data-section]');
-            const contentOverlay = document.getElementById('content-overlay');
-            const sections = document.querySelectorAll('.content-section');
-            const timelineEvents = document.querySelectorAll('.timeline-event');
+        // --- Global State & Config ---
+        console.log("Tee & Me - Relationship Tracker v1.1 (LifeSync Design)");
+        const APP_NAME = "TeeAndMe";
+        let currentMainSection = 'overview';
+        let currentSubTargets = {
+            overview: null, 
+            analysis: 'analysis-tracking',
+            media: 'media-songs',
+            connect: 'connect-feedback',
+            lifesyncFun: 'fun-compatibility'
+        };
+        let dashboardMainChart, analysisTrackingChart; 
+        let overviewImageCarouselInterval;
+        let overviewImageCarouselCurrentIndex = 0;
+        let modalCarouselItems = [];
+        let currentModalCarouselIndex = 0;
 
-            // Modals
-            const loginModal = document.getElementById('loginModal');
-            const registerModal = document.getElementById('registerModal');
-            const loginBtn = document.getElementById('loginBtn');
-            const registerBtn = document.getElementById('registerBtn');
-            const closeButtons = document.querySelectorAll('.close-button');
-
-            // --- Navigation ---
-            function showSection(sectionId) {
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    contentOverlay.scrollTo({
-                        left: targetSection.offsetLeft - 10, // Account for margin
-                        behavior: 'smooth'
-                    });
-                    navButtons.forEach(btn => {
-                        btn.classList.remove('active-nav');
-                        if (btn.dataset.section === sectionId) {
-                            btn.classList.add('active-nav');
-                        }
-                    });
+        // --- Sample Data (To be replaced with actual data loading mechanism) ---
+        const relationshipData = { 
+            playlistUrl: "https://www.youtube.com/embed/playlist?list=YOUR_PLAYLIST_ID_HERE", 
+            ourSpecialSongUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", 
+            photoFileNames: [ 
+                "https://placehold.co/600x400/E8117F/white?text=Memory+1",
+                "https://placehold.co/600x400/7c3aed/white?text=Memory+2",
+                "https://placehold.co/600x400/16a34a/white?text=Memory+3",
+                "https://placehold.co/600x400/f59e0b/white?text=Memory+4"
+            ],
+            weeks: [
+                {
+                    weekNumber: 1, startDate: "2024-05-20",
+                    contributions: {
+                        affection: { salatiso: 7, tee: 8, notesKey: "timeline.week1.affectionNotes"},
+                        food: {salatisoActions:["Groceries (R300)"], teeActions:["Cooked Mon, Wed"], score:7, notesKey:"timeline.week1.foodNotes"},
+                        safety: {salatisoActions:["Locked up"], teeActions:["Checked stove"], score:9, notesKey:"timeline.week1.safetyNotes"},
+                        finances:{salatiso:300, tee:50, category:"Household", notesKey:"timeline.week1.financeNotes"},
+                        support: { salatiso: 6, tee: 7, notesKey: "timeline.week1.supportNotes" },
+                        communication: { salatiso: 8, tee: 8, notesKey: "timeline.week1.commNotes" }
+                    },
+                    summaryKey: "timeline.week1.summary",
+                    events: [
+                        {type:"music", songTitleKey:"overview.songName_shaggy", artist:"Shaggy", songUrl:"https://www.youtube.com/watch?v=dQw4w9WgXcQ", sharedBy:"Salatiso", textKey: "timeline.sharedThankYouBaby"},
+                        {type:"event", textKey:"timeline.week1.event1"}
+                    ]
+                },
+                 { 
+                    weekNumber: 2, startDate: "2024-05-27", 
+                    contributions: { 
+                        affection: { salatiso: 8, tee: 7, notesKey: "timeline.week2.affectionNotes"}, 
+                        support:{salatiso:9, tee:8, notesKey:"timeline.week2.supportNotes"},
+                        food: {salatisoActions:["Weekend Braai Prep"], teeActions:["Made Desserts"], score:8, notesKey:"timeline.week2.foodNotes"}, 
+                        safety: {salatisoActions:["Checked alarms"], teeActions:["Ensured windows closed"], score:8, notesKey:"timeline.week2.safetyNotes"},
+                        communication: { salatiso: 7, tee: 9, notesKey: "timeline.week2.commNotes" }
+                    }, 
+                    summaryKey: "timeline.week2.summary", 
+                    events: [{type:"event", textKey:"timeline.week2.event1"}]
                 }
-            }
-            window.showSection = showSection; // Expose globally
+            ],
+            reinforcementWords: [
+                { wordActionKey: "reinforcement.words.safe", purposeKey: "reinforcement.purpose.reassurance", occurrences: { salatiso: [1], tee: [1,2], joint: [] } },
+            ],
+            feedbackLog: [
+                { id: Date.now() + 1, sender: "Salatiso", recipient: "Tee", message: "Appreciated you making coffee this morning! It was a great start to the day.", timestamp: new Date(2024, 4, 21, 8, 0, 0).toISOString(), response: "You're welcome! Glad you enjoyed it. ❤️", responseTimestamp: new Date(2024, 4, 21, 9, 30, 0).toISOString(), read: true },
+            ],
+            actionLog: [
+                 { id: Date.now() + 1, type: "apology", actor: "Salatiso", target: "Tee", message: "So sorry for being late to our virtual date last night. Work ran over.", timestamp: new Date(2024, 4, 22, 10, 0, 0).toISOString(), details: {} },
+            ],
+            travelLog: [
+                { id: 1, type: "visited", destinationKey: "travel.dest.durban", dates: "2023-07-10 to 2023-07-15", roles: { salatisoKey: "travel.roles.durban.salatiso", teeKey: "travel.roles.durban.tee" }, highlightsKey: "travel.durban.highlights", photos: ["https://placehold.co/300x200/1abc9c/white?text=Durban+1"] }
+            ],
+            desiredTravel: [ { id: 1, destination: "Cape Town Wine Route", description: "Explore Stellenbosch and Franschhoek", priority: "High" } ],
+            sharedSongs: [ { titleKey: "overview.songName_shaggy", artist: "Shaggy", sharedBy: "Salatiso", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" } ]
+        };
 
-            navButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    showSection(this.dataset.section);
-                });
+        // --- i18next Configuration ---
+        const translations = {
+            en: {
+                translation: { 
+                    siteTitle: "Tee & Me - Our Story", headerTitle: "Tee & Me",
+                    navOverview: "Overview", navAnalysis: "Analysis Hub", navMedia: "Media & Travel", navConnect: "Connect & Resolve", navLifeSync: "LifeSync & Fun",
+                    overview: { title: "Our Journey Snapshot", dashboardTitle: "Relationship Dashboard", affectionLevel: "Affection Level", supportScore: "Support Score", foodContribution: "Food Prep Score", safetyFeeling: "Safety Feeling", ourSong: "Our Special Song", songName_shaggy: "\"Thank You Baby! (For Makin' Someday Come So Soon)\"", listenToSong: "Listen", quickTimeline: "Recent Milestones" },
+                    tabTracking: "Tracking", tabContributions: "Contributions", tabReinforcement: "Reinforcement",
+                    tabSongs: "Shared Songs", tabPhotos: "Photo Moments", tabVisited: "Visited Places", tabDream: "Dream Trips",
+                    tabFeedback: "Feedback", tabActions: "Actions", tabLogs: "Logs",
+                    tabCompatibility: "Compatibility Checks", tabQuizzes: "Quizzes", tabReports: "LifeSync Reports",
+                    parameter: "Parameter", salatiso: "Salatiso", tee: "Tee", notes: "Notes", details: "Details",
+                    wordAction: "Word/Action", purpose: "Purpose", joint: "Joint",
+                    feedbackPlaceholder: "Type your feedback...", sendFeedback: "Send Feedback",
+                    makeApology: "Make an Apology", apologyPlaceholder: "Type your apology...", submitApology: "Submit Apology",
+                    astrologyTitle: "Astrology Compatibility", checkCompatibility: "Check Compatibility", valuesAlignment: "Values Alignment", startTest: "Start Test",
+                    comingSoon: "Coming Soon!", last3Months: "Last 3 Months", allTime: "All Time", generateReport: "Generate Report", ok: "OK",
+                    footer: { text: "© 2025 Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved." },
+                    langEN: "EN", langXH: "XH",
+                    timeline: { week1: { summary: "Our journey began!", event1: "Created 'Us' group.", affectionNotes: "Lots of love.", foodNotes: "Shared cooking.", safetyNotes: "Felt secure.", financeNotes: "Budget talk.", supportNotes: "Mutual support.", commNotes: "Good talks." }, week2: { summary: "Growing closer.", event1: "Supported each other.", affectionNotes: "Very affectionate.", foodNotes: "Tried new recipes.", safetyNotes: "Very secure.", supportNotes: "Always there.", commNotes: "Deep convos." } , sharedThankYouBaby: "Shared 'Thank You Baby!'", noEvents: "No timeline events recorded yet." },
+                    insights: { week1: { affection: "Great affection shown.", intimacy: "Opened up emotionally."} },
+                    tracking: { selectAspect: "Track Aspect:", affectionLevel: "Affection", supportScore: "Support", communicationFrequency: "Communication", foodContribution: "Food Prep", safetyFeeling: "Safety Score", financialTeamwork: "Finances", feedbackResponseTime: "Feedback Response", noResponseData: "No data for this metric." },
+                    contributions: { filterWeek: "Filter by Week:", table: { parameter: "Parameter", salatiso: "Salatiso", tee: "Tee", details: "Details" }, params: { food: "Food Prep", safety: "Safety & Security", chores: "Household Chores", planning: "Joint Planning", finances: "Financials", affection: "Affection", support: "Support", communication: "Communication" }, noDataForWeek: "No contribution data for this week.", noneReported: "N/A" },
+                    reinforcement: { table: { wordAction: "Word/Action", purpose: "Purpose", salatisoOccurrences: "Salatiso (Wks)", teeOccurrences: "Tee (Wks)", jointOccurrences: "Joint (Wks)"}, words: { safe: "'I'm safe'", loveYou: "'I love you'", helpRequest: "Help Request" }, purpose: { reassurance: "Reassurance", affection: "Affection", supportSeeking: "Support Seeking" }},
+                    mediaGallery: { sharedSongs: "Shared Songs", photoMoments: "Photo Moments", photoNote: "(Placeholder images)", noSongs: "No songs logged yet.", noPhotos: "No photos available." },
+                    travel: { visitedTitle: "Places We've Been", desiredTitle: "Our Dream Trips", rolesTitle: "Our Roles", highlightsTitle: "Highlights", noVisited: "No past travels logged.", noDesired: "No dream trips added yet.", dest: { durban: "Durban Beach Escape"}, roles: {durban: {salatiso: "Logistics & Fun Planner", tee: "Foodie & Vibe Curator"}}, durban: {highlights: "Morning beach walks, trying new seafood, relaxing by the ocean."} },
+                    relationshipActions: { titleShort: "Log Action", logTitleShort: "Action Log", title: "Connect & Resolve Actions", salatiso: "Salatiso", tee: "Tee", apology: { title: "Make an Apology", from: "From:", messagePlaceholder: "Your heartfelt apology...", sendButton: "Send Apology", success: "Apology sent and logged." }, dissatisfaction: { title: "Express Dissatisfaction", from: "From:", messagePlaceholder: "Describe your dissatisfaction...", sendButton: "Log Dissatisfaction", success: "Dissatisfaction logged." }, bookDate: { title: "Book a Date", booker: "Booked by:", activityPlaceholder: "E.g., Dinner at [Restaurant]", proposeButton: "Propose Date", success: "Date proposal logged." }, terminate: { title: "Initiate Termination", terminator: "Initiated by:", reason: "Reason:", reasons: { irreconcilable: "Irreconcilable Differences", communication: "Communication Breakdown", paths: "Different Life Paths", other: "Other" }, otherReasonPlaceholder: "Specify other reason...", initiateButton: "Initiate Termination", success: "Termination initiated and logged.", confirmMessage: "Are you sure you want to initiate termination? This action will be logged.", specifyOther: "Please specify 'Other' reason if selected." }, logTitle: "Relationship Actions Log", actionBy: "Action by {actor}", actionType: "Type: {type}", actionDetails: "Details: {details}", noActionsYet: "No actions logged yet." },
+                    funtools: { quizzes: { title: "Fun Quizzes", placeholder:"Relationship quizzes coming soon!" }, astrology: { title: "Astrology Compatibility", salatisoBday: "Salatiso's Bday:", teeBday: "Tee's Bday:", checkButton: "Check Compatibility", invalidDate: "Invalid dates provided.", salatisoIsA: "Salatiso is a", teeIsA: "Tee is a", virgoTaurus: "Virgo & Taurus: An earthy and stable match, often sharing practical goals and a love for comfort. Strong potential for a lasting bond!", general: "Explore your unique dynamic based on your signs!" } },
+                    compatibilityTests: { startTest: "Start Test", values: { title: "Values Alignment", description: "Align your core values." }, communication: { title: "Communication Styles", description: "Understand communication." }, proverbs: { title: "African Proverbs Wisdom", description: "Wisdom from proverbs." }, comingSoon: "Test coming soon!" },
+                    lifesync: { title: "LifeSync Integration", reportGen: "Generate LifeSync Report", last3Months: "Last 3 Months", last6Months: "Last 6 Months", lastYear: "Last Year", allTime: "All Time", generateButton: "Generate", reportNote: "(This is a conceptual LifeSync report based on your data.)" },
+                    feedback: { title: "Feedback Channel", giveFeedback: "Give Feedback", sender: "From:", recipient: "To:", tee: "Tee", salatiso: "Salatiso", message: "Message:", sendButton: "Send Feedback", receivedFeedback: "Feedback Log", feedbackFrom: "From {sender}", respondedIn: "Responded: {duration}", pendingResponse: "Pending", markAsRead: "Acknowledge", messageEmpty: "Feedback message cannot be empty.", success: "Feedback sent and logged.", senderRecipientSame: "Sender and recipient cannot be the same.", noFeedbackYet: "No feedback messages yet." },
+                    modal: { detailsTitle: "Details for Week {weekNumber}", contributionDetailsTitle: "Contribution Details: {parameter} - Week {weekNumber}" },
+                    alert: { defaultTitle: "Notification", actionLogged: "Action Logged Successfully", fillAllFields: "Please fill all required fields.", messageEmpty: "Message cannot be empty." },
+                    playlist: { title: "Our Shared Playlist", note: "If the embedded player fails, it might be due to viewing restrictions or an invalid link." }
+                }
+            },
+            xh: { translation: typeof xhosaTranslations !== 'undefined' ? xhosaTranslations : {} }
+        };
+
+        // --- App Initialization ---
+        function initializeApp() {
+            console.log("Tee & Me App Initializing...");
+            i18next.use(i18nextBrowserLanguageDetector).init({
+                debug: false, fallbackLng: 'en', resources: translations
+            }, (err, t) => {
+                if (err) { console.error("i18next initialization error:", err); return; }
+                
+                updateNavStickiness();
+                populateAllSelects(); 
+                setupEventListeners();
+                navigateToSection(currentMainSection); 
+                updateContentAll(); 
+                
+                document.getElementById('currentYear').textContent = new Date().getFullYear();
+                document.getElementById('ourSongLink').href = relationshipData.ourSpecialSongUrl;
+                document.getElementById('playlistFrame').src = relationshipData.playlistUrl;
+                console.log("Tee & Me App Initialized & Ready.");
             });
+        }
 
-            // --- Timeline ---
+        function updateNavStickiness() {
+            const header = document.getElementById('appHeader');
+            const nav = document.getElementById('mainNav');
+            const contentWrapper = document.getElementById('contentAreaWrapper');
+            if (header && nav && contentWrapper) {
+                const headerHeight = header.offsetHeight;
+                const navHeight = nav.offsetHeight;
+                nav.style.top = `${headerHeight}px`;
+                contentWrapper.style.paddingTop = `${headerHeight + navHeight}px`;
+            }
+        }
+
+        function populateAllSelects() {
+            const trackingMetrics = { affection: "tracking.affectionLevel", support: "tracking.supportScore", communication: "tracking.communicationFrequency", food: "tracking.foodContribution", safety: "tracking.safetyFeeling", finances: "tracking.financialTeamwork", feedbackResponse: "tracking.feedbackResponseTime" };
+            populateSelectWithOptions('trackingMetricSelect', trackingMetrics);
+            populateSelectWithOptions('dashboardMetricSelect', trackingMetrics);
+
+
+            const weekOptions = relationshipData.weeks.reduce((acc, week) => {
+                acc[week.weekNumber] = `Week ${week.weekNumber} (${week.startDate})`;
+                return acc;
+            }, {});
+            populateSelectWithOptions('contributionFilterWeek', weekOptions, false);
+
+            const people = { Salatiso: "salatiso", Tee: "tee" };
+            ['feedbackSender', 'feedbackRecipient', 'apologyFrom', 'dissatisfactionFrom', 'dateBooker', 'terminator'].forEach(id => populateSelectWithOptions(id, people));
+            
+            const terminationReasons = { irreconcilable: "relationshipActions.terminate.reasons.irreconcilable", communication: "relationshipActions.terminate.reasons.communication", paths: "relationshipActions.terminate.reasons.paths", other: "relationshipActions.terminate.reasons.other" };
+            populateSelectWithOptions('terminationReason', terminationReasons);
+            
+            const lifesyncPeriods = { last3Months: "lifesync.last3Months", allTime: "allTime" };
+            populateSelectWithOptions('lifesyncPeriodSelect', lifesyncPeriods);
+
+             const reportMetricsOptions = { affection: "overview.affectionLevel", support: "overview.supportScore", finances: "overview.foodContribution", conflict: "overview.safetyFeeling" };
+            populateSelectWithOptions('reportMetrics', reportMetricsOptions, true, true); 
+        }
+
+        function populateSelectWithOptions(selectId, optionsObject, useI18nForText = true, isMultiple = false) {
+            const selectElement = document.getElementById(selectId);
+            if (!selectElement) { console.warn(`Select element '${selectId}' not found.`); return; }
+            selectElement.innerHTML = '';
+            if (isMultiple) selectElement.multiple = true;
+
+            for (const value in optionsObject) {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = useI18nForText ? i18next.t(optionsObject[value]) : optionsObject[value];
+                selectElement.appendChild(option);
+            }
+        }
+        
+        function navigateToSection(sectionId) {
+            currentMainSection = sectionId;
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId)?.classList.add('active');
+
+            document.querySelectorAll('#mainNav .nav-tab').forEach(btn => {
+                btn.classList.toggle('active-nav', btn.dataset.section === sectionId);
+            });
+            
+            const activeSectionElement = document.getElementById(sectionId);
+            const firstSubNavTab = activeSectionElement?.querySelector('.sub-nav-tab');
+            if (firstSubNavTab) { // If section has sub-tabs, activate the default/current one
+                navigateToSubSection(sectionId, currentSubTargets[sectionId] || firstSubNavTab.dataset.subtarget, true);
+            } else { // If no sub-tabs (like Overview), just render its content
+                renderActiveSectionContent(); 
+            }
+        }
+
+        function navigateToSubSection(mainSectionId, subTargetId, isInitialSectionLoad = false) {
+            currentSubTargets[mainSectionId] = subTargetId;
+            const mainSectionElement = document.getElementById(mainSectionId);
+            mainSectionElement?.querySelectorAll('.sub-nav-tab').forEach(tab => tab.classList.toggle('active-sub-nav', tab.dataset.subtarget === subTargetId));
+            mainSectionElement?.querySelectorAll('.sub-content').forEach(content => content.classList.toggle('active-sub-content', content.id === subTargetId));
+            
+            if (!isInitialSectionLoad) renderActiveSectionContent();
+        }
+
+        function renderActiveSectionContent() {
+            console.log(`Rendering main: ${currentMainSection}, sub: ${currentSubTargets[currentMainSection]}`);
+            switch (currentMainSection) {
+                case 'overview': renderOverviewSection(); break;
+                case 'analysis': renderAnalysisHubSection(); break;
+                case 'media': renderMediaTravelHubSection(); break;
+                case 'connect': renderConnectResolveSection(); break;
+                case 'lifesyncFun': renderLifesyncFunSection(); break;
+            }
+            updateContentAll(); 
+        }
+
+        function renderOverviewSection() { 
+            updateDashboardMetrics(); 
+            updateDashboardChart(); 
+            renderOverviewTimelineCarousel(); 
+            renderOverviewImageCarousel(); 
+            startOverviewImageCarousel();
+        }
+        
+        function updateDashboardMetrics() {
+            const latestWeek = relationshipData.weeks.length > 0 ? relationshipData.weeks[relationshipData.weeks.length - 1] : null;
+            const getScore = (metric) => (latestWeek && latestWeek.contributions[metric]) ? (( (latestWeek.contributions[metric].salatiso || 0) + (latestWeek.contributions[metric].tee || 0) ) / 2).toFixed(1) + "/10" : '--';
+            
+            document.getElementById('affection-metric').textContent = getScore('affection');
+            document.getElementById('support-metric').textContent = getScore('support');
+            document.getElementById('food-metric').textContent = (latestWeek && latestWeek.contributions.food) ? `${latestWeek.contributions.food.score || '--'}/10` : '--';
+            document.getElementById('safety-metric').textContent = (latestWeek && latestWeek.contributions.safety) ? `${latestWeek.contributions.safety.score || '--'}/10` : '--';
+        }
+
+        function renderOverviewTimelineCarousel() {
+            const container = document.getElementById('overviewTimelineContainer'); 
+            if(!container) { return; }
+            container.innerHTML = ''; 
+
+            const timelineEvents = relationshipData.weeks.flatMap(week => 
+                (week.events || []).map(event => ({...event, weekNumber: week.weekNumber, startDate: week.startDate}))
+            ).sort((a,b) => new Date(a.startDate) - new Date(b.startDate)).slice(-7).reverse(); // Get last 7 chronological events, newest first
+
+            if (timelineEvents.length === 0) {
+                container.innerHTML = `<p class="text-sm text-center w-full">${i18next.t('timeline.noEvents') || 'No timeline events yet.'}</p>`;
+                return;
+            }
+
             timelineEvents.forEach(event => {
-                event.addEventListener('click', function() {
-                    timelineEvents.forEach(e => {
-                        if (e !== this) e.classList.remove('active');
-                    });
-                    this.classList.toggle('active');
-                });
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'timeline-event-card';
+                let eventText = i18next.t(event.textKey) || event.text || "Timeline Event";
+                if (event.type === 'music') {
+                    const songTitle = event.songTitleKey ? i18next.t(event.songTitleKey) : (event.songTitle || "A song");
+                    eventText = `${i18next.t('timeline.sharedSong', { song: songTitle, artist: event.artist, sharer: event.sharedBy })}`;
+                }
+                itemDiv.innerHTML = `
+                    <h4>${eventText.substring(0,30)}${eventText.length > 30 ? '...' : ''}</h4>
+                    <p class="date">${new Date(event.startDate).toLocaleDateString()}</p>
+                    <p>${i18next.t(relationshipData.weeks.find(w=>w.weekNumber === event.weekNumber)?.summaryKey)?.substring(0,50) || 'Weekly summary...'}</p>
+                `;
+                container.appendChild(itemDiv);
             });
+        }
+        
+        function renderOverviewImageCarousel() {
+            const container = document.getElementById('overviewImageCarousel');
+            if (!container) { return; }
+            container.innerHTML = ''; 
 
-            // --- Guest Assessment ---
-            const assessmentArea = document.getElementById('assessment-area');
-            const resultArea = document.getElementById('assessment-result');
-            const questionText = document.getElementById('question-text');
-            const optionsArea = document.getElementById('options-area');
-            const feedbackArea = document.getElementById('feedback-area');
-            const progressBar = document.getElementById('progress-bar');
-            const questionCounter = document.getElementById('question-counter');
-            const totalQuestionsDisplay = document.getElementById('total-questions');
-
-            const questions = [
-                { q: "How important is spending quality time together?", o: ["Not very", "Somewhat", "Very", "Essential"], f: "Shared time seems important for connection." },
-                { q: "How do you prefer to handle disagreements?", o: ["Avoid them", "Discuss calmly", "Need space first", "Address immediately"], f: "Conflict resolution style is key." },
-                { q: "What's your general approach to saving vs. spending?", o: ["Big Saver", "Mostly Save", "Balanced", "Mostly Spend"], f: "Financial outlook is a common discussion point." },
-                { q: "How significant are cultural traditions in your life?", o: ["Not really", "A little", "Quite a bit", "Very"], f: "Cultural views shape many life aspects." },
-                { q: "How important is personal growth within a relationship?", o: ["Not vital", "Good to have", "Important", "Crucial"], f: "Growth alignment can foster a dynamic partnership." }
-            ];
-            totalQuestionsDisplay.textContent = questions.length;
-
-            let currentQuestionIndex = 0;
-            let userAnswers = [];
-            let cumulativeFeedback = "Let's begin...";
-
-            function loadQuestion(index) {
-                if (index < questions.length) {
-                    const q = questions[index];
-                    questionText.textContent = q.q;
-                    optionsArea.innerHTML = '';
-                    q.o.forEach(option => {
-                        const button = document.createElement('button');
-                        button.textContent = option;
-                        button.addEventListener('click', () => handleAnswer(option, q.f));
-                        optionsArea.appendChild(button);
-                    });
-                    feedbackArea.textContent = cumulativeFeedback;
-                    updateProgress();
-                } else {
-                    showResults();
-                }
+            if (!relationshipData.photoFileNames || relationshipData.photoFileNames.length === 0) {
+                container.innerHTML = `<div class="flex items-center justify-center h-full text-gray-400 text-sm">${i18next.t('mediaGallery.noPhotos')}</div>`;
+                return;
             }
-
-            function handleAnswer(answer, feedback) {
-                userAnswers.push({ q: questions[currentQuestionIndex].q, a: answer });
-                cumulativeFeedback = feedback;
-                currentQuestionIndex++;
-                loadQuestion(currentQuestionIndex);
-            }
-
-            function updateProgress() {
-                 const progressPercent = (currentQuestionIndex / questions.length) * 100;
-                 progressBar.style.width = `${progressPercent}%`;
-                 questionCounter.textContent = currentQuestionIndex + 1 > questions.length ? questions.length : currentQuestionIndex + 1;
-            }
-
-            function showResults() {
-                assessmentArea.style.display = 'none';
-                resultArea.style.display = 'block';
-                progressBar.style.width = `100%`;
-                document.getElementById('final-feedback').textContent = "You've completed the preview! Register for deeper insights.";
-                // console.log("User Answers:", userAnswers);
-            }
-
-            window.resetAssessment = function() {
-                currentQuestionIndex = 0;
-                userAnswers = [];
-                cumulativeFeedback = "Let's begin...";
-                assessmentArea.style.display = 'block';
-                resultArea.style.display = 'none';
-                loadQuestion(currentQuestionIndex);
-            }
-            loadQuestion(currentQuestionIndex);
-
-            // --- Vision Carousel ---
-            const visionTrack = document.getElementById('visionCarouselTrack');
-            const visionSlides = Array.from(visionTrack.children);
-            const visionNextButton = document.getElementById('visionNextBtn');
-            const visionPrevButton = document.getElementById('visionPrevBtn');
-            let visionCurrentIndex = 0;
-
-            const visionSlideWidth = visionSlides[0].getBoundingClientRect().width;
-
-            function moveToVisionSlide(index) {
-                visionTrack.style.transform = 'translateX(-' + visionSlideWidth * index + 'px)';
-                visionCurrentIndex = index;
-            }
-
-            visionNextButton.addEventListener('click', () => {
-                const newIndex = visionCurrentIndex + 1;
-                if (newIndex < visionSlides.length) {
-                    moveToVisionSlide(newIndex);
-                } else {
-                    moveToVisionSlide(0); // Loop to start
-                }
+            relationshipData.photoFileNames.forEach((fileName, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'carousel-item absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-1000 ease-in-out';
+                itemDiv.innerHTML = `<img src="${fileName}" alt="Overview Image ${index + 1}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error';">`;
+                container.appendChild(itemDiv);
             });
+            if (relationshipData.photoFileNames.length > 0) {
+                showOverviewImage(overviewImageCarouselCurrentIndex); 
+            }
+        }
 
-            visionPrevButton.addEventListener('click', () => {
-                const newIndex = visionCurrentIndex - 1;
-                if (newIndex >= 0) {
-                    moveToVisionSlide(newIndex);
-                } else {
-                    moveToVisionSlide(visionSlides.length - 1); // Loop to end
-                }
+        function showOverviewImage(index) {
+            const items = document.querySelectorAll('#overviewImageCarousel .carousel-item');
+            if (items.length === 0) return;
+            overviewImageCarouselCurrentIndex = (index + items.length) % items.length; 
+            items.forEach(item => item.classList.remove('opacity-100', 'z-10'));
+            items[overviewImageCarouselCurrentIndex].classList.add('opacity-100', 'z-10');
+        }
+        function nextOverviewImage() { showOverviewImage(overviewImageCarouselCurrentIndex + 1); }
+        function prevOverviewImage() { showOverviewImage(overviewImageCarouselCurrentIndex - 1); }
+        
+        function startOverviewImageCarousel() {
+            if (overviewImageInterval) clearInterval(overviewImageInterval);
+            if (relationshipData.photoFileNames.length > 1) {
+                overviewImageInterval = setInterval(nextOverviewImage, 6000); 
+            }
+        }
+        function stopOverviewImageCarousel() { clearInterval(overviewImageInterval); }
+
+        function updateDashboardChart() {
+            const el = document.getElementById('dashboardChart');
+            if (!el) { return; } 
+            const ctx = el.getContext('2d'); 
+            const selectedMetric = document.getElementById('dashboardMetricSelect')?.value || 'affection';
+            const labels = relationshipData.weeks.map(w => `Wk ${w.weekNumber}`);
+            const dataS = relationshipData.weeks.map(w => w.contributions[selectedMetric]?.salatiso || (w.contributions[selectedMetric]?.score / 2 ) || 0);
+            const dataT = relationshipData.weeks.map(w => w.contributions[selectedMetric]?.tee || (w.contributions[selectedMetric]?.score / 2 ) || 0);
+            const metricLabel = i18next.t(`overview.${selectedMetric}Level`) || selectedMetric;
+
+            if (dashboardMainChart) dashboardMainChart.destroy();
+            dashboardMainChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: `${i18next.t('salatiso')} - ${metricLabel}`, data: dataS, borderColor: 'var(--accent-pink-vibrant)', backgroundColor: 'rgba(231, 84, 128, 0.1)', tension: 0.3, borderWidth: 1.5, pointBackgroundColor: 'var(--accent-pink-vibrant)', pointRadius: 3, fill: true },
+                        { label: `${i18next.t('tee')} - ${metricLabel}`, data: dataT, borderColor: 'var(--accent-teal-bright)', backgroundColor: 'rgba(72, 209, 204, 0.1)', tension: 0.3, borderWidth: 1.5, pointBackgroundColor: 'var(--accent-teal-bright)', pointRadius: 3, fill: true }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 10, ticks:{color: 'var(--text-secondary-lavender)', font: {size: 10}}, grid:{color: 'var(--border-color-lavender)'} }, x:{ticks:{color: 'var(--text-secondary-lavender)', font: {size: 10}}, grid:{color: 'var(--border-color-lavender)'}} }, plugins: { legend: { position: 'top', labels:{color: 'var(--text-primary-light)', font: {size: 10}} } } }
             });
-            // Initial position
-            moveToVisionSlide(0);
+        }
+        
+        function renderAnalysisHubSection() {
+            const activeSub = currentSubTargets.analysis;
+            if (activeSub === 'analysis-tracking') updateTrackingChart(document.getElementById('trackingMetricSelect')?.value || 'affection');
+            else if (activeSub === 'analysis-contributions') renderContributionsTable(document.getElementById('contributionFilterWeek')?.value || (relationshipData.weeks.length > 0 ? relationshipData.weeks[0].weekNumber.toString() : '1'));
+            else if (activeSub === 'analysis-reinforcement') renderReinforcementTable();
+        }
 
+        function updateTrackingChart(metricKey = 'affection') {
+            const el = document.getElementById('trackingChart'); 
+            if(!el) { return; } 
+            const ctx = el.getContext('2d'); 
+            const labels = relationshipData.weeks.map(w => `Wk ${w.weekNumber} (${w.startDate})`);
+            let dataS = [], dataT = [];
+            let metricLabel = i18next.t(`tracking.${metricKey}`);
 
-            // --- Modal Handling ---
-            loginBtn.onclick = function() { loginModal.style.display = "block"; }
-            registerBtn.onclick = function() { registerModal.style.display = "block"; }
-
-            closeButtons.forEach(button => {
-                button.onclick = function() {
-                    loginModal.style.display = "none";
-                    registerModal.style.display = "none";
-                }
+            relationshipData.weeks.forEach(w => {
+                const contrib = w.contributions[metricKey];
+                if (contrib) { dataS.push(contrib.salatiso || (contrib.score / 2 ) || 0); dataT.push(contrib.tee || (contrib.score / 2 ) || 0); } 
+                else { dataS.push(0); dataT.push(0); }
             });
-
-            window.onclick = function(event) {
-                if (event.target == loginModal) {
-                    loginModal.style.display = "none";
-                }
-                if (event.target == registerModal) {
-                    registerModal.style.display = "none";
-                }
+            
+            if (dataS.every(val => val === 0) && dataT.every(val => val === 0) && metricKey !== 'feedbackResponseTime') {
+                 metricLabel += ` (${i18next.t('tracking.noResponseData')})`;
             }
 
-            // Initial Load
-            showSection('about');
+            if (analysisTrackingChart) analysisTrackingChart.destroy();
+            analysisTrackingChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: `${i18next.t('salatiso')} - ${metricLabel}`, data: dataS, backgroundColor: 'rgba(231, 84, 128, 0.3)', borderColor: 'var(--accent-pink-vibrant)', borderWidth: 1.5, tension: 0.3, fill: true },
+                        { label: `${i18next.t('tee')} - ${metricLabel}`, data: dataT, backgroundColor: 'rgba(72, 209, 204, 0.3)', borderColor: 'var(--accent-teal-bright)', borderWidth: 1.5, tension: 0.3, fill: true }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: (metricKey === 'finances' ? undefined : 10), ticks:{color: 'var(--text-secondary-lavender)'}, grid:{color: 'var(--border-color-lavender)'} }, x:{ticks:{color: 'var(--text-secondary-lavender)'}, grid:{color: 'var(--border-color-lavender)'}} }, plugins: { legend: { position: 'top', labels:{color: 'var(--text-primary-light)'} } } }
+            });
+        }
+        
+        function renderContributionsTable(weekNumStr) {
+            const tableBody = document.getElementById('contributionsTableBody');
+            if (!tableBody) { return; }
+            tableBody.innerHTML = ''; 
 
-        }); // End DOMContentLoaded
+            const weekNumber = parseInt(weekNumStr);
+            const weekData = relationshipData.weeks.find(w => w.weekNumber === weekNumber);
+
+            if (!weekData || !weekData.contributions) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4">${i18next.t('contributions.noDataForWeek')}</td></tr>`;
+                return;
+            }
+
+            const parameters = i18next.t('contributions.params', { returnObjects: true });
+            Object.keys(parameters).forEach(paramKey => {
+                const contrib = weekData.contributions[paramKey];
+                const tr = tableBody.insertRow();
+                tr.insertCell().textContent = parameters[paramKey];
+                
+                const formatContrib = (personData) => {
+                    if (!personData) return i18next.t('contributions.noneReported');
+                    let text = personData.score !== undefined ? `${personData.score}` : '';
+                    if (personData.actions && personData.actions.length > 0) {
+                        text += (text ? ' (' : '') + personData.actions.join(', ') + (text ? ')' : '');
+                    }
+                    return text || i18next.t('contributions.noneReported');
+                };
+
+                tr.insertCell().textContent = formatContrib(contrib?.salatiso);
+                tr.insertCell().textContent = formatContrib(contrib?.tee);
+                
+                const notesKey = contrib?.notesKey;
+                const notesText = notesKey ? i18next.t(notesKey) : (contrib?.notes || '');
+                tr.insertCell().textContent = notesText;
+            });
+        }
+
+        function renderReinforcementTable() {
+            const tableBody = document.getElementById('reinforcementTableBody');
+            if (!tableBody) { return; }
+            tableBody.innerHTML = '';
+
+            relationshipData.reinforcementWords.forEach(item => {
+                const tr = tableBody.insertRow();
+                tr.insertCell().textContent = i18next.t(item.wordActionKey);
+                tr.insertCell().textContent = i18next.t(item.purposeKey);
+                tr.insertCell().textContent = item.occurrences.salatiso.length > 0 ? item.occurrences.salatiso.join(', ') : '0';
+                tr.insertCell().textContent = item.occurrences.tee.length > 0 ? item.occurrences.tee.join(', ') : '0';
+                tr.insertCell().textContent = item.occurrences.joint.length > 0 ? item.occurrences.joint.join(', ') : '0';
+            });
+        }
+
+        function renderMediaTravelHubSection() {
+            const activeSub = currentSubTargets.media;
+            if (activeSub === 'media-songs') renderSongList();
+            else if (activeSub === 'media-photos') renderPhotoGallery();
+            else if (activeSub === 'travel-visited') renderTravelLog('visitedPlacesContainer', relationshipData.travelLog.filter(t => t.type === 'visited'), 'visited');
+            else if (activeSub === 'travel-desired') renderTravelLog('desiredPlacesContainer', relationshipData.desiredTravel, 'desired');
+        }
+        
+        function renderSongList() {
+            const container = document.getElementById('songListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            if (!relationshipData.sharedSongs || relationshipData.sharedSongs.length === 0) {
+                container.innerHTML = `<p class="text-sm text-center">${i18next.t('mediaGallery.noSongs')}</p>`; return;
+            }
+            relationshipData.sharedSongs.forEach(song => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item p-3 rounded-md shadow-sm flex justify-between items-center';
+                songItem.style.backgroundColor = "var(--bg-card-purple)";
+                const title = song.titleKey ? i18next.t(song.titleKey) : song.title;
+                songItem.innerHTML = `
+                    <div class="song-item-info">
+                        <h4 class="font-semibold text-sm" style="color: var(--accent-pink-vibrant);">${title}</h4>
+                        <p class="text-xs" style="color: var(--text-secondary-lavender);">Artist: ${song.artist} - Shared by: ${song.sharedBy}</p>
+                    </div>
+                    <div class="song-item-actions">
+                        <a href="${song.link}" target="_blank" title="Listen" class="text-lg" style="color: var(--accent-teal-bright);"><i class="fas fa-play-circle"></i></a>
+                    </div>`;
+                container.appendChild(songItem);
+            });
+        }
+
+        function renderPhotoGallery() {
+            const container = document.getElementById('photoGalleryContainer');
+            if (!container) return;
+            container.innerHTML = '';
+             if (!relationshipData.photoFileNames || relationshipData.photoFileNames.length === 0) {
+                container.innerHTML = `<p class="text-sm text-center">${i18next.t('mediaGallery.noPhotos')}</p>`; return;
+            }
+            relationshipData.photoFileNames.forEach((fileName, index) => {
+                const item = document.createElement('div');
+                item.className = 'media-gallery-item relative group cursor-pointer';
+                item.innerHTML = `<img src="${fileName}" alt="Photo ${index + 1}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/300x300/4B0082/FFFFFF?text=Error';">`;
+                // Add click to open in modal later
+                container.appendChild(item);
+            });
+        }
+
+        function renderTravelLog(containerId, items, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            const noItemsKey = type === 'visited' ? 'travel.noVisited' : 'travel.noDesired';
+            if (!items || items.length === 0) {
+                container.innerHTML = `<p class="text-sm text-center">${i18next.t(noItemsKey)}</p>`; return;
+            }
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'travel-item p-3 rounded-md shadow-sm';
+                itemDiv.style.backgroundColor = "var(--bg-card-purple)";
+                let content = `<h4>${item.destinationKey ? i18next.t(item.destinationKey) : item.destination}</h4>`;
+                if (type === 'visited') {
+                    content += `<p class="text-xs"><strong>Dates:</strong> ${item.dates}</p>
+                                <p class="text-xs"><strong>${i18next.t('travel.highlightsTitle')}:</strong> ${i18next.t(item.highlightsKey)}</p>
+                                <p class="text-xs"><strong>${i18next.t('travel.rolesTitle')}</strong> Salatiso: ${i18next.t(item.roles.salatisoKey)}, Tee: ${i18next.t(item.roles.teeKey)}</p>`;
+                    if (item.photos && item.photos.length > 0) {
+                        content += `<div class="photos-grid mt-1.5 grid grid-cols-3 gap-1">
+                            ${item.photos.map(pUrl => `<img src="${pUrl}" alt="Travel photo" class="rounded object-cover h-16 w-full" onerror="this.onerror=null;this.src='https://placehold.co/100x100/4B0082/FFFFFF?text=X';">`).join('')}
+                        </div>`;
+                    }
+                } else { // desired
+                    content += `<p class="text-xs">${item.description}</p><p class="text-xs"><strong>Priority:</strong> ${item.priority}</p>`;
+                }
+                itemDiv.innerHTML = content;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function renderConnectResolveSection() {
+            const activeSub = currentSubTargets.connect;
+            if (activeSub === 'connect-feedback') renderFeedbackLog();
+            else if (activeSub === 'connect-logs') renderRelationshipActionLog();
+        }
+
+        function renderFeedbackLog() {
+            const container = document.getElementById('feedbackLogContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            if (relationshipData.feedbackLog.length === 0) {
+                container.innerHTML = `<p class="text-center">${i18next.t('feedback.noFeedbackYet')}</p>`; return;
+            }
+            relationshipData.feedbackLog.slice().reverse().forEach(fb => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'feedback-item p-2.5 border rounded-md mb-2';
+                itemDiv.style.borderColor = "var(--border-color-lavender)";
+                itemDiv.style.backgroundColor = "rgba(255,255,255,0.05)";
+                const senderName = i18next.t(fb.sender === "Salatiso" ? "salatiso" : "tee");
+                const recipientName = i18next.t(fb.recipient === "Salatiso" ? "salatiso" : "tee");
+                let responseHtml = `<p class="response-status text-xs mt-1" style="color: var(--accent-purple-medium);">${i18next.t('feedback.pendingResponse')}</p>`;
+                if (fb.responseTimestamp) {
+                    responseHtml = `<p class="text-xs mt-1 pt-1 border-t" style="border-color: var(--border-color-lavender);"><strong>Response from ${recipientName}</strong> (${new Date(fb.responseTimestamp).toLocaleString()}):<br>${fb.response}</p>`;
+                }
+                itemDiv.innerHTML = `
+                    <p class="font-medium text-sm">${i18next.t('feedback.feedbackFrom', { sender: senderName })} to ${recipientName}:</p>
+                    <p class="text-sm">${fb.message}</p>
+                    <p class="timestamp text-xs mt-1">Sent: ${new Date(fb.timestamp).toLocaleString()}</p>
+                    ${responseHtml}`;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function renderRelationshipActionLog() {
+            const container = document.getElementById('relationshipActionLogContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            if (relationshipData.actionLog.length === 0) {
+                container.innerHTML = `<p class="text-center">${i18next.t('relationshipActions.noActionsYet')}</p>`; return;
+            }
+            relationshipData.actionLog.slice().reverse().forEach(log => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'action-log-item p-2.5 border rounded-md mb-2';
+                itemDiv.style.borderColor = "var(--border-color-lavender)";
+                itemDiv.style.backgroundColor = "rgba(255,255,255,0.05)";
+                const actorName = i18next.t(log.actor === "Salatiso" ? "salatiso" : "tee");
+                let detailsText = log.message || '';
+                 if (log.type === "dateProposal" && log.details) {
+                    detailsText = `Activity: ${log.details.activity}, Proposed: ${log.details.proposedDate}. ${log.message || ''}`;
+                } else if (log.type === "termination" && log.details) {
+                    detailsText = `Reason: ${i18next.t(log.details.reasonKey)}. ${log.details.otherReason || ''} ${log.message || ''}`;
+                }
+                itemDiv.innerHTML = `
+                    <p class="font-medium text-sm"><strong>${i18next.t(`relationshipActions.${log.type}.title`, {defaultValue: log.type})}</strong></p>
+                    <p class="text-xs">${i18next.t('relationshipActions.actionBy', { actor: actorName })}</p>
+                    ${detailsText ? `<p class="text-sm mt-1">${i18next.t('relationshipActions.actionDetails', { details: detailsText })}</p>` : ''}
+                    <p class="timestamp text-xs mt-1">Logged: ${new Date(log.timestamp).toLocaleString()}</p>`;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function renderLifesyncFunSection() { /* Placeholder */ }
+        
+        // --- Event Listeners Setup ---
+        function setupEventListeners() {
+            document.querySelectorAll('#mainNav .nav-tab').forEach(button => button.addEventListener('click', handleNavClick));
+            document.querySelectorAll('.content-section .sub-nav-tab').forEach(tab => tab.addEventListener('click', handleSubNavClick));
+            document.getElementById('langEN')?.addEventListener('click', () => i18next.changeLanguage('en', updateContentAll));
+            document.getElementById('langXH')?.addEventListener('click', () => i18next.changeLanguage('xh', updateContentAll));
+            
+            ['closeDetailsModal', 'closeAlertModal', 'closePlaylistModalBtn'].forEach(id => {
+                document.getElementById(id)?.addEventListener('click', () => document.getElementById(id.replace('close', '').toLowerCase() + (id.includes('Playlist') ? 'Modal' : 'Modal')).style.display = 'none');
+            });
+            document.getElementById('alertModalOk')?.addEventListener('click', () => document.getElementById('alertModal').style.display = 'none');
+            document.getElementById('playlistButton')?.addEventListener('click', () => document.getElementById('playlistModal').style.display = 'flex');
+
+            document.getElementById('overview-img-prev')?.addEventListener('click', () => { prevOverviewImage(); stopOverviewImageCarousel(); });
+            document.getElementById('overview-img-next')?.addEventListener('click', () => { nextOverviewImage(); stopOverviewImageCarousel(); });
+            document.getElementById('dashboardMetricSelect')?.addEventListener('change', updateDashboardChart);
+            document.getElementById('trackingMetricSelect')?.addEventListener('change', (e) => { if(currentSubTargets.analysis === 'analysis-tracking') updateTrackingChart(e.target.value); });
+            document.getElementById('contributionFilterWeek')?.addEventListener('change', (e) => { if(currentSubTargets.analysis === 'analysis-contributions') renderContributionsTable(e.target.value); });
+            
+            document.getElementById('feedbackForm')?.addEventListener('submit', handleSendFeedback);
+            document.getElementById('apologyForm')?.addEventListener('submit', handleSendApology);
+            
+            document.getElementById('checkCompatibility')?.addEventListener('click', handleAstrologyCheck);
+            document.querySelectorAll('.compatibility-test-btn').forEach(btn => btn.addEventListener('click', () => showAlert(i18next.t('comingSoon'))));
+            document.getElementById('generateReport')?.addEventListener('click', () => showAlert(i18next.t('lifesync.reportNote')));
+
+            window.addEventListener('resize', updateNavStickiness);
+        }
+        
+        // --- Event Handlers ---
+        function handleNavClick(event) {
+            const sectionId = event.currentTarget.dataset.section;
+            if (sectionId) {
+                if (currentMainSection === 'overview' && sectionId !== 'overview') stopOverviewImageCarousel();
+                navigateToSection(sectionId);
+                if (sectionId === 'overview') startOverviewImageCarousel();
+            }
+        }
+
+        function handleSubNavClick(event) {
+            const subTargetId = event.currentTarget.dataset.subtarget;
+            const mainSection = event.currentTarget.closest('.content-section');
+            if (subTargetId && mainSection) {
+                navigateToSubSection(mainSection.id, subTargetId);
+            }
+        }
+        
+        function handleSendFeedback(e) {
+            e.preventDefault();
+            const sender = document.getElementById('feedbackSender').value;
+            const recipient = document.getElementById('feedbackRecipient').value;
+            const message = document.getElementById('feedbackMessage').value.trim();
+            if (!message) { showAlert(i18next.t('feedback.messageEmpty')); return; }
+            if (sender === recipient) { showAlert(i18next.t('feedback.senderRecipientSame')); return; }
+            relationshipData.feedbackLog.push({ id: Date.now(), sender, recipient, message, timestamp: new Date().toISOString(), response: null, read: false });
+            showAlert(i18next.t('feedback.success'));
+            document.getElementById('feedbackMessage').value = '';
+            if (currentSubTargets.connect === 'connect-feedback') renderFeedbackLog();
+        }
+
+        function handleSendApology(e) {
+            e.preventDefault();
+            const from = document.getElementById('apologyFrom').value;
+            const message = document.getElementById('apologyMessage').value.trim();
+            if (!message) { showAlert(i18next.t('alert.messageEmpty')); return; }
+            logRelationshipAction('apology', from, (from === "Salatiso" ? "Tee" : "Salatiso"), message);
+            document.getElementById('apologyMessage').value = '';
+        }
+        
+        function handleAstrologyCheck() {
+            const salatisoBdayStr = document.getElementById('salatisoBirthday').value;
+            const teeBdayStr = document.getElementById('teeBirthday').value;
+            const resultDiv = document.getElementById('compatibilityResult');
+            if (!resultDiv) return;
+            if (!salatisoBdayStr || !teeBdayStr) { resultDiv.textContent = i18next.t('funtools.astrology.invalidDate'); return; }
+            const salatisoSign = getZodiacSign(new Date(salatisoBdayStr));
+            const teeSign = getZodiacSign(new Date(teeBdayStr));
+            let msg = `${i18next.t('funtools.astrology.salatisoIsA')} ${salatisoSign}. ${i18next.t('funtools.astrology.teeIsA')} ${teeSign}. `;
+            if ((salatisoSign === "Virgo" && teeSign === "Taurus") || (salatisoSign === "Taurus" && teeSign === "Virgo")) {
+                msg += i18next.t('funtools.astrology.virgoTaurus');
+            } else { msg += i18next.t('funtools.astrology.general'); }
+            resultDiv.textContent = msg;
+        }
+
+        // --- Utility Functions ---
+        function updateContentAll() { 
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const optionsAttr = el.getAttribute('data-i18n-options');
+                let options = {};
+                if (optionsAttr) { try { options = JSON.parse(optionsAttr); } catch (e) { console.warn(`Error parsing i18n options for ${key}:`, e); } }
+                const translation = i18next.t(key, options);
+                if (el.hasAttribute('data-i18n-placeholder')) { el.placeholder = translation; }
+                else if (el.tagName === 'TITLE') { el.textContent = translation; }
+                else { el.innerHTML = translation; } 
+            });
+            populateAllSelects(); 
+            renderActiveSectionContent(); // Re-render active content after translation change
+        }
+        
+        function getZodiacSign(date) { 
+            if (!(date instanceof Date) || isNaN(date)) return "Invalid Date";
+            const day = date.getDate(); const month = date.getMonth() + 1;
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius";
+            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces";
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries";
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus";
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini";
+            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer";
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo";
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo";
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra";
+            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio";
+            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius";
+            if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn";
+            return "Unknown";
+        }
+        function logRelationshipAction(type, actor, target, message, details = {}) { 
+             const newAction = { id: Date.now(), type, actor, target, message, timestamp: new Date().toISOString(), details };
+            relationshipData.actionLog.push(newAction);
+            showAlert(i18next.t('alert.actionLogged'));
+            if (currentSubTargets.connect === 'connect-logs') renderRelationshipActionLog();
+        }
+        function showAlert(message, title = i18next.t('alert.defaultTitle')) { 
+            const modal = document.getElementById('alertModal'); 
+            const titleEl = document.getElementById('alertModalTitle'); 
+            const messageEl = document.getElementById('alertModalMessage'); 
+            if (modal && titleEl && messageEl) {
+                titleEl.textContent = title;
+                messageEl.textContent = message;
+                modal.style.display = 'flex'; 
+            }
+        }
+
+        // --- Initial Call ---
+        document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
 </body>
 </html>
