@@ -273,9 +273,9 @@
         }
         .resource-category-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(var(--accent-purple-medium-rgb, 168, 85, 247), 0.4);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.4); /* Using actual RGB for accent-purple-medium */
         }
-        .resource-category-card i.fa-2x { /* Ensure icons are a bit larger */
+        .resource-category-card i.fa-2x {
             font-size: 2.5rem;
             color: var(--accent-teal-bright);
             margin-bottom: 1rem;
@@ -285,57 +285,24 @@
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
-        .resource-item-list {
-            list-style: none;
-            padding-left: 0;
+        #resourceItemList .value-prop-card { /* Re-styling for items in the list */
             text-align: left;
+            margin-bottom: 1rem;
         }
-        .resource-item-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border-color-lavender);
+        #resourceItemList .value-prop-card h5 {
+            color: var(--accent-teal-bright);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
         }
-        .resource-item-list li:last-child { border-bottom: none; }
-        .resource-item-list a {
-            color: var(--text-primary-light);
-            text-decoration: none;
-            transition: color 0.3s;
+        #resourceItemList .value-prop-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary-lavender);
+            margin-bottom: 0.75rem;
         }
-        .resource-item-list a:hover { color: var(--accent-teal-bright); }
-
-        /* Carousel styles (Basic - can be enhanced with JS library if needed) */
-        .carousel-container {
-            overflow: hidden;
-            width: 100%;
-            margin-bottom: 2rem;
-            position: relative;
+        #resourceItemList .value-prop-card a.btn {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
         }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .carousel-slide {
-            min-width: 100%; /* Full width slides */
-            box-sizing: border-box;
-            padding: 0 10px; /* Spacing between slides if multiple are partially visible */
-        }
-        .carousel-slide .value-prop-card { /* Reuse existing card style */
-            width: 100%;
-            margin-bottom: 0; /* Remove margin if it's handled by slide padding */
-        }
-        .carousel-buttons {
-            text-align: center;
-            margin-top: 1rem;
-        }
-        .carousel-buttons button {
-            background-color: var(--accent-purple-medium);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin: 0 5px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .carousel-buttons button:hover { background-color: var(--accent-pink-vibrant); }
 
     </style>
 </head>
@@ -531,20 +498,6 @@
                 <h2 class="text-center" data-i18n="resources.pageTitle">Relationship Resources Hub</h2>
                 <p class="text-center mb-6" data-i18n="resources.pageSubtitle">Explore a curated list of tools, services, and information to support your relationship journey. Click on a category to learn more.</p>
 
-                <!--
-                <div class="mb-6 text-center">
-                    <label for="resourceCategoryFilter" class="mr-2" data-i18n="resources.filterByCategory">Filter by Category:</label>
-                    <select id="resourceCategoryFilter" class="p-2 rounded bg-[var(--bg-card-purple)] border border-[var(--border-color-lavender)] text-sm">
-                        <option value="all" data-i18n="resources.filterAllCategories">All Categories</option>
-                        <option value="dating" data-i18n="resources.category.dating">Dating & Meeting</option>
-                        <option value="assessment" data-i18n="resources.category.assessment">Assessments</option>
-                        <option value="counseling" data-i18n="resources.category.counseling">Counseling & Therapy</option>
-                        <option value="legal" data-i18n="resources.category.legal">Legal & Marriage</option>
-                         Add more categories as they are defined
-                    </select>
-                </div>
-                -->
-
                 <div id="resourceCategoriesContainer" class="resource-category-grid">
                     </div>
 
@@ -554,7 +507,6 @@
                     <div id="resourceItemList" class="grid md:grid-cols-2 gap-4">
                         </div>
                 </div>
-
             </section>
 
             <section id="profile" class="content-section">
@@ -706,15 +658,14 @@
 
     <script>
         // --- Firebase Configuration ---
-        // IMPORTANT: Replace with your actual Firebase project configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY", // PASTE YOUR ACTUAL apiKey HERE
-            authDomain: "YOUR_AUTH_DOMAIN", // PASTE YOUR ACTUAL authDomain HERE
-            projectId: "YOUR_PROJECT_ID", // PASTE YOUR ACTUAL projectId HERE
-            storageBucket: "YOUR_STORAGE_BUCKET", // PASTE YOUR ACTUAL storageBucket HERE
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // PASTE YOUR ACTUAL messagingSenderId HERE
-            appId: "YOUR_APP_ID", // PASTE YOUR ACTUAL appId HERE
-            measurementId: "YOUR_MEASUREMENT_ID" // Optional, but good to include if you have it
+            apiKey: "AIzaSyAW0SakPbUUfpK-gD4SHMIQzlEhpMLzUbI",
+            authDomain: "lifesyncapp-391ab.firebaseapp.com",
+            projectId: "lifesyncapp-391ab",
+            storageBucket: "lifesyncapp-391ab.appspot.com", // Corrected from .firebasestorage.app
+            messagingSenderId: "617714109567",
+            appId: "1:617714109567:web:b7f3cf016d6f7348b1434a",
+            measurementId: "G-7XKHR48S14"
         };
 
         // Initialize Firebase
@@ -830,7 +781,7 @@
                         pageSubtitle: "Explore a curated list of tools, services, and information to support your relationship journey. Click on a category to learn more.",
                         filterByCategory: "Filter by Category:",
                         filterAllCategories: "All Categories",
-                        category: { // For dynamic category buttons/filters
+                        category: {
                             dating: "Dating & Meeting Platforms",
                             assessment: "Personality & Compatibility Assessments",
                             christian: "Christian Relationship Resources",
@@ -845,12 +796,43 @@
                             postdivorce: "Post-Divorce Support",
                             lgbtq: "LGBTQ+ Specific Services",
                             cultural: "Cultural & Traditional Services",
-                            additional: "Additional Resources"
+                            additional: "Additional Resources",
+                            emergency: "Emergency Contacts"
                         },
                         backToCategories: "Back to Categories",
-                        title: "Find Your Connection - Dating Platform Guide", // Old title, can be a category now
-                        subtitle: "Explore popular dating platforms to make new connections. LifeSync is here for when you're ready to deepen that bond. (Data below is for illustrative purposes).", // Old subtitle
-                        filterLabel: "Filter by Country (Illustrative):", filter: { all: "All Countries", za: "South Africa", us: "United States", uk: "United Kingdom" }, table: { platform: "Platform", audience: "Target Audience", features: "Key Features", popularityZA: "Popularity (SA)", link: "Link" }, visitSite: "Visit Site"
+                        visitSite: "Visit Site",
+                        // Descriptions for resource items (examples)
+                        datingDesc: {
+                            tinder: "Global swipe-based app for casual or serious dating.",
+                            bumble: "Women-first app for dating, friendship, and networking.",
+                            okcupid: "LGBTQIA+ friendly with in-depth profile questions.",
+                            hinge: "Relationship-focused, 'designed to be deleted'.",
+                            saDating: "Local South African dating site.",
+                            badoo: "Widely used global platform with strong SA presence."
+                        },
+                        assessmentDesc: {
+                            personalityMatch: "Free personality test and compatibility scoring.",
+                            "16Personalities": "Myers-Briggs based test with relationship insights.",
+                            bigFive: "Scientific Big Five Factor Model assessment.",
+                            loveLanguages: "Discover how you and your partner express and receive love."
+                        },
+                        christianDesc: {
+                            focusSA: "Counseling, marriage resources, and family support in SA.",
+                            marriageBuilders: "Global resource for building strong marriages.",
+                            christianMingle: "Faith-based dating platform."
+                        },
+                        lgbtqDesc: {
+                            outSA: "Advocacy, support, and health services for LGBTQ+ individuals in SA.",
+                            triangleSA: "Support, health, and community services in Cape Town.",
+                            grindr: "Popular global app for gay, bi, trans, and queer people.",
+                            her: "Dating and community app for lesbian, bi, and queer women."
+                        },
+                        legalDesc: {
+                            legalAidSA: "Free legal assistance for qualifying individuals in SA.",
+                            dha: "Official site for marriage registration and legal requirements in SA.",
+                            divorceLaws: "Information on divorce procedures in South Africa."
+                        }
+                        // Add more description keys for other categories and items
                     },
                     profile: { title: "My LifeSync Profile", subtitle: "This is where your detailed individual profile will be displayed, managed, and where you can initiate syncing with a partner.", assessmentsTitle: "Completed Assessments:", partnersTitle: "Synced Partners:", noPartners: "No partner synced yet.", connectBtn: "Connect with Partner (Coming Soon)", dataTitle: "Profile Data & Preferences:", dataNote: "Example: Your views on 'Lobola' importance (Weight: 4/5), your preferred 'Financial Management Style', your 'Relationship with Extended Family' details.", importTitle: "Import Social Media Data:", importInstructions: "Upload your social media data file (e.g., LinkedIn ZIP, Facebook JSON) to enhance your profile.", importBtn: "Import Data", loadingAssessments: "Loading assessments...", loadingData: "Loading data...", typePermanent: "Permanent", typeTemporary: "Temporary", emailTemp: "Email: (Temporary Profile)", expiresOn: "Expires on:", guestName: "Guest", guestEmail: "Email: Not logged in", noAssessmentsLoggedIn: "Log in to see assessments.", noDataLoggedIn: "Log in to see profile data.", noAssessmentsYet: "No assessments completed yet.", noProfileDataYet: "No profile data added yet.", completedOn: "Completed on" },
                     notifications: { title: "Notifications", welcome: "Welcome to LifeSync! Complete your profile to get started." },
@@ -866,7 +848,6 @@
             zu: {
                 translation: { /* Zulu translations as previously defined, ensure all new keys are added */ }
             },
-            // Add other languages here...
         };
 
         i18next
@@ -893,8 +874,6 @@
                 if (key) {
                     const translation = i18next.t(key);
                      if (elem.tagName === 'INPUT' || elem.tagName === 'TEXTAREA') {
-                        // For input elements, you might want to set 'value' if it's not a placeholder
-                        // but typically for labels and buttons, innerHTML is fine.
                     } else {
                         elem.innerHTML = translation;
                     }
@@ -1172,12 +1151,12 @@
             }
             items.forEach(item => {
                 let html = '<div>';
-                if(item.source && item.details) { // Specific structure from social media import
+                if(item.source && item.details) {
                     html += `<p><strong>Source:</strong> ${item.source}</p>`;
-                    for (const key in item.details.raw) { // Assuming raw data is nested
+                    for (const key in item.details.raw) {
                          html += `<p><strong>${key.replace(/_/g, ' ')}:</strong> ${JSON.stringify(item.details.raw[key]).substring(0,100)}</p>`;
                     }
-                } else { // Generic display for other profile data items
+                } else {
                     for (const key in item) { html += `<p><strong>${key}:</strong> ${JSON.stringify(item[key])}</p>`;}
                 }
                 html += '</div><hr class="my-2 border-[var(--border-color-lavender)]">';
@@ -1359,49 +1338,79 @@
             dating: {
                 icon: "fas fa-heart", titleKey: "resources.category.dating",
                 items: [
-                    { name: "Tinder", link: "https://tinder.com", descriptionKey: "resources.dating.tinderDesc", tags: ["global", "swipe"] },
-                    { name: "Bumble", link: "https://bumble.com", descriptionKey: "resources.dating.bumbleDesc", tags: ["global", "women-first"] },
-                    { name: "OkCupid", link: "https://okcupid.com", descriptionKey: "resources.dating.okcupidDesc", tags: ["global", "questionnaire"] },
-                    { name: "Hinge", link: "https://hinge.co", descriptionKey: "resources.dating.hingeDesc", tags: ["global", "relationship-focused"] },
-                    { name: "SouthAfricanDating", link: "https://southafricancupid.com/", descriptionKey: "resources.dating.saDatingDesc", tags: ["sa", "local"] }, // Example, actual URL might differ
-                    { name: "Badoo", link: "https://badoo.com", descriptionKey: "resources.dating.badooDesc", tags: ["global", "sa-popular"] }
+                    { name: "Tinder", link: "https://tinder.com", descriptionKey: "resources.datingDesc.tinder", tags: ["global", "swipe", "sa-popular"] },
+                    { name: "Bumble", link: "https://bumble.com", descriptionKey: "resources.datingDesc.bumble", tags: ["global", "women-first", "sa-popular"] },
+                    { name: "OkCupid", link: "https://okcupid.com", descriptionKey: "resources.datingDesc.okcupid", tags: ["global", "lgbtq-friendly", "questionnaire"] },
+                    { name: "Hinge", link: "https://hinge.co", descriptionKey: "resources.datingDesc.hinge", tags: ["global", "relationship-focused"] },
+                    { name: "SouthAfricanCupid", link: "https://www.southafricancupid.com/", descriptionKey: "resources.datingDesc.saDating", tags: ["sa", "local"] },
+                    { name: "Badoo", link: "https://badoo.com", descriptionKey: "resources.datingDesc.badoo", tags: ["global", "sa-popular"] },
+                    { name: "Plenty of Fish (POF)", link: "https://pof.com", descriptionKey: "resources.datingDesc.pof", tags: ["global", "free"] },
+                    { name: "Singles2Meet.co.za", link: "https://www.singles2meet.co.za/", descriptionKey: "resources.datingDesc.singles2meet", tags: ["sa", "local", "free"] },
+                    { name: "SALT Christian Dating", link: "https://www.be-salt.com/south-africa/christian-dating", descriptionKey: "resources.datingDesc.salt", tags: ["christian", "global", "sa"] },
+                    { name: "Grindr", link: "https://www.grindr.com/", descriptionKey: "resources.datingDesc.grindr", tags: ["lgbtq", "global", "gay", "bi", "trans", "queer"] },
+                    { name: "HER", link: "https://weareher.com/", descriptionKey: "resources.datingDesc.her", tags: ["lgbtq", "global", "lesbian", "bi", "queer"] }
                 ]
             },
             assessment: {
                 icon: "fas fa-clipboard-check", titleKey: "resources.category.assessment",
                 items: [
-                    { name: "PersonalityMatch", link: "https://apps.apple.com/za/app/personalitymatch/id1472 PersonalityMatch", descriptionKey: "resources.assessment.personalityMatchDesc", tags: ["personality", "compatibility", "free"] },
-                    { name: "16Personalities", link: "https://www.16personalities.com", descriptionKey: "resources.assessment.16PersonalitiesDesc", tags: ["personality", "myers-briggs", "free"] },
-                    { name: "Big Five Personality Test", link: "https://openpsychometrics.org/tests/IPIP-BFFM/", descriptionKey: "resources.assessment.bigFiveDesc", tags: ["personality", "free"] },
-                    { name: "Love Languages Quiz", link: "https://5lovelanguages.com/quizzes/", descriptionKey: "resources.assessment.loveLanguagesDesc", tags: ["communication", "free"] }
+                    { name: "PersonalityMatch App", link: "https://apps.apple.com/za/app/personalitymatch/id1472 PersonalityMatch", descriptionKey: "resources.assessmentDesc.personalityMatch", tags: ["personality", "compatibility", "free", "app"] },
+                    { name: "16Personalities", link: "https://www.16personalities.com", descriptionKey: "resources.assessmentDesc.16Personalities", tags: ["personality", "myers-briggs", "free"] },
+                    { name: "Big Five Personality Test (Open Psychometrics)", link: "https://openpsychometrics.org/tests/IPIP-BFFM/", descriptionKey: "resources.assessmentDesc.bigFive", tags: ["personality", "free", "scientific"] },
+                    { name: "The 5 Love Languages Quiz", link: "https://5lovelanguages.com/quizzes/", descriptionKey: "resources.assessmentDesc.loveLanguages", tags: ["communication", "relationship", "free"] },
+                    { name: "CoupleFlow AI Chat", link: "https://coupleflow.com", descriptionKey: "resources.assessmentDesc.coupleflow", tags: ["ai", "relationship", "insights"] },
+                    { name: "Attachment Style Quiz (Attachment Project)", link: "https://www.attachmentproject.com/attachment-style-quiz/", descriptionKey: "resources.assessmentDesc.attachmentStyle", tags: ["relationship", "psychology", "free"] }
                 ]
             },
             christian: {
                 icon: "fas fa-cross", titleKey: "resources.category.christian",
                 items: [
-                    { name: "Focus on the Family SA", link: "https://www.focusonthefamily.co.za/", descriptionKey: "resources.christian.focusSA", tags: ["counseling", "marriage", "sa"] },
-                    { name: "Marriage Builders", link: "https://www.marriagebuilders.com/", descriptionKey: "resources.christian.marriageBuilders", tags: ["marriage", "global"] },
-                    { name: "Christian Mingle", link: "https://christianmingle.com", descriptionKey: "resources.christian.christianMingle", tags: ["dating", "faith-based"] }
+                    { name: "Focus on the Family Africa", link: "https://www.focusonthefamily.co.za/", descriptionKey: "resources.christianDesc.focusSA", tags: ["counseling", "marriage", "family", "sa"] },
+                    { name: "Marriage Builders", link: "https://www.marriagebuilders.com/", descriptionKey: "resources.christianDesc.marriageBuilders", tags: ["marriage", "global", "resources"] },
+                    { name: "Christian Mingle", link: "https://christianmingle.com", descriptionKey: "resources.christianDesc.christianMingle", tags: ["dating", "faith-based", "global"] },
+                    { name: "The Marriage Course (Alpha SA)", link: "https://alphasa.co.za/preview/the-marriage-course/", descriptionKey: "resources.christianDesc.marriageCourse", tags: ["pre-marriage", "enrichment", "sa"] }
                 ]
             },
             lgbtq: {
                 icon: "fas fa-rainbow", titleKey: "resources.category.lgbtq",
                 items: [
-                    { name: "OUT LGBT Well-being (SA)", link: "https://out.org.za", descriptionKey: "resources.lgbtq.outSA", tags: ["support", "advocacy", "sa"] },
-                    { name: "Triangle Project (SA)", link: "https://triangle.org.za", descriptionKey: "resources.lgbtq.triangleSA", tags: ["support", "health", "sa"] },
-                    { name: "Grindr", link: "https://www.grindr.com/", descriptionKey: "resources.lgbtq.grindr", tags: ["dating", "global", "gay", "bi", "trans", "queer"] },
-                    { name: "Her", link: "https://weareher.com/", descriptionKey: "resources.lgbtq.her", tags: ["dating", "global", "lesbian", "bi", "queer"] }
+                    { name: "OUT LGBT Well-being (SA)", link: "https://out.org.za", descriptionKey: "resources.lgbtqDesc.outSA", tags: ["support", "advocacy", "health", "sa"] },
+                    { name: "Triangle Project (SA)", link: "https://triangle.org.za", descriptionKey: "resources.lgbtqDesc.triangleSA", tags: ["support", "health", "community", "sa", "cape-town"] },
+                    { name: "GALA Queer Archive (SA)", link: "https://gala.co.za", descriptionKey: "resources.lgbtqDesc.gala", tags: ["archive", "history", "resources", "sa"] }
                 ]
             },
             legal: {
                 icon: "fas fa-gavel", titleKey: "resources.category.legal",
                 items: [
-                    { name: "Legal Aid South Africa", link: "https://legal-aid.co.za", descriptionKey: "resources.legal.legalAidSA", tags: ["free", "sa"] },
-                    { name: "Dept. of Home Affairs (Marriages)", link: "https://www.dha.gov.za/", descriptionKey: "resources.legal.dha", tags: ["government", "sa"] },
-                    { name: "DivorceLaws.co.za", link: "https://www.divorcelaws.co.za", descriptionKey: "resources.legal.divorceLaws", tags: ["divorce", "sa"] }
+                    { name: "Legal Aid South Africa", link: "https://legal-aid.co.za", descriptionKey: "resources.legalDesc.legalAidSA", tags: ["free", "legal-assistance", "sa"] },
+                    { name: "Dept. of Home Affairs (Marriages)", link: "https://www.dha.gov.za/", descriptionKey: "resources.legalDesc.dha", tags: ["government", "marriage-registration", "sa"] },
+                    { name: "DivorceLaws.co.za", link: "https://www.divorcelaws.co.za", descriptionKey: "resources.legalDesc.divorceLaws", tags: ["divorce", "information", "sa"] },
+                    { name: "Marriage Act 25 of 1961", link: "https://www.gov.za/sites/default/files/gcis_document/201505/act-25-1961.pdf", descriptionKey: "resources.legalDesc.marriageAct", tags: ["legislation", "civil-marriage", "sa"] },
+                    { name: "Civil Union Act 17 of 2006", link: "https://www.saflii.org/za/legis/num_act/cua2006139.pdf", descriptionKey: "resources.legalDesc.civilUnionAct", tags: ["legislation", "same-sex-marriage", "civil-partnership", "sa"] },
+                    { name: "Recognition of Customary Marriages Act", link: "https://www.saflii.org/za/legis/consol_act/rocma1998366.pdf", descriptionKey: "resources.legalDesc.customaryMarriageAct", tags: ["legislation", "traditional-marriage", "sa"] }
+                ]
+            },
+            counseling: {
+                icon: "fas fa-users", titleKey: "resources.category.counseling",
+                items: [
+                    { name: "LifeLine Southern Africa", link: "https://lifelinesa.co.za", descriptionKey: "resources.counselingDesc.lifeline", tags: ["crisis", "helpline", "sa"] },
+                    { name: "SADAG", link: "https://www.sadag.org", descriptionKey: "resources.counselingDesc.sadag", tags: ["mental-health", "helpline", "sa"] },
+                    { name: "FAMSA", link: "https://famsa.org.za", descriptionKey: "resources.counselingDesc.famsa", tags: ["family", "marriage", "sa"] },
+                    { name: "TherapyNow", link: "https://www.therapynow.co.za/", descriptionKey: "resources.counselingDesc.therapynow", tags: ["online-therapy", "sa"] },
+                    { name: "Kena Health", link: "https://www.kena.health/blog/mental-health-online-therapy-in-south-africa-what-to-know", descriptionKey: "resources.counselingDesc.kena", tags: ["online-therapy", "app", "sa"] }
+                ]
+            },
+            // Add more categories based on the PDF's Table of Contents
+            // For example: premarriage, enhancement, family, crisis, divorce, postdivorce, cultural, additional, emergency
+            emergency: {
+                icon: "fas fa-phone-volume", titleKey: "resources.category.emergency",
+                items: [
+                    { name: "LifeLine SA", link: "tel:0861322322", descriptionKey: "resources.emergencyDesc.lifeline", contact: "0861 322 322" },
+                    { name: "SADAG Suicide Helpline", link: "tel:0800567567", descriptionKey: "resources.emergencyDesc.sadagSuicide", contact: "0800 567 567" },
+                    { name: "GBV Command Centre", link: "tel:0800428428", descriptionKey: "resources.emergencyDesc.gbv", contact: "0800 428 428" },
+                    { name: "Police Emergency", link: "tel:10111", descriptionKey: "resources.emergencyDesc.police", contact: "10111" }
                 ]
             }
-            // ... Add ALL other categories and items from user's list here, structured similarly
         };
 
         const resourceCategoriesContainer = document.getElementById('resourceCategoriesContainer');
@@ -1413,7 +1422,7 @@
         function displayResourceCategories() {
             resourceCategoriesContainer.innerHTML = '';
             resourceDetailView.style.display = 'none';
-            resourceCategoriesContainer.style.display = 'grid'; // Or 'flex' if using flexbox
+            resourceCategoriesContainer.style.display = 'grid';
 
             for (const categoryKey in resourcesData) {
                 const category = resourcesData[categoryKey];
@@ -1426,7 +1435,7 @@
                 card.onclick = () => displayResourceItems(categoryKey);
                 resourceCategoriesContainer.appendChild(card);
             }
-            updateUIWithTranslations(); // Ensure new cards are translated
+            updateUIWithTranslations();
         }
 
         function displayResourceItems(categoryKey) {
@@ -1434,20 +1443,27 @@
             resourceDetailTitle.textContent = i18next.t(category.titleKey);
             resourceItemList.innerHTML = '';
 
-            category.items.forEach(item => {
-                const listItem = document.createElement('div'); // Using div for richer content per item
-                listItem.className = 'value-prop-card p-4 mb-3'; // Re-use card style for items
-                let itemHtml = `<h5 class="text-lg font-semibold" style="color: var(--accent-teal-bright);">${item.name}</h5>`;
-                if (item.descriptionKey) {
-                    itemHtml += `<p class="text-sm text-gray-300 mb-2">${i18next.t(item.descriptionKey, {defaultValue: "Description not available."})}</p>`;
-                }
-                if (item.link) {
-                    itemHtml += `<a href="${item.link}" target="_blank" class="btn btn-secondary !text-xs !py-1 !px-2">${i18next.t('resources.visitSite')} <i class="fas fa-external-link-alt ml-1"></i></a>`;
-                }
-                // Add tags or other info here if needed
-                listItem.innerHTML = itemHtml;
-                resourceItemList.appendChild(listItem);
-            });
+            if (category.items && category.items.length > 0) {
+                category.items.forEach(item => {
+                    const itemCard = document.createElement('div');
+                    itemCard.className = 'value-prop-card p-4 mb-3'; // Using value-prop-card for consistent item styling
+                    let itemHtml = `<h5 class="text-lg font-semibold" style="color: var(--accent-teal-bright);">${item.name}</h5>`;
+                    // Try to get description using the key, fallback to a default if not found
+                    const descriptionText = i18next.t(item.descriptionKey, { defaultValue: "Detailed information available via the link." });
+                    itemHtml += `<p class="text-sm text-gray-300 mb-2">${descriptionText}</p>`;
+
+                    if (item.link) {
+                        itemHtml += `<a href="${item.link}" target="_blank" class="btn btn-secondary !text-xs !py-1 !px-2">${i18next.t('resources.visitSite')} <i class="fas fa-external-link-alt ml-1"></i></a>`;
+                    }
+                     if (item.contact) {
+                        itemHtml += `<p class="text-sm mt-2"><strong>Contact:</strong> ${item.contact}</p>`;
+                    }
+                    itemCard.innerHTML = itemHtml;
+                    resourceItemList.appendChild(itemCard);
+                });
+            } else {
+                resourceItemList.innerHTML = `<p data-i18n="resources.noItemsInCategory">No items listed in this category yet.</p>`;
+            }
 
             resourceCategoriesContainer.style.display = 'none';
             resourceDetailView.style.display = 'block';
@@ -1460,9 +1476,9 @@
         // --- Initial Load ---
         document.addEventListener('DOMContentLoaded', () => {
             showSection('about');
-            loadDatingSites();
+            loadDatingSites(); // This can be removed if dating sites are part of the new resource structure
             loadDetailsQuestion();
-            displayResourceCategories(); // Initialize resources page
+            displayResourceCategories(); // Initialize new resources page
             updateUIWithTranslations();
             checkTempProfile();
         });
