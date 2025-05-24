@@ -181,9 +181,15 @@
             margin: 8px;
             box-sizing: border-box;
             opacity: 0;
+            display: none;
             animation: fadeIn 0.6s forwards;
             color: var(--text-primary-light);
             max-height: 100%;
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
         }
 
         .content-section:nth-child(n+2) {
@@ -550,7 +556,6 @@
             color: var(--accent-pink-vibrant);
         }
 
-        /* Search Button Styles */
         #searchBtn {
             position: fixed;
             bottom: 60px;
@@ -621,8 +626,22 @@
             <button class="auth-button" id="logoutBtn" style="display:none;"><i class="fa-solid fa-sign-out-alt"></i> <span data-i18n="nav.logout">Logout</span></button>
             <select id="languageSelector" class="p-1 rounded bg-[var(--bg-card-purple)] border border-[var(--border-color-lavender)] text-sm ml-2">
                 <option value="en">English</option>
-                <option value="zu">Zulu</option>
-                <!-- Add more languages in Phase 2 -->
+                <option value="zu">isiZulu</option>
+                <option value="xh">isiXhosa</option>
+                <option value="af">Afrikaans</option>
+                <option value="nso">Sepedi</option>
+                <option value="st">Sesotho</option>
+                <option value="tn">Setswana</option>
+                <option value="ss">siSwati</option>
+                <option value="ts">Xitsonga</option>
+                <option value="ve">Tshivenda</option>
+                <option value="nr">isiNdebele</option>
+                <option value="zh">Mandarin</option>
+                <option value="ja">Japanese</option>
+                <option value="fr">French</option>
+                <option value="sw">Swahili</option>
+                <option value="sn">Shona</option>
+                <option value="pt">Portuguese</option>
             </select>
         </div>
     </nav>
@@ -1225,4 +1244,904 @@
                             syncLabel: "Vumelanisa Nomlingani Wakho:",
                             sync: "Khetha ukuthi yiziphi izinto ozowabelana ngazo futhi uqhathanise nomlingani wakho, ukhuthaze ukuxhumana okuvulekile nokwethembeka.",
                             insightsLabel: "Ulwazi Olusekelwe Edatheni:",
-                            insights: "Qonda amaphethini akho okuthembeka, khomba amandla,
+                            insights: "Qonda amaphethini akho okuthembeka, khomba amandla, futhi ubone izindawo zokukhula kanye nezingxoxo.",
+                            culturalLabel: "Iyasizwa Ngamasiko:",
+                            cultural: "Ukuhlola kucabangela izizinda ezahlukahlukene, okuhlanganisa nezimo zamasiko ezithile njengezaseNingizimu Afrika (isib. lobola, izindima zomndeni).",
+                            trackLabel: "Landela Uhambo Lwakho:",
+                            track: "Bhalisa imicimbi ebalulekile, qaphela izinguquko ekuvumelaneni, futhi gubhe izigigaba ezibalulekile ndawonye.",
+                            empowerLabel: "Nika Amandla Izinketho Zakho:",
+                            empower: "Thatha izinqumo ezinolwazi mayelana nekusasa lobudlelwano bakho, obakhelwe ekubeni sobala kanye nokuqonda okufanayo."
+                        },
+                        exploreBtn: "Hlola Ukuhlola"
+                    },
+                    assessments: {
+                        title: "Thola Ukuthembeka Kwakho",
+                        subtitle: "Zibandakanye nokuhlola kwethu ukuze uthole ulwazi olubalulekile mayelana nobudlelwano bakho. Nika izisindo kulokho okubalulekile kuwe kakhulu!",
+                        quickCompat: {
+                            title: "Ukuhlola Ukuthembeka Okusheshayo",
+                            description: "Indlela esheshayo yokuthi wena nomlingani ongase abe khona nizizwe ngokuvumelana kokuqala. Khetha ukujula kwakho!",
+                            basicBtn: "Ukuvumelanisa Okusheshayo (Imibuzo 5)",
+                            intermediateBtn: "Ukujula Okukhulu (Imibuzo 10)",
+                            advancedBtn: "I-Spectrum Ephelele (Imibuzo 15)",
+                            importanceLabel: "Ukubaluleka (1-5):",
+                            progress: "Umbuzo <span id='quickCompatCounter'>1</span> kwezi-<span id='quickCompatTotal'>5</span>",
+                            nextBtn: "Okulandelayo",
+                            resultsTitle: "Imiphumela Yokuvumelanisa Okusheshayo!",
+                            retryBtn: "Zama Elinye Izinga"
+                        },
+                        profileBuilder: {
+                            title: "Isakhi Sephrofayili Yobudlelwano Bami",
+                            description: "Qala ukwakha iphrofayili yakho eningilizayo ye-LifeSync ngokuphendula le mibuzo yokuqala mayelana nemibono kanye nezintandokazi zakho. Lokhu kwakha isisekelo sokuvumelanisa kwakho kwesikhathi esizayo.",
+                            q1: "Iyini ulimi lwakho lothando oluyinhloko?",
+                            options: {
+                                words: "Izinkulumo Zokuvuma",
+                                acts: "Izenzo Zokusebenzela",
+                                gifts: "Ukuthola Izipho",
+                                quality_time: "Isikhathi Esisezingeni",
+                                touch: "Ukuthintwa Komzimba"
+                            },
+                            importanceLabel: "Kubaluleke kangakanani lokhu kuwe? (1-5):",
+                            progress: "Umbuzo <span id='detailsCounter'>1</span> kwezi-<span id='detailsTotal'>10</span>",
+                            nextBtn: "Umbuzo Olandelayo",
+                            resultsTitle: "Isigaba Sephrofayili Siqediwe!",
+                            reviewBtn: "Buyekeza Izimpendulo",
+                            viewProfileBtn: "Buka Iphrofayili Yami"
+                        },
+                        note: "Ukuhlola okujulile ngokwezimali, izindinganiso zamasiko (isib. izingxoxo zelobola, izindima zomndeni), indlela yokuphila, kanye nezinhloso zesikhathi eside kuyatholakala uma usudale iphrofayili yakho futhi uxhumana nomlingani."
+                    },
+                    tools: {
+                        title: "Amathuluzi Okuthuthukisa Ubudlelwano",
+                        subtitle: "Thola isethi yamathuluzi aklanyelwe ukukhuthaza ukuxhumana, ukulandela inqubekelaphambili, kanye nokubhekana nezinselele ndawonye.",
+                        communication: {
+                            title: "Izinkombandlela Zokuxhumana",
+                            description: "Izinkomba ezihlelekile kanye nezinkombandlela zokuxoxa ngezindaba ezibucayi njengezimali, okulindelekile emndenini, kanye nezinhlelo zesikhathi esizayo."
+                        },
+                        milestone: {
+                            title: "Ukubhalisa Isigigaba & Usuku",
+                            description: "Bhalisa izinsuku ezibalulekile, izikhumbuzo, kanye nezimpawu zobudlelwano. Thola izikhumbuzo futhi ugubhe ndawonye."
+                        },
+                        monitoring: {
+                            title: "Ukubheka Izingxenye",
+                            description: "Landela izinguquko ezindabeni ezibalulekile zobudlelwano (isib. ukuvama kwezinkulumo zokuvuma, imisebenzi eyabiwe) futhi uthole izikhumbuzo ezithambile."
+                        },
+                        conflict: {
+                            title: "Izinsiza Zokuxazulula Ukungaboni Ngaso Linye",
+                            description: "Amathuluzi okusiza ukubhekana nokungaboni ngaso linye ngendlela eyakhayo, okuhlanganisa ukushintshisana ngempendulo ehlukile."
+                        },
+                        goals: {
+                            title: "Izinhloso Ezabiwe & Amaphupho",
+                            description: "Chaza futhi ulandele inqubekelaphambili yezifiso ezabiwe njengombhangqwana."
+                        },
+                        closure: {
+                            title: "Ukuvala Ubudlelwano (Uma Kudingeka)",
+                            description: "Amathuluzi okusiza inqubo ehloniphekile futhi ecacile uma ubudlelwano buphela."
+                        },
+                        comingSoon: "Iza Maduze"
+                    },
+                    resources: {
+    title: "Thola Ukuxhumana Kwakho - Umhlahlandlela Wesikhulumi Sokuphola",
+    subtitle: "Hlola izinkundla zokuphola ezidumile ukuze wenze ukuxhumana okusha. I-LifeSync ilapha uma usulungele ukujulisa lolo xhumano. (Idatha engezansi yenzelwe ukufanekisa).",
+    filterLabel: "Hlunga Ngokwezwe (Okufanekisayo):",
+    filter: {
+        all: "Wonke Amazwe",
+        za: "INingizimu Afrika",
+        us: "IMelika",
+        uk: "I-United Kingdom"
+    },
+    table: {
+        platform: "Inkudla",
+        audience: "Abantu Abayithintayo",
+        features: "Izici Ezibalulekile",
+        popularityZA: "Ukuduma (SA)",
+        link: "Isixhumanisi"
+    }
+}
+zh: {
+    translation: {
+        title: "LifeSync - 深化你的连接",
+        nav: {
+            brand: "LifeSync",
+            about: "关于",
+            assessments: "评估",
+            tools: "工具",
+            resources: "资源",
+            profile: "我的档案",
+            login: "登录",
+            register: "注册",
+            logout: "退出"
+        },
+        about: {
+            title: "通过LifeSync解锁更深层次的连接",
+            subtitle: "超越滑动。了解真正重要的持久兼容性。",
+            datingApps: {
+                title: "约会应用：火花",
+                description: "约会应用非常适合初步介绍和根据兴趣和吸引力寻找潜在匹配对象。它们帮助你发现外面有哪些人。",
+                focusLabel: "焦点：",
+                focus: "发现，初步吸引力，粗略描绘。"
+            },
+            lifesync: {
+                title: "LifeSync：深度",
+                description: "LifeSync是你的下一步。一旦你建立了联系，我们帮助你探索更深层次的兼容性——财务、价值观、生活方式、文化细微差别和长期目标。",
+                focusLabel: "焦点：",
+                focus: "深度兼容性，长期对齐，共同未来。"
+            },
+            whyTitle: "为什么选择LifeSync？",
+            why: {
+                stageLabel: "适用于每个关系阶段：",
+                stage: "无论你是刚认识，正在考虑同居，计划结婚，还是处理长期伴侣关系，LifeSync都能提供相关见解。",
+                profileLabel: "打造你的独特档案：",
+                profile: "创建一个详细的个人档案，涵盖对你至关重要的方面。这是你的基础。",
+                syncLabel: "与你的伴侣同步：",
+                sync: "选择要分享和比较的参数，促进开放和诚实的沟通。",
+                insightsLabel: "数据驱动的见解：",
+                insights: "了解你的兼容性模式，识别优势，并指出成长和讨论的领域。",
+                culturalLabel: "文化敏感：",
+                cultural: "评估考虑了多元背景，包括南非的特定文化背景（如彩礼、家庭角色）。",
+                trackLabel: "追踪你的旅程：",
+                track: "记录重要事件，监控对齐变化，一起庆祝里程碑。",
+                empowerLabel: "赋予你的选择：",
+                empower: "基于透明和相互理解，为你的关系未来做出明智的决定。"
+            },
+            exploreBtn: "探索评估"
+        },
+        assessments: {
+            title: "发现你的兼容性",
+            subtitle: "参与我们的评估，深入了解你的关系动态。分配对你最重要的权重！",
+            quickCompat: {
+                title: "快速兼容性检查",
+                description: "为你和潜在伴侣快速感受初步对齐的方式。选择你的深度！",
+                basicBtn: "快速同步（5个问题）",
+                intermediateBtn: "深入探索（10个问题）",
+                advancedBtn: "全谱（15个问题）",
+                importanceLabel: "重要性（1-5）：",
+                progress: "问题 <span id='quickCompatCounter'>1</span> 共 <span id='quickCompatTotal'>5</span>",
+                nextBtn: "下一个",
+                resultsTitle: "快速同步结果！",
+                retryBtn: "尝试另一个级别"
+            },
+            profileBuilder: {
+                title: "我的关系档案构建器",
+                description: "通过回答有关你的观点和偏见的初步问题，开始构建你的详细LifeSync档案。这是你未来同步的基础。",
+                q1: "你的主要爱语是什么？",
+                options: {
+                    words: "肯定的言语",
+                    acts: "服务行为",
+                    gifts: "接收礼物",
+                    quality_time: "优质时间",
+                    touch: "身体接触"
+                },
+                importanceLabel: "这对你有多重要？（1-5）：",
+                progress: "问题 <span id='detailsCounter'>1</span> 共 <span id='detailsTotal'>10</span>",
+                nextBtn: "下一个问题",
+                resultsTitle: "档案部分完成！",
+                reviewBtn: "审查答案",
+                viewProfileBtn: "查看我的档案"
+            },
+            note: "更深入的评估（关于财务、文化价值观（如彩礼讨论、家庭角色）、生活方式和长期目标）在你创建档案并与伴侣连接后可用。"
+        },
+        tools: {
+            title: "关系增强工具",
+            subtitle: "访问一套旨在促进沟通、跟踪进展和共同应对挑战的工具。",
+            communication: {
+                title: "沟通指南",
+                description: "结构化的提示和指南，用于讨论敏感话题，如财务、家庭期望和未来计划。"
+            },
+            milestone: {
+                title: "里程碑和日期追踪器",
+                description: "记录重要日期、纪念日和关系里程碑。获取提醒并一起庆祝。"
+            },
+            monitoring: {
+                title: "参数监控",
+                description: "跟踪关键关系方面的变化（例如肯定的言语频率、共享活动）并获得轻微提醒。"
+            },
+            conflict: {
+                title: "冲突解决辅助",
+                description: "帮助以建设性方式处理分歧的工具，包括结构化反馈交换。"
+            },
+            goals: {
+                title: "共享目标和梦想",
+                description: "作为一对情侣，定义并追踪共同愿望的进展。"
+            },
+            closure: {
+                title: "关系结束（如果需要）",
+                description: "如果关系结束，工具可以促进一个尊重和清晰的过程。"
+            },
+            comingSoon: "即将推出"
+        },
+        resources: {
+            title: "找到你的连接 - 约会平台指南",
+            subtitle: "探索流行的约会平台以建立新的连接。LifeSync在你准备好加深这种联系时随时为你服务。（以下数据仅供说明）。",
+            filterLabel: "按国家过滤（示例）：",
+            filter: {
+                all: "所有国家",
+                za: "南非",
+                us: "美国",
+                uk: "英国"
+            },
+            table: {
+                platform: "平台",
+                audience: "目标受众",
+                features: "主要功能",
+                popularityZA: "受欢迎程度（南非）",
+                link: "链接"
+            }
+        },
+        profile: {
+            title: "我的LifeSync档案",
+            subtitle: "在这里将显示、管理你的详细个人档案，并可以与伴侣发起同步。",
+            assessmentsTitle: "已完成的评估：",
+            partnersTitle: "已同步的伴侣：",
+            noPartners: "尚未同步伴侣。",
+            connectBtn: "与伴侣连接（即将推出）",
+            dataTitle: "档案数据和偏好：",
+            dataNote: "示例：你对“彩礼”重要性的看法（权重：4/5），你首选的“财务管理风格”，你的“与大家庭的关系”详情。",
+            importTitle: "导入社交媒体数据：",
+            importInstructions: "上传你的社交媒体数据文件（例如LinkedIn ZIP、Facebook JSON）以增强你的档案。",
+            importBtn: "导入数据"
+        },
+        notifications: {
+            title: "通知",
+            welcome: "欢迎使用LifeSync！完成你的档案以开始。"
+        },
+        footer: {
+            privacy: "隐私政策",
+            terms: "服务条款",
+            built: "为LifeSync打造，带着<i class='fa-solid fa-heart' style='color: var(--accent-pink-vibrant)'></i>"
+        },
+        login: {
+            title: "登录LifeSync",
+            subtitle: "访问你的档案、评估和同步数据。",
+            emailLabel: "电子邮件：",
+            emailPlaceholder: "your@email.com",
+            passwordLabel: "密码：",
+            passwordPlaceholder: "你的密码",
+            submit: "登录",
+            google: "使用Google登录",
+            tempProfilePrompt: "不想登录？创建临时档案：",
+            tempProfileBtn: "创建临时档案"
+        },
+        register: {
+            title: "创建你的LifeSync账户",
+            subtitle: "开始构建你的深刻关系档案。",
+            nameLabel: "姓名：",
+            namePlaceholder: "你的姓名",
+            emailLabel: "电子邮件：",
+            emailPlaceholder: "your@email.com",
+            passwordLabel: "密码：",
+            passwordPlaceholder: "创建密码",
+            submit: "注册",
+            google: "使用Google注册"
+        },
+        tempProfile: {
+            title: "创建临时档案",
+            subtitle: "创建临时档案以探索LifeSync 90天。",
+            usernameLabel: "用户名：",
+            usernamePlaceholder: "选择用户名",
+            createBtn: "创建档案",
+            codeInstructions: "你的临时档案已创建！使用此代码登录：",
+            expiryNote: "此档案将在90天后过期。"
+        },
+        tempProfileLogin: {
+            title: "使用临时档案登录",
+            usernameLabel: "用户名：",
+            usernamePlaceholder: "你的用户名",
+            codeLabel: "代码：",
+            codePlaceholder: "你的访问代码",
+            submit: "登录"
+        },
+        search: {
+            button: "搜索",
+            title: "搜索LifeSync",
+            placeholder: "搜索档案、评估、资源...",
+            submit: "搜索"
+        },
+        alerts: {
+            selectionNeeded: "请选择一个答案以继续。",
+            loginSuccess: "登录成功！",
+            loginFailed: "登录失败。请检查你的凭据。",
+            registerSuccess: "注册成功！请登录。",
+            registerFailed: "注册失败。请重试。",
+            tempProfileCreated: "临时档案已创建！使用上面的代码登录。",
+            tempProfileLoginSuccess: "使用临时档案登录成功！",
+            tempProfileLoginFailed: "用户名或代码无效。",
+            tempProfileExpired: "此临时档案已过期。",
+            importSuccess: "社交媒体数据导入成功！",
+            importFailed: "无法导入数据。请重试。",
+            logoutSuccess: "成功退出！"
+        }
+    }
+},
+xh: { translation: { /* isiXhosa translations */ } },
+af: { translation: { /* Afrikaans translations */ } },
+nso: { translation: { /* Sepedi translations */ } },
+st: { translation: { /* Sesotho translations */ } },
+tn: { translation: { /* Setswana translations */ } },
+ss: { translation: { /* siSwati translations */ } },
+ts: { translation: { /* Xitsonga translations */ } },
+ve: { translation: { /* Tshivenda translations */ } },
+nr: { translation: { /* isiNdebele translations */ } },
+ja: { translation: { /* Japanese translations */ } },
+fr: { translation: { /* French translations */ }
+
+ i18next
+    .use(i18nextBrowserLanguageDetector)
+    .init({
+        resources: translations,
+        fallbackLng: 'en',
+        debug: true,
+        interpolation: {
+            escapeValue: false
+        }
+    }, function(err, t) {
+        if (err) return console.error('i18next init error:', err);
+        updateContent();
+    });
+
+function updateContent() {
+    document.querySelectorAll('[data-i18n]').forEach(elem => {
+        const key = elem.getAttribute('data-i18n');
+        elem.innerHTML = i18next.t(key);
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(elem => {
+        const key = elem.getAttribute('data-i18n-placeholder');
+        elem.setAttribute('placeholder', i18next.t(key));
+    });
+}
+
+document.getElementById('languageSelector').addEventListener('change', function() {
+    i18next.changeLanguage(this.value, () => updateContent());
+});
+
+// Authentication State Listener
+auth.onAuthStateChanged(user => {
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (user) {
+        loginBtn.style.display = 'none';
+        registerBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        updateProfileDisplay(user);
+    } else {
+        loginBtn.style.display = 'inline-block';
+        registerBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        checkTempProfile();
+    }
+});
+
+// Email/Password Login
+document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            alert(i18next.t('alerts.loginSuccess'));
+            closeModal('loginModal');
+        })
+        .catch(err => alert(i18next.t('alerts.loginFailed') + ' ' + err.message));
+});
+
+// Google Login
+document.getElementById('googleLoginBtn').addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+        .then(() => {
+            alert(i18next.t('alerts.loginSuccess'));
+            closeModal('loginModal');
+        })
+        .catch(err => alert(i18next.t('alerts.loginFailed') + ' ' + err.message));
+});
+
+// Email/Password Register
+document.getElementById('registerForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            return userCredential.user.updateProfile({ displayName: name });
+        })
+        .then(() => {
+            alert(i18next.t('alerts.registerSuccess'));
+            closeModal('registerModal');
+        })
+        .catch(err => alert(i18next.t('alerts.registerFailed') + ' ' + err.message));
+});
+
+// Google Register
+document.getElementById('googleRegisterBtn').addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+        .then(() => {
+            alert(i18next.t('alerts.registerSuccess'));
+            closeModal('registerModal');
+        })
+        .catch(err => alert(i18next.t('alerts.registerFailed') + ' ' + err.message));
+});
+
+// Temporary Profile Creation
+document.getElementById('tempProfileForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('tempUsername').value;
+    const code = Math.random().toString(36).substr(2, 8).toUpperCase();
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 90);
+    db.collection('tempProfiles').add({
+        username,
+        code,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        expiresAt: firebase.firestore.Timestamp.fromDate(expiresAt),
+        profileData: {}
+    }).then(() => {
+        localStorage.setItem('tempProfile', JSON.stringify({ username, code }));
+        document.getElementById('tempProfileCodeDisplay').textContent = code;
+        document.getElementById('tempProfileCode').style.display = 'block';
+        alert(i18next.t('alerts.tempProfileCreated'));
+    });
+});
+
+// Temporary Profile Login
+document.getElementById('tempProfileLoginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('tempLoginUsername').value;
+    const code = document.getElementById('tempLoginCode').value;
+    db.collection('tempProfiles')
+        .where('username', '==', username)
+        .where('code', '==', code)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) throw new Error(i18next.t('alerts.tempProfileLoginFailed'));
+            const profile = snapshot.docs[0].data();
+            if (profile.expiresAt.toDate() < new Date()) {
+                throw new Error(i18next.t('alerts.tempProfileExpired'));
+            }
+            localStorage.setItem('tempProfile', JSON.stringify({ username, code }));
+            alert(i18next.t('alerts.tempProfileLoginSuccess'));
+            closeModal('tempProfileLoginModal');
+            updateProfileDisplay(null, profile);
+        })
+        .catch(err => alert(err.message));
+});
+
+// Check for Temporary Profile on Load
+function checkTempProfile() {
+    const tempProfile = JSON.parse(localStorage.getItem('tempProfile'));
+    if (tempProfile) {
+        db.collection('tempProfiles')
+            .where('username', '==', tempProfile.username)
+            .where('code', '==', tempProfile.code)
+            .get()
+            .then(snapshot => {
+                if (!snapshot.empty) {
+                    const profile = snapshot.docs[0].data();
+                    if (profile.expiresAt.toDate() >= new Date()) {
+                        updateProfileDisplay(null, profile);
+                    }
+                }
+            });
+    }
+}
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    auth.signOut().then(() => {
+        localStorage.removeItem('tempProfile');
+        alert(i18next.t('alerts.logoutSuccess'));
+    });
+});
+rules_version = '2';
+service cloud.firestore {
+    match /databases/{database}/documents {
+        match /users/{userId} {
+            allow read, write: if request.auth != null && request.auth.uid == userId;
+        }
+        match /tempProfiles/{profileId} {
+            allow read, write: if true; // Secure later
+        }
+    }
+}
+function showSection(sectionId) {
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.querySelectorAll('.nav-links button').forEach(button => {
+        button.classList.remove('active-nav');
+    });
+    document.getElementById(sectionId).classList.add('active');
+    document.querySelector(`button[data-section="${sectionId}"]`).classList.add('active-nav');
+    document.getElementById('content-overlay').scrollTo({
+        left: document.getElementById(sectionId).offsetLeft,
+        behavior: 'smooth'
+    });
+}
+
+document.querySelectorAll('.nav-links button[data-section]').forEach(button => {
+    button.addEventListener('click', () => {
+        const section = button.getAttribute('data-section');
+        showSection(section);
+    });
+});
+
+const quickCompatQuestions = {
+    basic: [
+        { question: "How important is financial stability to you?", options: ["Not important", "Somewhat important", "Very important"] },
+        { question: "Do you prefer spending time indoors or outdoors?", options: ["Indoors", "Outdoors", "Both"] },
+        { question: "How often do you need personal space?", options: ["Rarely", "Sometimes", "Often"] },
+        { question: "Do you value spontaneity or planning?", options: ["Spontaneity", "Planning", "Both"] },
+        { question: "How important is family involvement in your relationship?", options: ["Not important", "Somewhat important", "Very important"] }
+    ],
+    intermediate: [
+        // Add 10 questions
+    ],
+    advanced: [
+        // Add 15 questions
+    ]
+};
+
+let currentQuickCompatQuestion = 0;
+let quickCompatLevel = 'basic';
+let quickCompatAnswers = [];
+
+document.querySelectorAll('#quickCompatLevelSelector button').forEach(button => {
+    button.addEventListener('click', () => {
+        quickCompatLevel = button.getAttribute('data-level');
+        currentQuickCompatQuestion = 0;
+        quickCompatAnswers = [];
+        document.getElementById('quickCompatQuizArea').style.display = 'block';
+        document.getElementById('quickCompatLevelSelector').style.display = 'none';
+        loadQuickCompatQuestion();
+    });
+});
+
+function loadQuickCompatQuestion() {
+    const questions = quickCompatQuestions[quickCompatLevel];
+    if (currentQuickCompatQuestion >= questions.length) {
+        showQuickCompatResults();
+        return;
+    }
+    const question = questions[currentQuickCompatQuestion];
+    document.getElementById('quickCompatQuestionText').textContent = question.question;
+    const optionsArea = document.getElementById('quickCompatOptionsArea');
+    optionsArea.innerHTML = '';
+    question.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.addEventListener('click', () => selectQuickCompatOption(option));
+        optionsArea.appendChild(btn);
+    });
+    document.getElementById('quickCompatCounter').textContent = currentQuickCompatQuestion + 1;
+    document.getElementById('quickCompatTotal').textContent = questions.length;
+    document.getElementById('quickCompatProgressBar').style.width = `${((currentQuickCompatQuestion + 1) / questions.length) * 100}%`;
+}
+
+function selectQuickCompatOption(option) {
+    const weight = document.getElementById('quickCompatWeight').value;
+    quickCompatAnswers.push({ question: quickCompatQuestions[quickCompatLevel][currentQuickCompatQuestion].question, answer: option, weight });
+    currentQuickCompatQuestion++;
+    loadQuickCompatQuestion();
+}
+
+function showQuickCompatResults() {
+    document.getElementById('quickCompatQuizArea').style.display = 'none';
+    document.getElementById('quickCompatResultArea').style.display = 'block';
+    document.getElementById('quickCompatFinalFeedback').textContent = `You completed the ${quickCompatLevel} compatibility check with ${quickCompatAnswers.length} answers.`;
+    saveAssessment('Quick Compatibility', quickCompatAnswers);
+}
+
+function resetQuickCompatQuiz() {
+    currentQuickCompatQuestion = 0;
+    quickCompatAnswers = [];
+    document.getElementById('quickCompatQuizArea').style.display = 'none';
+    document.getElementById('quickCompatResultArea').style.display = 'none';
+    document.getElementById('quickCompatLevelSelector').style.display = 'block';
+}   
+
+        const profileBuilderQuestions = [
+    { question: i18next.t('assessments.profileBuilder.q1'), options: ['words', 'acts', 'gifts', 'quality_time', 'touch'] },
+    { question: "How do you handle finances?", options: ["Saver", "Spender", "Balanced"] },
+    { question: "How important is lobola to you?", options: ["Not important", "Somewhat important", "Very important"] },
+    // Add more questions to reach 10
+];
+
+let currentDetailsQuestion = 0;
+let detailsAnswers = [];
+
+document.getElementById('detailsNextBtn').addEventListener('click', () => {
+    const selectedOption = document.querySelector('#detailsOptionsArea button.selected');
+    if (!selectedOption) {
+        alert(i18next.t('alerts.selectionNeeded'));
+        return;
+    }
+    const weight = document.getElementById('detailsWeight').value;
+    detailsAnswers.push({
+        question: profileBuilderQuestions[currentDetailsQuestion].question,
+        answer: selectedOption.getAttribute('data-value'),
+        weight
+    });
+    currentDetailsQuestion++;
+    if (currentDetailsQuestion >= profileBuilderQuestions.length) {
+        showDetailsResults();
+    } else {
+        loadDetailsQuestion();
+    }
+});
+
+function loadDetailsQuestion() {
+    const question = profileBuilderQuestions[currentDetailsQuestion];
+    document.getElementById('detailsQuestionText').textContent = question.question;
+    const optionsArea = document.getElementById('detailsOptionsArea');
+    optionsArea.innerHTML = '';
+    question.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.setAttribute('data-value', opt);
+        btn.textContent = i18next.t(`assessments.profileBuilder.options.${opt}`);
+        btn.addEventListener('click', () => {
+            optionsArea.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        });
+        optionsArea.appendChild(btn);
+    });
+    document.getElementById('detailsCounter').textContent = currentDetailsQuestion + 1;
+    document.getElementById('detailsTotal').textContent = profileBuilderQuestions.length;
+    document.getElementById('detailsProgressBar').style.width = `${((currentDetailsQuestion + 1) / profileBuilderQuestions.length) * 100}%`;
+}
+
+function showDetailsResults() {
+    document.getElementById('relationshipDetailsQuizArea').style.display = 'none';
+    document.getElementById('detailsResultArea').style.display = 'block';
+    document.getElementById('detailsFinalFeedback').textContent = `You completed your profile builder with ${detailsAnswers.length} answers.`;
+    saveAssessment('Profile Builder', detailsAnswers);
+}
+
+function resetDetailsQuiz() {
+    currentDetailsQuestion = 0;
+    detailsAnswers = [];
+    document.getElementById('relationshipDetailsQuizArea').style.display = 'block';
+    document.getElementById('detailsResultArea').style.display = 'none';
+    loadDetailsQuestion();
+}
+
+function saveAssessment(type, answers) {
+    const user = auth.currentUser;
+    const tempProfile = JSON.parse(localStorage.getItem('tempProfile'));
+    if (user) {
+        db.collection('users').doc(user.uid).set({
+            assessments: firebase.firestore.FieldValue.arrayUnion({ type, answers, date: new Date() })
+        }, { merge: true });
+    } else if (tempProfile) {
+        db.collection('tempProfiles')
+            .where('username', '==', tempProfile.username)
+            .where('code', '==', tempProfile.code)
+            .get()
+            .then(snapshot => {
+                if (!snapshot.empty) {
+                    snapshot.docs[0].ref.update({
+                        assessments: firebase.firestore.FieldValue.arrayUnion({ type, answers, date: new Date() })
+                    });
+                }
+            });
+    }
+}
+
+  function updateProfileDisplay(user, tempProfile) {
+    const nameDisplay = document.getElementById('profileNameDisplay');
+    const emailDisplay = document.getElementById('profileEmail');
+    const completedAssessmentsList = document.getElementById('completedAssessmentsList');
+    const profileDataDisplay = document.getElementById('profileDataDisplay');
+
+    if (user) {
+        nameDisplay.textContent = user.displayName || 'User';
+        emailDisplay.textContent = `Email: ${user.email}`;
+        db.collection('users').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                completedAssessmentsList.innerHTML = '';
+                (data.assessments || []).forEach(assessment => {
+                    const li = document.createElement('li');
+                    li.textContent = `${assessment.type} - Completed on ${assessment.date.toDate().toLocaleDateString()}`;
+                    completedAssessmentsList.appendChild(li);
+                });
+                profileDataDisplay.innerHTML = (data.profileData || []).map(item => `<p>${item.question}: ${item.answer} (Weight: ${item.weight})</p>`).join('');
+            }
+        });
+    } else if (tempProfile) {
+        nameDisplay.textContent = tempProfile.username;
+        emailDisplay.textContent = 'Email: Temporary Profile';
+        db.collection('tempProfiles')
+            .where('username', '==', tempProfile.username)
+            .where('code', '==', tempProfile.code)
+            .get()
+            .then(snapshot => {
+                if (!snapshot.empty) {
+                    const data = snapshot.docs[0].data();
+                    completedAssessmentsList.innerHTML = '';
+                    (data.assessments || []).forEach(assessment => {
+                        const li = document.createElement('li');
+                        li.textContent = `${assessment.type} - Completed on ${assessment.date.toDate().toLocaleDateString()}`;
+                        completedAssessmentsList.appendChild(li);
+                    });
+                    profileDataDisplay.innerHTML = (data.profileData || []).map(item => `<p>${item.question}: ${item.answer} (Weight: ${item.weight})</p>`).join('');
+                }
+            });
+    }
+}
+
+  document.getElementById('importSocialMediaBtn').addEventListener('click', () => {
+    const fileInput = document.getElementById('socialMediaFileInput');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert('Please select a file.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            let data;
+            if (file.name.endsWith('.json')) {
+                data = JSON.parse(e.target.result);
+            } else if (file.name.endsWith('.zip')) {
+                // Handle ZIP file (requires additional library like JSZip)
+                alert('ZIP file parsing not implemented yet.');
+                return;
+            }
+            const extractedData = extractSocialMediaData(data);
+            saveSocialMediaData(extractedData);
+        } catch (err) {
+            document.getElementById('importFeedback').textContent = i18next.t('alerts.importFailed');
+        }
+    };
+    reader.readAsText(file);
+});
+
+function extractSocialMediaData(data) {
+    // Example: Extract interests, relationship status, posts
+    return {
+        interests: data.interests || [],
+        relationshipStatus: data.relationship_status || 'Unknown',
+        posts: data.posts ? data.posts.slice(0, 10) : []
+    };
+}
+
+function saveSocialMediaData(data) {
+    const user = auth.currentUser;
+    const tempProfile = JSON.parse(localStorage.getItem('tempProfile'));
+    if (user) {
+        db.collection('users').doc(user.uid).set({
+            profileData: firebase.firestore.FieldValue.arrayUnion(data)
+        }, { merge: true }).then(() => {
+            document.getElementById('importFeedback').textContent = i18next.t('alerts.importSuccess');
+            updateProfileDisplay(user);
+        });
+    } else if (tempProfile) {
+        db.collection('tempProfiles')
+            .where('username', '==', tempProfile.username)
+            .where('code', '==', tempProfile.code)
+            .get()
+            .then(snapshot => {
+                if (!snapshot.empty) {
+                    snapshot.docs[0].ref.update({
+                        profileData: firebase.firestore.FieldValue.arrayUnion(data)
+                    }).then(() => {
+                        document.getElementById('importFeedback').textContent = i18next.t('alerts.importSuccess');
+                        updateProfileDisplay(null, tempProfile);
+                    });
+                }
+            });
+    }
+}
+
+document.getElementById('searchBtn').addEventListener('click', () => {
+    document.getElementById('searchModal').classList.add('active');
+});
+
+document.getElementById('closeSearchModal').addEventListener('click', () => {
+    closeModal('searchModal');
+});
+
+document.getElementById('searchSubmitBtn').addEventListener('click', () => {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const resultsDiv = document.getElementById('searchResults');
+    resultsDiv.innerHTML = '';
+
+    // Search Firestore (basic example)
+    const user = auth.currentUser;
+    const tempProfile = JSON.parse(localStorage.getItem('tempProfile'));
+    if (user) {
+        db.collection('users').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const assessments = (data.assessments || []).filter(a => a.type.toLowerCase().includes(query));
+                assessments.forEach(a => {
+                    const div = document.createElement('div');
+                    div.textContent = `Assessment: ${a.type}`;
+                    resultsDiv.appendChild(div);
+                });
+            }
+        });
+    } else if (tempProfile) {
+        db.collection('tempProfiles')
+            .where('username', '==', tempProfile.username)
+            .where('code', '==', tempProfile.code)
+            .get()
+            .then(snapshot => {
+                if (!snapshot.empty) {
+                    const data = snapshot.docs[0].data();
+                    const assessments = (data.assessments || []).filter(a => a.type.toLowerCase().includes(query));
+                    assessments.forEach(a => {
+                        const div = document.createElement('div');
+                        div.textContent = `Assessment: ${a.type}`;
+                        resultsDiv.appendChild(div);
+                    });
+                }
+            });
+    }
+});
+
+    const datingSites = [
+    { name: "Tinder", audience: "Young adults", features: "Swipe-based matching", popularityZA: "High", link: "https://tinder.com", country: "ZA" },
+    { name: "OkCupid", audience: "Diverse", features: "In-depth profiles", popularityZA: "Medium", link: "https://okcupid.com", country: "US" },
+    { name: "Match.com", audience: "Serious relationships", features: "Advanced search", popularityZA: "Low", link: "https://match.com", country: "UK" }
+];
+
+function loadDatingSites(filterCountry = 'all') {
+    const tbody = document.querySelector('#datingSiteTable tbody');
+    tbody.innerHTML = '';
+    datingSites
+        .filter(site => filterCountry === 'all' || site.country === filterCountry)
+        .forEach(site => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${site.name}</td>
+                <td>${site.audience}</td>
+                <td>${site.features}</td>
+                <td>${site.popularityZA}</td>
+                <td><a href="${site.link}" target="_blank">${site.link}</a></td>
+            `;
+            tbody.appendChild(row);
+        });
+}
+
+document.getElementById('countryFilter').addEventListener('change', function() {
+    loadDatingSites(this.value);
+});
+
+loadDatingSites();
+
+       function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+}
+
+document.getElementById('loginBtn').addEventListener('click', () => {
+    document.getElementById('loginModal').classList.add('active');
+});
+
+document.getElementById('closeLoginModal').addEventListener('click', () => {
+    closeModal('loginModal');
+});
+
+document.getElementById('registerBtn').addEventListener('click', () => {
+    document.getElementById('registerModal').classList.add('active');
+});
+
+document.getElementById('closeRegisterModal').addEventListener('click', () => {
+    closeModal('registerModal');
+});
+
+document.getElementById('createTempProfileBtn').addEventListener('click', () => {
+    closeModal('loginModal');
+    document.getElementById('tempProfileModal').classList.add('active');
+});
+
+document.getElementById('closeTempProfileModal').addEventListener('click', () => {
+    closeModal('tempProfileModal');
+});
+
+document.getElementById('closeTempProfileLoginModal').addEventListener('click', () => {
+    closeModal('tempProfileLoginModal');
+});
+
+        
