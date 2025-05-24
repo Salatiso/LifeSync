@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeSync - Deepen Your Connections</title>
+    <title data-i18n="title">LifeSync - Deepen Your Connections</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector@7.1.0/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <style>
         :root {
-            --bg-dark-purple: #301934; 
+            --bg-dark-purple: #301934;
             --bg-content-purple: rgba(45, 25, 55, 0.97);
             --bg-content-purple-opaque: rgb(45, 25, 55);
             --bg-card-purple: rgba(60, 30, 70, 0.92);
-            --text-primary-light: #FDE7F3; 
-            --text-secondary-lavender: #E9D5FF; 
-            --accent-pink-vibrant: #DB2777; 
-            --accent-purple-medium: #A855F7; 
-            --accent-teal-bright: #2DD4BF; 
-            --border-color-lavender: rgba(168, 85, 247, 0.35); 
+            --text-primary-light: #FDE7F3;
+            --text-secondary-lavender: #E9D5FF;
+            --accent-pink-vibrant: #DB2777;
+            --accent-purple-medium: #A855F7;
+            --accent-teal-bright: #2DD4BF;
+            --border-color-lavender: rgba(168, 85, 247, 0.35);
             --border-color-strong: rgba(168, 85, 247, 0.65);
             --font-main: 'Poppins', sans-serif;
             --font-heading: 'Ubuntu', sans-serif;
@@ -38,841 +45,1184 @@
         }
 
         #video-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: -10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -10;
             filter: brightness(0.25) contrast(1.1) blur(4px);
         }
 
         nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 10px 30px; /* Adjusted padding */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 30px;
             z-index: 1000;
-            display: flex; justify-content: space-between; align-items: center;
-            background-color: rgba(30, 10, 40, 0.85); /* Darker purple */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(30, 10, 40, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color-lavender);
         }
 
         nav a.nav-brand {
-            font-size: 1.5rem; /* Slightly smaller */
-            font-weight: 700; color: var(--accent-teal-bright);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-teal-bright);
             font-family: var(--font-heading);
             text-shadow: 0 0 8px var(--accent-teal-bright);
         }
-        nav a.nav-brand i { margin-right: 8px; }
 
-        nav .nav-links button, nav .nav-links .auth-button {
-            background: none; border: none; padding: 6px 12px; /* Compact buttons */
-            margin-left: 6px; cursor: pointer; font-size: 0.9rem; /* Smaller font */
+        nav a.nav-brand i {
+            margin-right: 8px;
+        }
+
+        nav .nav-links button,
+        nav .nav-links .auth-button {
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            margin-left: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
             transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease, border-bottom-color 0.3s ease;
-            color: var(--text-secondary-lavender); font-family: var(--font-main);
+            color: var(--text-secondary-lavender);
+            font-family: var(--font-main);
             border-bottom: 2px solid transparent;
         }
-        nav .nav-links button .fa-solid { margin-right: 6px; width: 18px; text-align: center; }
-        nav .nav-links button:hover, nav .nav-links .auth-button:hover {
+
+        nav .nav-links button .fa-solid {
+            margin-right: 6px;
+            width: 18px;
+            text-align: center;
+        }
+
+        nav .nav-links button:hover,
+        nav .nav-links .auth-button:hover {
             color: var(--text-primary-light);
             text-shadow: 0 0 10px var(--accent-pink-vibrant);
             transform: translateY(-1px);
         }
-         nav .nav-links button.active-nav {
-             color: var(--accent-teal-bright); font-weight: 600;
-             text-shadow: 0 0 8px rgba(72, 209, 204, 0.7);
-             border-bottom-color: var(--accent-teal-bright);
-         }
-         nav .nav-links .auth-button {
-            padding: 5px 10px; border: 1px solid var(--accent-pink-vibrant);
-            color: var(--accent-pink-vibrant); border-radius: 18px; font-size: 0.8rem;
-         }
-         nav .nav-links .auth-button:hover { background-color: var(--accent-pink-vibrant); color: var(--bg-dark-purple); text-shadow: none; }
-         nav .nav-links .auth-button.login-btn { border-color: var(--accent-purple-medium); color: var(--accent-purple-medium); }
-         nav .nav-links .auth-button.login-btn:hover { background-color: var(--accent-purple-medium); color: var(--bg-dark-purple); }
 
-        .page-container { display: flex; flex-direction: column; height: 100vh; padding-top: 60px; /* Adjusted for nav height */ box-sizing: border-box; }
-        .content-overlay {
-            flex-grow: 1; display: flex;
-            overflow-x: scroll; overflow-y: hidden;
-            scroll-snap-type: x mandatory; scroll-behavior: smooth;
-            width: 100%; height: calc(100% - 50px); /* Adjusted for footer */
+        nav .nav-links button.active-nav {
+            color: var(--accent-teal-bright);
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(72, 209, 204, 0.7);
+            border-bottom-color: var(--accent-teal-bright);
         }
-        .content-overlay::-webkit-scrollbar { display: none; }
-        .content-overlay { -ms-overflow-style: none; scrollbar-width: none; }
+
+        nav .nav-links .auth-button {
+            padding: 5px 10px;
+            border: 1px solid var(--accent-pink-vibrant);
+            color: var(--accent-pink-vibrant);
+            border-radius: 18px;
+            font-size: 0.8rem;
+        }
+
+        nav .nav-links .auth-button:hover {
+            background-color: var(--accent-pink-vibrant);
+            color: var(--bg-dark-purple);
+            text-shadow: none;
+        }
+
+        nav .nav-links .auth-button.login-btn {
+            border-color: var(--accent-purple-medium);
+            color: var(--accent-purple-medium);
+        }
+
+        nav .nav-links .auth-button.login-btn:hover {
+            background-color: var(--accent-purple-medium);
+            color: var(--bg-dark-purple);
+        }
+
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .content-overlay {
+            flex-grow: 1;
+            display: flex;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            width: 100%;
+            height: calc(100% - 50px);
+        }
+
+        .content-overlay::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content-overlay {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
         .content-section {
-            width: 100vw; height: 100%; flex-shrink: 0;
-            padding: 1.5rem 2rem; /* Adjusted padding */
-            border-radius: 0.5rem; /* Smaller radius */
-            overflow-y: auto; scroll-snap-align: start;
+            width: 100vw;
+            height: 100%;
+            flex-shrink: 0;
+            padding: 1.5rem 2rem;
+            border-radius: 0.5rem;
+            overflow-y: auto;
+            scroll-snap-align: start;
             background-color: var(--bg-content-purple);
             border: 1px solid var(--border-color-lavender);
-            margin: 8px; /* Spacing between sections */
-            box-sizing: border-box; opacity: 0;
+            margin: 8px;
+            box-sizing: border-box;
+            opacity: 0;
             animation: fadeIn 0.6s forwards;
             color: var(--text-primary-light);
             max-height: 100%;
         }
-        .content-section:nth-child(n+2) { animation-delay: calc(0.1s * (n - 1)); }
 
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(25px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-        h1, h2, h3 { font-family: var(--font-heading); color: var(--text-primary-light); margin-bottom: 1.25rem; }
-         h1 { font-size: 2.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
-         h2 { font-size: 1.6rem; color: var(--accent-teal-bright); }
-         h3 { font-size: 1.3rem; color: var(--accent-pink-vibrant); }
-        p { line-height: 1.65; color: var(--text-secondary-lavender); margin-bottom: 0.8rem; font-size: 0.9rem;}
-        ul { list-style: inside; margin-left: 1rem; margin-bottom: 0.8rem; }
-        li { margin-bottom: 0.4rem; }
-
-        /* Specific Section Styles */
-        .value-prop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .value-prop-card { background-color: var(--bg-card-purple); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color-strong); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .value-prop-card i { font-size: 2rem; color: var(--accent-teal-bright); margin-bottom: 0.75rem; }
-        .value-prop-card h4 { color: var(--accent-pink-vibrant); font-size: 1.1rem; margin-bottom: 0.5rem; }
-
-        /* Assessment & Quiz Styles */
-        .assessment-container, .quiz-container {
-            background-color: var(--bg-card-purple); padding: 2rem; border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); width: 100%; max-width: 700px; margin: auto;
+        .content-section:nth-child(n+2) {
+            animation-delay: calc(0.1s * (n - 1));
         }
-        .assessment-question, .quiz-question { margin-bottom: 1.5rem; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--text-primary-light);
+            margin-bottom: 1.25rem;
+        }
+
+        h1 { font-size: 2.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        h2 { font-size: 1.6rem; color: var(--accent-teal-bright); }
+        h3 { font-size: 1.3rem; color: var(--accent-pink-vibrant); }
+
+        p {
+            line-height: 1.65;
+            color: var(--text-secondary-lavender);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        ul {
+            list-style: inside;
+            margin-left: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        .value-prop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .value-prop-card {
+            background-color: var(--bg-card-purple);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color-strong);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .value-prop-card i {
+            font-size: 2rem;
+            color: var(--accent-teal-bright);
+            margin-bottom: 0.75rem;
+        }
+
+        .value-prop-card h4 {
+            color: var(--accent-pink-vibrant);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .assessment-container, .quiz-container {
+            background-color: var(--bg-card-purple);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .assessment-question, .quiz-question {
+            margin-bottom: 1.5rem;
+        }
+
         .assessment-options button, .quiz-options button {
-            display: block; width: 100%; padding: 0.8rem 1rem; margin-bottom: 0.6rem;
-            background-color: var(--bg-content-purple-opaque); border: 1px solid var(--border-color-lavender);
-            color: var(--text-primary-light); border-radius: 5px; cursor: pointer;
+            display: block;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.6rem;
+            background-color: var(--bg-content-purple-opaque);
+            border: 1px solid var(--border-color-lavender);
+            color: var(--text-primary-light);
+            border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
             font-size: 0.9rem;
         }
-        .assessment-options button:hover, .quiz-options button:hover { background-color: var(--accent-teal-bright); border-color: var(--accent-teal-bright); color: var(--bg-dark-purple); }
-        .assessment-feedback, .quiz-feedback { margin-top: 1.25rem; font-style: italic; color: var(--accent-pink-vibrant); min-height: 20px; font-size: 0.85rem; }
-        .progress-bar { width: 100%; background-color: var(--border-color-lavender); border-radius: 5px; overflow: hidden; margin-top: 1.25rem; }
-        .progress-bar-fill { height: 8px; width: 0%; background-color: var(--accent-teal-bright); transition: width 0.5s ease-in-out; }
-        .weight-slider { margin-top: 0.5rem; }
-        .weight-slider label { font-size: 0.8rem; color: var(--text-secondary-lavender); margin-right: 0.5rem;}
-        .weight-slider input[type="range"] { width: 60%; accent-color: var(--accent-pink-vibrant); }
-        .quiz-level-selector button { margin: 0 0.5rem; }
 
-        /* Resources Page - Dating Sites */
-        .dating-site-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        .dating-site-table th, .dating-site-table td {
-            border: 1px solid var(--border-color-lavender); padding: 0.75rem; text-align: left;
+        .assessment-options button:hover, .quiz-options button:hover {
+            background-color: var(--accent-teal-bright);
+            border-color: var(--accent-teal-bright);
+            color: var(--bg-dark-purple);
+        }
+
+        .assessment-feedback, .quiz-feedback {
+            margin-top: 1.25rem;
+            font-style: italic;
+            color: var(--accent-pink-vibrant);
+            min-height: 20px;
             font-size: 0.85rem;
         }
-        .dating-site-table th { background-color: var(--bg-card-purple); color: var(--accent-teal-bright); cursor: pointer; }
-        .dating-site-table th .fa-sort, .dating-site-table th .fa-sort-up, .dating-site-table th .fa-sort-down { margin-left: 0.5rem; }
-        .dating-site-table tbody tr:nth-child(even) { background-color: rgba(0,0,0,0.1); }
-        .dating-site-table tbody tr:hover { background-color: rgba(var(--accent-purple-medium-rgb, 168, 85, 247), 0.15); }
-        .dating-site-table a { color: var(--accent-pink-vibrant); text-decoration: underline; }
 
-        /* Notifications Placeholder */
-        .notifications-area {
-            position: fixed; top: 70px; right: 20px; width: 300px;
-            background-color: var(--bg-card-purple); border-radius: 8px;
-            padding: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 1001; display: none; /* Toggle with JS */
+        .progress-bar {
+            width: 100%;
+            background-color: var(--border-color-lavender);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1.25rem;
         }
-        .notifications-area h4 { color: var(--accent-teal-bright); margin-bottom: 0.5rem; }
-        .notification-item { font-size: 0.8rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color-lavender); }
-        .notification-item:last-child { border-bottom: none; }
 
+        .progress-bar-fill {
+            height: 8px;
+            width: 0%;
+            background-color: var(--accent-teal-bright);
+            transition: width 0.5s ease-in-out;
+        }
 
-        /* Footer Styles */
+        .weight-slider {
+            margin-top: 0.5rem;
+        }
+
+        .weight-slider label {
+            font-size: 0.8rem;
+            color: var(--text-secondary-lavender);
+            margin-right: 0.5rem;
+        }
+
+        .weight-slider input[type="range"] {
+            width: 60%;
+            accent-color: var(--accent-pink-vibrant);
+        }
+
+        .quiz-level-selector button {
+            margin: 0 0.5rem;
+        }
+
+        .dating-site-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .dating-site-table th, .dating-site-table td {
+            border: 1px solid var(--border-color-lavender);
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .dating-site-table th {
+            background-color: var(--bg-card-purple);
+            color: var(--accent-teal-bright);
+            cursor: pointer;
+        }
+
+        .dating-site-table th .fa-sort,
+        .dating-site-table th .fa-sort-up,
+        .dating-site-table th .fa-sort-down {
+            margin-left: 0.5rem;
+        }
+
+        .dating-site-table tbody tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .dating-site-table tbody tr:hover {
+            background-color: rgba(168, 85, 247, 0.15);
+        }
+
+        .dating-site-table a {
+            color: var(--accent-pink-vibrant);
+            text-decoration: underline;
+        }
+
+        .notifications-area {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 300px;
+            background-color: var(--bg-card-purple);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001;
+            display: none;
+        }
+
+        .notifications-area h4 {
+            color: var(--accent-teal-bright);
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-item {
+            font-size: 0.8rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color-lavender);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
         footer {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            padding: 12px 30px; /* Adjusted padding */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px 30px;
             background-color: rgba(30, 10, 40, 0.9);
             border-top: 1px solid var(--border-color-lavender);
-            text-align: center; font-size: 0.8rem; /* Smaller font */
-            color: var(--text-secondary-lavender); z-index: 1000;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary-lavender);
+            z-index: 1000;
             backdrop-filter: blur(8px);
         }
-         footer a { color: var(--accent-teal-bright); text-decoration: none; transition: color 0.3s; }
-         footer a:hover { color: var(--text-primary-light); }
 
-         /* Utility & Button Styles */
-         .btn {
-             padding: 0.6rem 1.25rem; border-radius: 20px; text-decoration: none;
-             font-weight: 600; transition: all 0.3s ease; cursor: pointer;
-             display: inline-block; margin-top: 0.8rem; border: 1px solid transparent;
-             text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.85rem;
-         }
-         .btn-primary { background-color: var(--accent-teal-bright); color: var(--bg-dark-purple); border-color: var(--accent-teal-bright); }
-         .btn-primary:hover { background-color: transparent; color: var(--accent-teal-bright); box-shadow: 0 0 10px var(--accent-teal-bright); }
-         .btn-secondary { background-color: var(--accent-pink-vibrant); color: var(--text-primary-light); border-color: var(--accent-pink-vibrant); }
-         .btn-secondary:hover { background-color: transparent; color: var(--accent-pink-vibrant); box-shadow: 0 0 10px var(--accent-pink-vibrant); }
-         .btn-purple { background-color: var(--accent-purple-medium); color: var(--text-primary-light); border-color: var(--accent-purple-medium); }
-         .btn-purple:hover { background-color: transparent; color: var(--accent-purple-medium); box-shadow: 0 0 10px var(--accent-purple-medium); }
+        footer a {
+            color: var(--accent-teal-bright);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
 
-        /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
-        .modal-content { background-color: var(--bg-content-purple-opaque); margin: 10% auto; padding: 25px; border: 1px solid var(--border-color-strong); width: 90%; max-width: 550px; border-radius: 10px; text-align: center; position: relative; box-shadow: 0 5px 25px rgba(0,0,0,0.4); }
-        .modal.active { display: flex; align-items: center; justify-content: center; }
-        .modal-content h2 { font-family: var(--font-heading); color: var(--accent-pink-vibrant); font-size: 1.4rem; margin-bottom: 1rem; }
-        .modal-content label { display: block; margin-bottom: 0.3rem; text-align: left; font-size: 0.9rem; color: var(--text-secondary-lavender); }
-        .input-field { background-color: rgba(30,10,40,0.5); border: 1px solid var(--border-color-lavender); color: var(--text-primary-light); padding: 0.6rem 0.8rem; border-radius: 6px; width: 100%; margin-bottom: 0.75rem; font-size: 0.9rem; }
-        .input-field::placeholder { color: var(--text-secondary-lavender); opacity: 0.7; }
-        .input-field:focus { outline: none; border-color: var(--accent-teal-bright); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2); }
-        .close-button { color: var(--text-secondary-lavender); position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
-        .close-button:hover, .close-button:focus { color: var(--accent-pink-vibrant); }
+        footer a:hover {
+            color: var(--text-primary-light);
+        }
 
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 0.8rem;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-teal-bright);
+            color: var(--bg-dark-purple);
+            border-color: var(--accent-teal-bright);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--accent-teal-bright);
+            box-shadow: 0 0 10px var(--accent-teal-bright);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-pink-vibrant);
+            color: var(--text-primary-light);
+            border-color: var(--accent-pink-vibrant);
+        }
+
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--accent-pink-vibrant);
+            box-shadow: 0 0 10px var(--accent-pink-vibrant);
+        }
+
+        .btn-purple {
+            background-color: var(--accent-purple-medium);
+            color: var(--text-primary-light);
+            border-color: var(--accent-purple-medium);
+        }
+
+        .btn-purple:hover {
+            background-color: transparent;
+            color: var(--accent-purple-medium);
+            box-shadow: 0 0 10px var(--accent-purple-medium);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--bg-content-purple-opaque);
+            margin: 10% auto;
+            padding: 25px;
+            border: 1px solid var(--border-color-strong);
+            width: 90%;
+            max-width: 550px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content h2 {
+            font-family: var(--font-heading);
+            color: var(--accent-pink-vibrant);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 0.3rem;
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--text-secondary-lavender);
+        }
+
+        .input-field {
+            background-color: rgba(30,10,40,0.5);
+            border: 1px solid var(--border-color-lavender);
+            color: var(--text-primary-light);
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .input-field::placeholder {
+            color: var(--text-secondary-lavender);
+            opacity: 0.7;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-teal-bright);
+            box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2);
+        }
+
+        .close-button {
+            color: var(--text-secondary-lavender);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--accent-pink-vibrant);
+        }
+
+        /* Search Button Styles */
+        #searchBtn {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            background-color: var(--accent-teal-bright);
+            color: var(--bg-dark-purple);
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        #searchBtn i {
+            margin-right: 8px;
+        }
+
+        #searchBtn:hover {
+            background-color: transparent;
+            color: var(--accent-teal-bright);
+            box-shadow: 0 0 10px var(--accent-teal-bright);
+        }
+
+        #searchModal .modal-content {
+            max-width: 600px;
+        }
+
+        #searchInput {
+            margin-bottom: 1rem;
+        }
+
+        #searchResults {
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        #searchResults div {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color-lavender);
+        }
+
+        #searchResults div:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
-
     <video id="video-background" autoplay muted loop playsinline>
         <source src="https://www.coverr.co/s3/mp4/Abstract_Plexus.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
     <nav>
-        <a href="#" class="nav-brand"><i class="fas fa-sync-alt"></i> LifeSync</a>
+        <a href="#" class="nav-brand"><i class="fas fa-sync-alt"></i> <span data-i18n="nav.brand">LifeSync</span></a>
         <div class="nav-links">
-            <button class="active-nav" data-section="about"><i class="fa-solid fa-info-circle"></i>About</button>
-            <button data-section="assessments"><i class="fa-solid fa-tasks"></i>Assessments</button>
-            <button data-section="tools"><i class="fa-solid fa-tools"></i>Tools</button>
-            <button data-section="resources"><i class="fa-solid fa-book-open"></i>Resources</button>
-            <button data-section="profile"><i class="fa-solid fa-user-circle"></i>My Profile</button>
-            <button class="auth-button login-btn" id="loginBtnPlaceholder"><i class="fa-solid fa-sign-in-alt"></i> Login</button>
-            <button class="auth-button" id="registerBtnPlaceholder"><i class="fa-solid fa-user-plus"></i> Register</button>
+            <button class="active-nav" data-section="about"><i class="fa-solid fa-info-circle"></i> <span data-i18n="nav.about">About</span></button>
+            <button data-section="assessments"><i class="fa-solid fa-tasks"></i> <span data-i18n="nav.assessments">Assessments</span></button>
+            <button data-section="tools"><i class="fa-solid fa-tools"></i> <span data-i18n="nav.tools">Tools</span></button>
+            <button data-section="resources"><i class="fa-solid fa-book-open"></i> <span data-i18n="nav.resources">Resources</span></button>
+            <button data-section="profile"><i class="fa-solid fa-user-circle"></i> <span data-i18n="nav.profile">My Profile</span></button>
+            <button class="auth-button login-btn" id="loginBtn"><i class="fa-solid fa-sign-in-alt"></i> <span data-i18n="nav.login">Login</span></button>
+            <button class="auth-button" id="registerBtn"><i class="fa-solid fa-user-plus"></i> <span data-i18n="nav.register">Register</span></button>
+            <button class="auth-button" id="logoutBtn" style="display:none;"><i class="fa-solid fa-sign-out-alt"></i> <span data-i18n="nav.logout">Logout</span></button>
+            <select id="languageSelector" class="p-1 rounded bg-[var(--bg-card-purple)] border border-[var(--border-color-lavender)] text-sm ml-2">
+                <option value="en">English</option>
+                <option value="zu">Zulu</option>
+                <!-- Add more languages in Phase 2 -->
+            </select>
         </div>
     </nav>
 
     <div class="page-container">
         <div class="content-overlay" id="content-overlay">
-
             <section id="about" class="content-section active">
-                <h1 class="text-center">Unlock Deeper Connections with LifeSync</h1>
-                <p class="text-center text-lg mb-8" style="color: var(--accent-teal-bright);">Go beyond the swipe. Understand what truly matters for lasting compatibility.</p>
+                <h1 class="text-center" data-i18n="about.title">Unlock Deeper Connections with LifeSync</h1>
+                <p class="text-center text-lg mb-8" style="color: var(--accent-teal-bright);" data-i18n="about.subtitle">Go beyond the swipe. Understand what truly matters for lasting compatibility.</p>
 
                 <div class="value-prop-grid">
                     <div class="value-prop-card">
                         <div class="text-center"><i class="fas fa-heart-broken"></i></div>
-                        <h4>Dating Apps: The Spark</h4>
-                        <p>Dating apps are fantastic for initial introductions and finding potential matches based on interests and attraction. They help you discover who's out there.</p>
-                        <p><strong>Focus:</strong> Discovery, Initial Attraction, Broad Strokes.</p>
+                        <h4 data-i18n="about.datingApps.title">Dating Apps: The Spark</h4>
+                        <p data-i18n="about.datingApps.description">Dating apps are fantastic for initial introductions and finding potential matches based on interests and attraction. They help you discover who's out there.</p>
+                        <p><strong data-i18n="about.datingApps.focusLabel">Focus:</strong> <span data-i18n="about.datingApps.focus">Discovery, Initial Attraction, Broad Strokes.</span></p>
                     </div>
                     <div class="value-prop-card">
-                         <div class="text-center"><i class="fas fa-sync-alt" style="color:var(--accent-pink-vibrant)"></i></div>
-                        <h4>LifeSync: The Depth</h4>
-                        <p>LifeSync is your next step. Once you've connected, we help you explore the deeper layers of compatibility – finances, values, lifestyle, cultural nuances, and long-term goals.</p>
-                        <p><strong>Focus:</strong> Deep Compatibility, Long-Term Alignment, Shared Future.</p>
+                        <div class="text-center"><i class="fas fa-sync-alt" style="color:var(--accent-pink-vibrant)"></i></div>
+                        <h4 data-i18n="about.lifesync.title">LifeSync: The Depth</h4>
+                        <p data-i18n="about.lifesync.description">LifeSync is your next step. Once you've connected, we help you explore the deeper layers of compatibility – finances, values, lifestyle, cultural nuances, and long-term goals.</p>
+                        <p><strong data-i18n="about.lifesync.focusLabel">Focus:</strong> <span data-i18n="about.lifesync.focus">Deep Compatibility, Long-Term Alignment, Shared Future.</span></p>
                     </div>
                 </div>
 
-                <h2 class="mt-10 text-center">Why LifeSync?</h2>
+                <h2 class="mt-10 text-center" data-i18n="about.whyTitle">Why LifeSync?</h2>
                 <ul class="list-disc list-inside space-y-2 mx-auto max-w-2xl">
-                    <li><strong>For Every Relationship Stage:</strong> Whether you've just met, are considering moving in, planning marriage, or navigating long-term partnership, LifeSync offers relevant insights.</li>
-                    <li><strong>Build Your Unique Profile:</strong> Create a rich, detailed personal profile covering aspects crucial to you. This is your foundation.</li>
-                    <li><strong>Sync with Your Partner:</strong> Choose what parameters to share and compare with your partner, fostering open and honest communication.</li>
-                    <li><strong>Data-Driven Insights:</strong> Understand your compatibility patterns, identify strengths, and pinpoint areas for growth and discussion.</li>
-                    <li><strong>Culturally Aware:</strong> Assessments consider diverse backgrounds, including specific cultural contexts like those in South Africa (e.g., lobola, family roles).</li>
-                    <li><strong>Track Your Journey:</strong> Log significant events, monitor changes in alignment, and celebrate milestones together.</li>
-                    <li><strong>Empower Your Choices:</strong> Make informed decisions about your relationship's future, built on transparency and mutual understanding.</li>
+                    <li><strong data-i18n="about.why.stageLabel">For Every Relationship Stage:</strong> <span data-i18n="about.why.stage">Whether you've just met, are considering moving in, planning marriage, or navigating long-term partnership, LifeSync offers relevant insights.</span></li>
+                    <li><strong data-i18n="about.why.profileLabel">Build Your Unique Profile:</strong> <span data-i18n="about.why.profile">Create a rich, detailed personal profile covering aspects crucial to you. This is your foundation.</span></li>
+                    <li><strong data-i18n="about.why.syncLabel">Sync with Your Partner:</strong> <span data-i18n="about.why.sync">Choose what parameters to share and compare with your partner, fostering open and honest communication.</span></li>
+                    <li><strong data-i18n="about.why.insightsLabel">Data-Driven Insights:</strong> <span data-i18n="about.why.insights">Understand your compatibility patterns, identify strengths, and pinpoint areas for growth and discussion.</span></li>
+                    <li><strong data-i18n="about.why.culturalLabel">Culturally Aware:</strong> <span data-i18n="about.why.cultural">Assessments consider diverse backgrounds, including specific cultural contexts like those in South Africa (e.g., lobola, family roles).</span></li>
+                    <li><strong data-i18n="about.why.trackLabel">Track Your Journey:</strong> <span data-i18n="about.why.track">Log significant events, monitor changes in alignment, and celebrate milestones together.</span></li>
+                    <li><strong data-i18n="about.why.empowerLabel">Empower Your Choices:</strong> <span data-i18n="about.why.empower">Make informed decisions about your relationship's future, built on transparency and mutual understanding.</span></li>
                 </ul>
-                 <div class="text-center mt-8">
-                    <button class="btn btn-primary" onclick="showSection('assessments')">Explore Assessments <i class="fas fa-arrow-right ml-2"></i></button>
+                <div class="text-center mt-8">
+                    <button class="btn btn-primary" onclick="showSection('assessments')" data-i18n="about.exploreBtn">Explore Assessments <i class="fas fa-arrow-right ml-2"></i></button>
                 </div>
             </section>
 
             <section id="assessments" class="content-section">
-                <h2 class="text-center">Discover Your Compatibility</h2>
-                <p class="text-center mb-6">Engage with our assessments to gain valuable insights into your relationship dynamics. Assign weights to what matters most to you!</p>
+                <h2 class="text-center" data-i18n="assessments.title">Discover Your Compatibility</h2>
+                <p class="text-center mb-6" data-i18n="assessments.subtitle">Engage with our assessments to gain valuable insights into your relationship dynamics. Assign weights to what matters most to you!</p>
 
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="assessment-container">
-                        <h3><i class="fas fa-rocket mr-2"></i>Quick Compatibility Check</h3>
-                        <p>A fast way for you and a potential partner to get an initial feel for alignment. Choose your depth!</p>
+                        <h3><i class="fas fa-rocket mr-2"></i> <span data-i18n="assessments.quickCompat.title">Quick Compatibility Check</span></h3>
+                        <p data-i18n="assessments.quickCompat.description">A fast way for you and a potential partner to get an initial feel for alignment. Choose your depth!</p>
                         <div id="quickCompatLevelSelector" class="my-4">
-                            <button class="btn btn-secondary !text-xs" data-level="basic">Quick Sync (5 Q's)</button>
-                            <button class="btn btn-secondary !text-xs" data-level="intermediate">Deeper Dive (10 Q's)</button>
-                            <button class="btn btn-secondary !text-xs" data-level="advanced">Full Spectrum (15 Q's)</button>
+                            <button class="btn btn-secondary !text-xs" data-level="basic" data-i18n="assessments.quickCompat.basicBtn">Quick Sync (5 Q's)</button>
+                            <button class="btn btn-secondary !text-xs" data-level="intermediate" data-i18n="assessments.quickCompat.intermediateBtn">Deeper Dive (10 Q's)</button>
+                            <button class="btn btn-secondary !text-xs" data-level="advanced" data-i18n="assessments.quickCompat.advancedBtn">Full Spectrum (15 Q's)</button>
                         </div>
                         <div id="quickCompatQuizArea" style="display:none;">
                             <div class="quiz-question">
                                 <h4 id="quickCompatQuestionText" class="text-lg mb-2">Sample Question for Quick Check?</h4>
-                                <div class="quiz-options" id="quickCompatOptionsArea">
-                                    </div>
+                                <div class="quiz-options" id="quickCompatOptionsArea"></div>
                                 <div class="weight-slider mt-3">
-                                     <label for="quickCompatWeight">Importance (1-5):</label>
-                                     <input type="range" id="quickCompatWeight" name="quickCompatWeight" min="1" max="5" value="3" class="w-1/2">
-                                     <span id="quickCompatWeightValue">3</span>
-                                 </div>
+                                    <label for="quickCompatWeight" data-i18n="assessments.quickCompat.importanceLabel">Importance (1-5):</label>
+                                    <input type="range" id="quickCompatWeight" name="quickCompatWeight" min="1" max="5" value="3" class="w-1/2">
+                                    <span id="quickCompatWeightValue">3</span>
+                                </div>
                             </div>
                             <div class="quiz-feedback" id="quickCompatFeedbackArea"></div>
-                            <p class="text-xs mt-3">Question <span id="quickCompatCounter">1</span> of <span id="quickCompatTotal">5</span></p>
+                            <p class="text-xs mt-3" data-i18n="assessments.quickCompat.progress">Question <span id="quickCompatCounter">1</span> of <span id="quickCompatTotal">5</span></p>
                             <div class="progress-bar mt-2"><div class="progress-bar-fill" id="quickCompatProgressBar"></div></div>
-                            <button id="quickCompatNextBtn" class="btn btn-primary mt-4">Next</button>
+                            <button id="quickCompatNextBtn" class="btn btn-primary mt-4" data-i18n="assessments.quickCompat.nextBtn">Next</button>
                         </div>
-                         <div id="quickCompatResultArea" style="display:none;" class="mt-4">
-                            <h4 class="text-xl" style="color: var(--accent-teal-bright);">Quick Sync Results!</h4>
+                        <div id="quickCompatResultArea" style="display:none;" class="mt-4">
+                            <h4 class="text-xl" style="color: var(--accent-teal-bright);" data-i18n="assessments.quickCompat.resultsTitle">Quick Sync Results!</h4>
                             <p id="quickCompatFinalFeedback" class="my-2"></p>
-                            <button class="btn btn-secondary" onclick="resetQuickCompatQuiz()">Try Another Level</button>
+                            <button class="btn btn-secondary" onclick="resetQuickCompatQuiz()" data-i18n="assessments.quickCompat.retryBtn">Try Another Level</button>
                         </div>
                     </div>
 
                     <div class="assessment-container">
-                        <h3><i class="fas fa-user-edit mr-2"></i>My Relationship Profile Builder</h3>
-                        <p>Start building your detailed LifeSync profile by answering these initial questions about your views and preferences. This forms the basis for future syncs.</p>
+                        <h3><i class="fas fa-user-edit mr-2"></i> <span data-i18n="assessments.profileBuilder.title">My Relationship Profile Builder</span></h3>
+                        <p data-i18n="assessments.profileBuilder.description">Start building your detailed LifeSync profile by answering these initial questions about your views and preferences. This forms the basis for future syncs.</p>
                         <div id="relationshipDetailsQuizArea">
-                             <div class="quiz-question">
-                                <h4 id="detailsQuestionText" class="text-lg mb-2">What is your primary love language?</h4>
-                                 <div class="quiz-options" id="detailsOptionsArea">
-                                     <button data-value="words">Words of Affirmation</button>
-                                     <button data-value="acts">Acts of Service</button>
-                                     <button data-value="gifts">Receiving Gifts</button>
-                                     <button data-value="quality_time">Quality Time</button>
-                                     <button data-value="touch">Physical Touch</button>
-                                 </div>
-                                 <div class="weight-slider mt-3">
-                                     <label for="detailsWeight">How crucial is this for you? (1-5):</label>
-                                     <input type="range" id="detailsWeight" name="detailsWeight" min="1" max="5" value="3" class="w-1/2">
-                                     <span id="detailsWeightValue">3</span>
-                                 </div>
-                             </div>
-                             <div class="quiz-feedback" id="detailsFeedbackArea"></div>
-                             <p class="text-xs mt-3">Question <span id="detailsCounter">1</span> of <span id="detailsTotal">10</span></p>
-                             <div class="progress-bar mt-2"><div class="progress-bar-fill" id="detailsProgressBar"></div></div>
-                             <button id="detailsNextBtn" class="btn btn-primary mt-4">Next Question</button>
+                            <div class="quiz-question">
+                                <h4 id="detailsQuestionText" class="text-lg mb-2" data-i18n="assessments.profileBuilder.q1">What is your primary love language?</h4>
+                                <div class="quiz-options" id="detailsOptionsArea">
+                                    <button data-value="words" data-i18n="assessments.profileBuilder.options.words">Words of Affirmation</button>
+                                    <button data-value="acts" data-i18n="assessments.profileBuilder.options.acts">Acts of Service</button>
+                                    <button data-value="gifts" data-i18n="assessments.profileBuilder.options.gifts">Receiving Gifts</button>
+                                    <button data-value="quality_time" data-i18n="assessments.profileBuilder.options.quality_time">Quality Time</button>
+                                    <button data-value="touch" data-i18n="assessments.profileBuilder.options.touch">Physical Touch</button>
+                                </div>
+                                <div class="weight-slider mt-3">
+                                    <label for="detailsWeight" data-i18n="assessments.profileBuilder.importanceLabel">How crucial is this for you? (1-5):</label>
+                                    <input type="range" id="detailsWeight" name="detailsWeight" min="1" max="5" value="3" class="w-1/2">
+                                    <span id="detailsWeightValue">3</span>
+                                </div>
+                            </div>
+                            <div class="quiz-feedback" id="detailsFeedbackArea"></div>
+                            <p class="text-xs mt-3" data-i18n="assessments.profileBuilder.progress">Question <span id="detailsCounter">1</span> of <span id="detailsTotal">10</span></p>
+                            <div class="progress-bar mt-2"><div class="progress-bar-fill" id="detailsProgressBar"></div></div>
+                            <button id="detailsNextBtn" class="btn btn-primary mt-4" data-i18n="assessments.profileBuilder.nextBtn">Next Question</button>
                         </div>
                         <div id="detailsResultArea" style="display:none;" class="mt-4">
-                            <h4 class="text-xl" style="color: var(--accent-teal-bright);">Profile Section Complete!</h4>
+                            <h4 class="text-xl" style="color: var(--accent-teal-bright);" data-i18n="assessments.profileBuilder.resultsTitle">Profile Section Complete!</h4>
                             <p id="detailsFinalFeedback" class="my-2"></p>
-                            <button class="btn btn-secondary" onclick="resetDetailsQuiz()">Review Answers</button>
-                            <button class="btn btn-primary" onclick="showSection('profile')">View My Profile</button>
+                            <button class="btn btn-secondary" onclick="resetDetailsQuiz()" data-i18n="assessments.profileBuilder.reviewBtn">Review Answers</button>
+                            <button class="btn btn-primary" onclick="showSection('profile')" data-i18n="assessments.profileBuilder.viewProfileBtn">View My Profile</button>
                         </div>
                     </div>
                 </div>
-                <p class="text-center mt-8 text-sm">More in-depth assessments on finances, cultural values (e.g., lobola discussions, family roles), lifestyle, and long-term goals are available once you create your profile and connect with a partner.</p>
+                <p class="text-center mt-8 text-sm" data-i18n="assessments.note">More in-depth assessments on finances, cultural values (e.g., lobola discussions, family roles), lifestyle, and long-term goals are available once you create your profile and connect with a partner.</p>
             </section>
 
             <section id="tools" class="content-section">
-                <h2 class="text-center">Relationship Enhancement Tools</h2>
-                <p class="text-center mb-6">Access a suite of tools designed to foster communication, track progress, and navigate challenges together.</p>
+                <h2 class="text-center" data-i18n="tools.title">Relationship Enhancement Tools</h2>
+                <p class="text-center mb-6" data-i18n="tools.subtitle">Access a suite of tools designed to foster communication, track progress, and navigate challenges together.</p>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="value-prop-card text-center">
                         <i class="fas fa-comments text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
-                        <h4>Communication Guides</h4>
-                        <p>Structured prompts and guides for discussing sensitive topics like finances, family expectations, and future plans.</p>
-                        <button class="btn btn-secondary !text-xs mt-3">Explore (Coming Soon)</button>
+                        <h4 data-i18n="tools.communication.title">Communication Guides</h4>
+                        <p data-i18n="tools.communication.description">Structured prompts and guides for discussing sensitive topics like finances, family expectations, and future plans.</p>
+                        <button class="btn btn-secondary !text-xs mt-3" data-i18n="tools.comingSoon">Explore (Coming Soon)</button>
                     </div>
                     <div class="value-prop-card text-center">
                         <i class="fas fa-calendar-check text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
-                        <h4>Milestone & Date Tracker</h4>
-                        <p>Log important dates, anniversaries, and relationship milestones. Get reminders and celebrate together.</p>
-                        <button class="btn btn-secondary !text-xs mt-3">Set Up (Coming Soon)</button>
+                        <h4 data-i18n="tools.milestone.title">Milestone & Date Tracker</h4>
+                        <p data-i18n="tools.milestone.description">Log important dates, anniversaries, and relationship milestones. Get reminders and celebrate together.</p>
+                        <button class="btn btn-secondary !text-xs mt-3" data-i18n="tools.comingSoon">Set Up (Coming Soon)</button>
                     </div>
                     <div class="value-prop-card text-center">
                         <i class="fas fa-chart-line text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
-                        <h4>Parameter Monitoring</h4>
-                        <p>Track changes in key relationship aspects (e.g., frequency of affirming words, shared activities) and get gentle nudges.</p>
-                        <button class="btn btn-secondary !text-xs mt-3">Configure (Coming Soon)</button>
+                        <h4 data-i18n="tools.monitoring.title">Parameter Monitoring</h4>
+                        <p data-i18n="tools.monitoring.description">Track changes in key relationship aspects (e.g., frequency of affirming words, shared activities) and get gentle nudges.</p>
+                        <button class="btn btn-secondary !text-xs mt-3" data-i18n="tools.comingSoon">Configure (Coming Soon)</button>
                     </div>
                     <div class="value-prop-card text-center">
                         <i class="fas fa-hands-helping text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
-                        <h4>Conflict Resolution Aids</h4>
-                        <p>Tools to help navigate disagreements constructively, including structured feedback exchange.</p>
-                        <button class="btn btn-secondary !text-xs mt-3">Learn More (Coming Soon)</button>
+                        <h4 data-i18n="tools.conflict.title">Conflict Resolution Aids</h4>
+                        <p data-i18n="tools.conflict.description">Tools to help navigate disagreements constructively, including structured feedback exchange.</p>
+                        <button class="btn btn-secondary !text-xs mt-3" data-i18n="tools.comingSoon">Learn More (Coming Soon)</button>
                     </div>
-                     <div class="value-prop-card text-center">
+                    <div class="value-prop-card text-center">
                         <i class="fas fa-gift text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
-                        <h4>Shared Goals & Dreams</h4>
-                        <p>Define and track progress towards shared aspirations as a couple.</p>
-                        <button class="btn btn-secondary !text-xs mt-3">Start Planning (Coming Soon)</button>
+                        <h4 data-i18n="tools.goals.title">Shared Goals & Dreams</h4>
+                        <p data-i18n="tools.goals.description">Define and track progress towards shared aspirations as a couple.</p>
+                        <button class="btn btn-secondary !text-xs mt-3" data-i18n="tools.comingSoon">Start Planning (Coming Soon)</button>
                     </div>
-                     <div class="value-prop-card text-center">
+                    <div class="value-prop-card text-center">
                         <i class="fas fa-user-minus text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
-                        <h4>Relationship Closure (If Needed)</h4>
-                        <p>Tools to facilitate a respectful and clear process if a relationship ends.</p>
-                        <button class="btn btn-secondary !text-xs mt-3">Understand (Coming Soon)</button>
+                        <h4 data-i18n="tools.closure.title">Relationship Closure (If Needed)</h4>
+                        <p data-i18n="tools.closure.description">Tools to facilitate a respectful and clear process if a relationship ends.</p>
+                        <button class="btn btn-secondary !text-xs mt-3" data-i18n="tools.comingSoon">Understand (Coming Soon)</button>
                     </div>
                 </div>
             </section>
 
             <section id="resources" class="content-section">
-                <h2 class="text-center">Find Your Connection - Dating Platform Guide</h2>
-                <p class="text-center mb-6">Explore popular dating platforms to make new connections. LifeSync is here for when you're ready to deepen that bond. (Data below is for illustrative purposes).</p>
+                <h2 class="text-center" data-i18n="resources.title">Find Your Connection - Dating Platform Guide</h2>
+                <p class="text-center mb-6" data-i18n="resources.subtitle">Explore popular dating platforms to make new connections. LifeSync is here for when you're ready to deepen that bond. (Data below is for illustrative purposes).</p>
                 <div class="mb-4 text-sm">
-                    <label for="countryFilter" class="mr-2">Filter by Country (Illustrative):</label>
+                    <label for="countryFilter" class="mr-2" data-i18n="resources.filterLabel">Filter by Country (Illustrative):</label>
                     <select id="countryFilter" class="p-2 rounded bg-[var(--bg-card-purple)] border border-[var(--border-color-lavender)] text-sm">
-                        <option value="all">All Countries</option>
-                        <option value="ZA">South Africa</option>
-                        <option value="US">United States</option>
-                        <option value="UK">United Kingdom</option>
+                        <option value="all" data-i18n="resources.filter.all">All Countries</option>
+                        <option value="ZA" data-i18n="resources.filter.za">South Africa</option>
+                        <option value="US" data-i18n="resources.filter.us">United States</option>
+                        <option value="UK" data-i18n="resources.filter.uk">United Kingdom</option>
                     </select>
                 </div>
                 <div class="overflow-x-auto">
                     <table id="datingSiteTable" class="dating-site-table">
                         <thead>
                             <tr>
-                                <th data-sort="name">Platform <i class="fas fa-sort"></i></th>
-                                <th data-sort="audience">Target Audience <i class="fas fa-sort"></i></th>
-                                <th data-sort="features">Key Features <i class="fas fa-sort"></i></th>
-                                <th data-sort="popularityZA">Popularity (SA) <i class="fas fa-sort"></i></th>
-                                <th>Link</th>
+                                <th data-sort="name" data-i18n="resources.table.platform">Platform <i class="fas fa-sort"></i></th>
+                                <th data-sort="audience" data-i18n="resources.table.audience">Target Audience <i class="fas fa-sort"></i></th>
+                                <th data-sort="features" data-i18n="resources.table.features">Key Features <i class="fas fa-sort"></i></th>
+                                <th data-sort="popularityZA" data-i18n="resources.table.popularityZA">Popularity (SA) <i class="fas fa-sort"></i></th>
+                                <th data-i18n="resources.table.link">Link</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </section>
 
             <section id="profile" class="content-section">
-                <h2 class="text-center">My LifeSync Profile</h2>
-                <p class="text-center mb-6">This is where your detailed individual profile will be displayed, managed, and where you can initiate syncing with a partner. (Full functionality coming soon).</p>
+                <h2 class="text-center" data-i18n="profile.title">My LifeSync Profile</h2>
+                <p class="text-center mb-6" data-i18n="profile.subtitle">This is where your detailed individual profile will be displayed, managed, and where you can initiate syncing with a partner.</p>
                 <div class="assessment-container max-w-3xl mx-auto">
                     <h3 id="profileNameDisplay">Your Name</h3>
-                    <p>Email: user@example.com (placeholder)</p>
+                    <p id="profileEmail">Email: user@example.com</p>
                     <div class="mt-4">
-                        <h4>Completed Assessments:</h4>
+                        <h4 data-i18n="profile.assessmentsTitle">Completed Assessments:</h4>
                         <ul id="completedAssessmentsList" class="list-disc pl-5 text-sm">
-                            <li>Relationship Details Quiz (Score: 85%)</li>
-                            <li>Values Alignment (Partial)</li>
+                            <!-- Populated dynamically -->
                         </ul>
                     </div>
                     <div class="mt-4">
-                        <h4>Synced Partners:</h4>
-                        <p class="text-sm">No partner synced yet.</p>
-                        <button class="btn btn-purple mt-2 !text-xs">Connect with Partner (Coming Soon)</button>
+                        <h4 data-i18n="profile.partnersTitle">Synced Partners:</h4>
+                        <p class="text-sm" id="syncedPartners" data-i18n="profile.noPartners">No partner synced yet.</p>
+                        <button class="btn btn-purple mt-2 !text-xs" data-i18n="profile.connectBtn">Connect with Partner (Coming Soon)</button>
                     </div>
-                     <div class="mt-6">
-                        <h4>Profile Data & Preferences:</h4>
-                        <p class="text-sm">This area will show your answers to various profile-building questions and allow you to manage sharing preferences for each data category when synced with a partner.</p>
-                        <p class="text-xs mt-2 italic">Example: Your views on "Lobola" importance (Weight: 4/5), your preferred "Financial Management Style", your "Relationship with Extended Family" details.</p>
+                    <div class="mt-6">
+                        <h4 data-i18n="profile.dataTitle">Profile Data & Preferences:</h4>
+                        <div id="profileDataDisplay" class="text-sm"></div>
+                        <p class="text-xs mt-2 italic" data-i18n="profile.dataNote">Example: Your views on "Lobola" importance (Weight: 4/5), your preferred "Financial Management Style", your "Relationship with Extended Family" details.</p>
+                    </div>
+                    <div class="mt-6">
+                        <h4 data-i18n="profile.importTitle">Import Social Media Data:</h4>
+                        <p class="text-sm mb-2" data-i18n="profile.importInstructions">Upload your social media data file (e.g., LinkedIn ZIP, Facebook JSON) to enhance your profile.</p>
+                        <input type="file" id="socialMediaFileInput" accept=".zip,.json" class="input-field">
+                        <button class="btn btn-primary mt-2" id="importSocialMediaBtn" data-i18n="profile.importBtn">Import Data</button>
+                        <div id="importFeedback" class="mt-2 text-sm"></div>
                     </div>
                 </div>
             </section>
 
-             <div id="notificationsArea" class="notifications-area">
-                <h4>Notifications</h4>
+            <div id="notificationsArea" class="notifications-area">
+                <h4 data-i18n="notifications.title">Notifications</h4>
                 <div id="notificationList">
-                    <div class="notification-item">Welcome to LifeSync! Complete your profile to get started.</div>
-                    </div>
+                    <div class="notification-item" data-i18n="notifications.welcome">Welcome to LifeSync! Complete your profile to get started.</div>
+                </div>
             </div>
+        </div>
 
-
-        </div> <footer>
-            &copy; <span id="currentYear"></span> Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | Built with <i class="fa-solid fa-heart" style="color: var(--accent-pink-vibrant)"></i> for LifeSync.
+        <footer>
+            © <span id="currentYear"></span> Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#" data-i18n="footer.privacy">Privacy Policy</a> | <a href="#" data-i18n="footer.terms">Terms of Service</a> | <span data-i18n="footer.built">Built with <i class="fa-solid fa-heart" style="color: var(--accent-pink-vibrant)"></i> for LifeSync.</span>
         </footer>
-    </div> <div id="loginModal" class="modal">
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
-            <h2><i class="fa-solid fa-sign-in-alt mr-2" style="color:var(--accent-purple-medium)"></i>Login to LifeSync</h2>
-            <p class="text-sm mb-4">Access your profile, assessments, and synced data.</p>
-            <form>
-                <div class="mb-3"><label for="loginEmail">Email:</label><input type="email" id="loginEmail" class="input-field" placeholder="your@email.com"></div>
-                <div class="mb-4"><label for="loginPassword">Password:</label><input type="password" id="loginPassword" class="input-field" placeholder="Your password"></div>
-                <button type="submit" class="btn btn-primary w-full">Login (Coming Soon)</button>
+            <span class="close-button" id="closeLoginModal">×</span>
+            <h2><i class="fa-solid fa-sign-in-alt mr-2" style="color:var(--accent-purple-medium)"></i> <span data-i18n="login.title">Login to LifeSync</span></h2>
+            <p class="text-sm mb-4" data-i18n="login.subtitle">Access your profile, assessments, and synced data.</p>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="loginEmail" data-i18n="login.emailLabel">Email:</label>
+                    <input type="email" id="loginEmail" class="input-field" placeholder="your@email.com" data-i18n-placeholder="login.emailPlaceholder">
+                </div>
+                <div class="mb-4">
+                    <label for="loginPassword" data-i18n="login.passwordLabel">Password:</label>
+                    <input type="password" id="loginPassword" class="input-field" placeholder="Your password" data-i18n-placeholder="login.passwordPlaceholder">
+                </div>
+                <button type="submit" class="btn btn-primary w-full" data-i18n="login.submit">Login</button>
             </form>
+            <button class="btn btn-secondary w-full mt-2" id="googleLoginBtn"><i class="fab fa-google mr-2"></i> <span data-i18n="login.google">Login with Google</span></button>
+            <div class="mt-4">
+                <p class="text-sm" data-i18n="login.tempProfilePrompt">Don't want to sign in? Create a temporary profile:</p>
+                <button class="btn btn-purple w-full mt-2" id="createTempProfileBtn" data-i18n="login.tempProfileBtn">Create Temporary Profile</button>
+            </div>
         </div>
     </div>
+
+    <!-- Register Modal -->
     <div id="registerModal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="document.getElementById('registerModal').style.display='none'">&times;</span>
-            <h2><i class="fa-solid fa-user-plus mr-2" style="color:var(--accent-pink-vibrant)"></i>Create Your LifeSync Account</h2>
-            <p class="text-sm mb-4">Start building your insightful relationship profile.</p>
-            <form>
-                <div class="mb-3"><label for="registerName">Name:</label><input type="text" id="registerName" class="input-field" placeholder="Your Name"></div>
-                <div class="mb-3"><label for="registerEmail">Email:</label><input type="email" id="registerEmail" class="input-field" placeholder="your@email.com"></div>
-                <div class="mb-4"><label for="registerPassword">Password:</label><input type="password" id="registerPassword" class="input-field" placeholder="Create a password"></div>
-                <button type="submit" class="btn btn-secondary w-full">Register (Coming Soon)</button>
+            <span class="close-button" id="closeRegisterModal">×</span>
+            <h2><i class="fa-solid fa-user-plus mr-2" style="color:var(--accent-pink-vibrant)"></i> <span data-i18n="register.title">Create Your LifeSync Account</span></h2>
+            <p class="text-sm mb-4" data-i18n="register.subtitle">Start building your insightful relationship profile.</p>
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="registerName" data-i18n="register.nameLabel">Name:</label>
+                    <input type="text" id="registerName" class="input-field" placeholder="Your Name" data-i18n-placeholder="register.namePlaceholder">
+                </div>
+                <div class="mb-3">
+                    <label for="registerEmail" data-i18n="register.emailLabel">Email:</label>
+                    <input type="email" id="registerEmail" class="input-field" placeholder="your@email.com" data-i18n-placeholder="register.emailPlaceholder">
+                </div>
+                <div class="mb-4">
+                    <label for="registerPassword" data-i18n="register.passwordLabel">Password:</label>
+                    <input type="password" id="registerPassword" class="input-field" placeholder="Create a password" data-i18n-placeholder="register.passwordPlaceholder">
+                </div>
+                <button type="submit" class="btn btn-secondary w-full" data-i18n="register.submit">Register</button>
+            </form>
+            <button class="btn btn-secondary w-full mt-2" id="googleRegisterBtn"><i class="fab fa-google mr-2"></i> <span data-i18n="register.google">Register with Google</span></button>
+        </div>
+    </div>
+
+    <!-- Temporary Profile Modal -->
+    <div id="tempProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeTempProfileModal">×</span>
+            <h2 data-i18n="tempProfile.title">Create Temporary Profile</h2>
+            <p class="text-sm mb-4" data-i18n="tempProfile.subtitle">Create a temporary profile to explore LifeSync for 90 days.</p>
+            <form id="tempProfileForm">
+                <div class="mb-3">
+                    <label for="tempUsername" data-i18n="tempProfile.usernameLabel">Username:</label>
+                    <input type="text" id="tempUsername" class="input-field" placeholder="Choose a username" data-i18n-placeholder="tempProfile.usernamePlaceholder">
+                </div>
+                <button type="submit" class="btn btn-primary w-full" data-i18n="tempProfile.createBtn">Create Profile</button>
+            </form>
+            <div id="tempProfileCode" class="mt-4" style="display:none;">
+                <p data-i18n="tempProfile.codeInstructions">Your temporary profile has been created! Use this code to log in:</p>
+                <p class="text-lg font-bold" id="tempProfileCodeDisplay"></p>
+                <p class="text-xs mt-2" data-i18n="tempProfile.expiryNote">This profile will expire in 90 days.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Temporary Profile Login Modal -->
+    <div id="tempProfileLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeTempProfileLoginModal">×</span>
+            <h2 data-i18n="tempProfileLogin.title">Login with Temporary Profile</h2>
+            <form id="tempProfileLoginForm">
+                <div class="mb-3">
+                    <label for="tempLoginUsername" data-i18n="tempProfileLogin.usernameLabel">Username:</label>
+                    <input type="text" id="tempLoginUsername" class="input-field" placeholder="Your username" data-i18n-placeholder="tempProfileLogin.usernamePlaceholder">
+                </div>
+                <div class="mb-4">
+                    <label for="tempLoginCode" data-i18n="tempProfileLogin.codeLabel">Code:</label>
+                    <input type="text" id="tempLoginCode" class="input-field" placeholder="Your access code" data-i18n-placeholder="tempProfileLogin.codePlaceholder">
+                </div>
+                <button type="submit" class="btn btn-primary w-full" data-i18n="tempProfileLogin.submit">Login</button>
             </form>
         </div>
     </div>
 
+    <!-- Search Modal -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSearchModal">×</span>
+            <h2 data-i18n="search.title"><i class="fas fa-search mr-2"></i> Search LifeSync</h2>
+            <input type="text" id="searchInput" class="input-field" placeholder="Search profiles, assessments, resources..." data-i18n-placeholder="search.placeholder">
+            <button class="btn btn-primary w-full" id="searchSubmitBtn" data-i18n="search.submit">Search</button>
+            <div id="searchResults" class="mt-4"></div>
+        </div>
+    </div>
+
+    <!-- Search Button -->
+    <button id="searchBtn"><i class="fas fa-search"></i> <span data-i18n="search.button">Search</span></button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navButtons = document.querySelectorAll('nav .nav-links button[data-section]');
-            const contentOverlay = document.getElementById('content-overlay');
-            const sections = document.querySelectorAll('.content-section');
-            const currentYearEl = document.getElementById('currentYear');
-            if(currentYearEl) currentYearEl.textContent = new Date().getFullYear();
+        // Firebase Configuration (Replace with your Firebase project config)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-            // --- Navigation ---
-            function showSection(sectionId) {
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    contentOverlay.scrollTo({ left: targetSection.offsetLeft - 8, behavior: 'smooth' }); // 8 for margin
-                    navButtons.forEach(btn => {
-                        btn.classList.remove('active-nav');
-                        if (btn.dataset.section === sectionId) btn.classList.add('active-nav');
-                    });
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // i18next Configuration
+        const translations = {
+            en: {
+                translation: {
+                    title: "LifeSync - Deepen Your Connections",
+                    nav: {
+                        brand: "LifeSync",
+                        about: "About",
+                        assessments: "Assessments",
+                        tools: "Tools",
+                        resources: "Resources",
+                        profile: "My Profile",
+                        login: "Login",
+                        register: "Register",
+                        logout: "Logout"
+                    },
+                    about: {
+                        title: "Unlock Deeper Connections with LifeSync",
+                        subtitle: "Go beyond the swipe. Understand what truly matters for lasting compatibility.",
+                        datingApps: {
+                            title: "Dating Apps: The Spark",
+                            description: "Dating apps are fantastic for initial introductions and finding potential matches based on interests and attraction. They help you discover who's out there.",
+                            focusLabel: "Focus:",
+                            focus: "Discovery, Initial Attraction, Broad Strokes."
+                        },
+                        lifesync: {
+                            title: "LifeSync: The Depth",
+                            description: "LifeSync is your next step. Once you've connected, we help you explore the deeper layers of compatibility – finances, values, lifestyle, cultural nuances, and long-term goals.",
+                            focusLabel: "Focus:",
+                            focus: "Deep Compatibility, Long-Term Alignment, Shared Future."
+                        },
+                        whyTitle: "Why LifeSync?",
+                        why: {
+                            stageLabel: "For Every Relationship Stage:",
+                            stage: "Whether you've just met, are considering moving in, planning marriage, or navigating long-term partnership, LifeSync offers relevant insights.",
+                            profileLabel: "Build Your Unique Profile:",
+                            profile: "Create a rich, detailed personal profile covering aspects crucial to you. This is your foundation.",
+                            syncLabel: "Sync with Your Partner:",
+                            sync: "Choose what parameters to share and compare with your partner, fostering open and honest communication.",
+                            insightsLabel: "Data-Driven Insights:",
+                            insights: "Understand your compatibility patterns, identify strengths, and pinpoint areas for growth and discussion.",
+                            culturalLabel: "Culturally Aware:",
+                            cultural: "Assessments consider diverse backgrounds, including specific cultural contexts like those in South Africa (e.g., lobola, family roles).",
+                            trackLabel: "Track Your Journey:",
+                            track: "Log significant events, monitor changes in alignment, and celebrate milestones together.",
+                            empowerLabel: "Empower Your Choices:",
+                            empower: "Make informed decisions about your relationship's future, built on transparency and mutual understanding."
+                        },
+                        exploreBtn: "Explore Assessments"
+                    },
+                    assessments: {
+                        title: "Discover Your Compatibility",
+                        subtitle: "Engage with our assessments to gain valuable insights into your relationship dynamics. Assign weights to what matters most to you!",
+                        quickCompat: {
+                            title: "Quick Compatibility Check",
+                            description: "A fast way for you and a potential partner to get an initial feel for alignment. Choose your depth!",
+                            basicBtn: "Quick Sync (5 Q's)",
+                            intermediateBtn: "Deeper Dive (10 Q's)",
+                            advancedBtn: "Full Spectrum (15 Q's)",
+                            importanceLabel: "Importance (1-5):",
+                            progress: "Question <span id='quickCompatCounter'>1</span> of <span id='quickCompatTotal'>5</span>",
+                            nextBtn: "Next",
+                            resultsTitle: "Quick Sync Results!",
+                            retryBtn: "Try Another Level"
+                        },
+                        profileBuilder: {
+                            title: "My Relationship Profile Builder",
+                            description: "Start building your detailed LifeSync profile by answering these initial questions about your views and preferences. This forms the basis for future syncs.",
+                            q1: "What is your primary love language?",
+                            options: {
+                                words: "Words of Affirmation",
+                                acts: "Acts of Service",
+                                gifts: "Receiving Gifts",
+                                quality_time: "Quality Time",
+                                touch: "Physical Touch"
+                            },
+                            importanceLabel: "How crucial is this for you? (1-5):",
+                            progress: "Question <span id='detailsCounter'>1</span> of <span id='detailsTotal'>10</span>",
+                            nextBtn: "Next Question",
+                            resultsTitle: "Profile Section Complete!",
+                            reviewBtn: "Review Answers",
+                            viewProfileBtn: "View My Profile"
+                        },
+                        note: "More in-depth assessments on finances, cultural values (e.g., lobola discussions, family roles), lifestyle, and long-term goals are available once you create your profile and connect with a partner."
+                    },
+                    tools: {
+                        title: "Relationship Enhancement Tools",
+                        subtitle: "Access a suite of tools designed to foster communication, track progress, and navigate challenges together.",
+                        communication: {
+                            title: "Communication Guides",
+                            description: "Structured prompts and guides for discussing sensitive topics like finances, family expectations, and future plans."
+                        },
+                        milestone: {
+                            title: "Milestone & Date Tracker",
+                            description: "Log important dates, anniversaries, and relationship milestones. Get reminders and celebrate together."
+                        },
+                        monitoring: {
+                            title: "Parameter Monitoring",
+                            description: "Track changes in key relationship aspects (e.g., frequency of affirming words, shared activities) and get gentle nudges."
+                        },
+                        conflict: {
+                            title: "Conflict Resolution Aids",
+                            description: "Tools to help navigate disagreements constructively, including structured feedback exchange."
+                        },
+                        goals: {
+                            title: "Shared Goals & Dreams",
+                            description: "Define and track progress towards shared aspirations as a couple."
+                        },
+                        closure: {
+                            title: "Relationship Closure (If Needed)",
+                            description: "Tools to facilitate a respectful and clear process if a relationship ends."
+                        },
+                        comingSoon: "Coming Soon"
+                    },
+                    resources: {
+                        title: "Find Your Connection - Dating Platform Guide",
+                        subtitle: "Explore popular dating platforms to make new connections. LifeSync is here for when you're ready to deepen that bond. (Data below is for illustrative purposes).",
+                        filterLabel: "Filter by Country (Illustrative):",
+                        filter: {
+                            all: "All Countries",
+                            za: "South Africa",
+                            us: "United States",
+                            uk: "United Kingdom"
+                        },
+                        table: {
+                            platform: "Platform",
+                            audience: "Target Audience",
+                            features: "Key Features",
+                            popularityZA: "Popularity (SA)",
+                            link: "Link"
+                        }
+                    },
+                    profile: {
+                        title: "My LifeSync Profile",
+                        subtitle: "This is where your detailed individual profile will be displayed, managed, and where you can initiate syncing with a partner.",
+                        assessmentsTitle: "Completed Assessments:",
+                        partnersTitle: "Synced Partners:",
+                        noPartners: "No partner synced yet.",
+                        connectBtn: "Connect with Partner (Coming Soon)",
+                        dataTitle: "Profile Data & Preferences:",
+                        dataNote: "Example: Your views on 'Lobola' importance (Weight: 4/5), your preferred 'Financial Management Style', your 'Relationship with Extended Family' details.",
+                        importTitle: "Import Social Media Data:",
+                        importInstructions: "Upload your social media data file (e.g., LinkedIn ZIP, Facebook JSON) to enhance your profile.",
+                        importBtn: "Import Data"
+                    },
+                    notifications: {
+                        title: "Notifications",
+                        welcome: "Welcome to LifeSync! Complete your profile to get started."
+                    },
+                    footer: {
+                        privacy: "Privacy Policy",
+                        terms: "Terms of Service",
+                        built: "Built with <i class='fa-solid fa-heart' style='color: var(--accent-pink-vibrant)'></i> for LifeSync."
+                    },
+                    login: {
+                        title: "Login to LifeSync",
+                        subtitle: "Access your profile, assessments, and synced data.",
+                        emailLabel: "Email:",
+                        emailPlaceholder: "your@email.com",
+                        passwordLabel: "Password:",
+                        passwordPlaceholder: "Your password",
+                        submit: "Login",
+                        google: "Login with Google",
+                        tempProfilePrompt: "Don't want to sign in? Create a temporary profile:",
+                        tempProfileBtn: "Create Temporary Profile"
+                    },
+                    register: {
+                        title: "Create Your LifeSync Account",
+                        subtitle: "Start building your insightful relationship profile.",
+                        nameLabel: "Name:",
+                        namePlaceholder: "Your Name",
+                        emailLabel: "Email:",
+                        emailPlaceholder: "your@email.com",
+                        passwordLabel: "Password:",
+                        passwordPlaceholder: "Create a password",
+                        submit: "Register",
+                        google: "Register with Google"
+                    },
+                    tempProfile: {
+                        title: "Create Temporary Profile",
+                        subtitle: "Create a temporary profile to explore LifeSync for 90 days.",
+                        usernameLabel: "Username:",
+                        usernamePlaceholder: "Choose a username",
+                        createBtn: "Create Profile",
+                        codeInstructions: "Your temporary profile has been created! Use this code to log in:",
+                        expiryNote: "This profile will expire in 90 days."
+                    },
+                    tempProfileLogin: {
+                        title: "Login with Temporary Profile",
+                        usernameLabel: "Username:",
+                        usernamePlaceholder: "Your username",
+                        codeLabel: "Code:",
+                        codePlaceholder: "Your access code",
+                        submit: "Login"
+                    },
+                    search: {
+                        button: "Search",
+                        title: "Search LifeSync",
+                        placeholder: "Search profiles, assessments, resources...",
+                        submit: "Search"
+                    },
+                    alerts: {
+                        selectionNeeded: "Please select an answer to proceed.",
+                        loginSuccess: "Logged in successfully!",
+                        loginFailed: "Login failed. Please check your credentials.",
+                        registerSuccess: "Registered successfully! Please log in.",
+                        registerFailed: "Registration failed. Please try again.",
+                        tempProfileCreated: "Temporary profile created! Use the code above to log in.",
+                        tempProfileLoginSuccess: "Logged in with temporary profile!",
+                        tempProfileLoginFailed: "Invalid username or code.",
+                        tempProfileExpired: "This temporary profile has expired.",
+                        importSuccess: "Social media data imported successfully!",
+                        importFailed: "Failed to import data. Please try again.",
+                        logoutSuccess: "Logged out successfully!"
+                    }
                 }
-            }
-            window.showSection = showSection; // Expose globally
-
-            navButtons.forEach(btn => {
-                btn.addEventListener('click', function() { showSection(this.dataset.section); });
-            });
-            
-            // Placeholder for Login/Register Modals
-            document.getElementById('loginBtnPlaceholder')?.addEventListener('click', () => document.getElementById('loginModal').style.display = 'flex');
-            document.getElementById('registerBtnPlaceholder')?.addEventListener('click', () => document.getElementById('registerModal').style.display = 'flex');
-            document.querySelectorAll('.close-button').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.getElementById('loginModal').style.display = 'none';
-                    document.getElementById('registerModal').style.display = 'none';
-                });
-            });
-
-
-            // --- Guest Assessment / Quick Compatibility Check Logic ---
-            const quickCompatLevelSelector = document.getElementById('quickCompatLevelSelector');
-            const quickCompatQuizArea = document.getElementById('quickCompatQuizArea');
-            const quickCompatQuestionText = document.getElementById('quickCompatQuestionText');
-            const quickCompatOptionsArea = document.getElementById('quickCompatOptionsArea');
-            const quickCompatFeedbackArea = document.getElementById('quickCompatFeedbackArea');
-            const quickCompatProgressBar = document.getElementById('quickCompatProgressBar');
-            const quickCompatCounter = document.getElementById('quickCompatCounter');
-            const quickCompatTotalDisplay = document.getElementById('quickCompatTotal');
-            const quickCompatNextBtn = document.getElementById('quickCompatNextBtn');
-            const quickCompatResultArea = document.getElementById('quickCompatResultArea');
-            const quickCompatFinalFeedback = document.getElementById('quickCompatFinalFeedback');
-            const quickCompatWeightInput = document.getElementById('quickCompatWeight');
-            const quickCompatWeightValue = document.getElementById('quickCompatWeightValue');
-
-
-            const allQuestions = { // Mock questions
-                basic: [
-                    { q: "Weekend preference: Cozy night in or adventurous outing?", o: ["Cozy Night In", "Adventurous Outing", "Depends on mood"], w: 3},
-                    { q: "Financial priority: Saving for future or enjoying the present?", o: ["Saving Focus", "Enjoying Present", "Balanced Approach"], w: 3},
-                    { q: "Communication style: Direct and to the point or gentle and suggestive?", o: ["Direct", "Gentle", "Mixture"], w: 3},
-                    { q: "Importance of shared hobbies?", o: ["Very Important", "Nice to Have", "Not Important"], w: 3},
-                    { q: "Attitude towards trying new foods/cuisines?", o: ["Love it!", "Sometimes", "Prefer Familiar"], w: 3}
-                ],
-                intermediate: [ /* Add 5 more questions */
-                    ...[ // Copy basic
-                        { q: "Weekend preference: Cozy night in or adventurous outing?", o: ["Cozy Night In", "Adventurous Outing", "Depends on mood"], w: 3},
-                        { q: "Financial priority: Saving for future or enjoying the present?", o: ["Saving Focus", "Enjoying Present", "Balanced Approach"], w: 3},
-                        { q: "Communication style: Direct and to the point or gentle and suggestive?", o: ["Direct", "Gentle", "Mixture"], w: 3},
-                        { q: "Importance of shared hobbies?", o: ["Very Important", "Nice to Have", "Not Important"], w: 3},
-                        { q: "Attitude towards trying new foods/cuisines?", o: ["Love it!", "Sometimes", "Prefer Familiar"], w: 3}
-                    ],
-                    { q: "How important is alone time in a relationship?", o: ["Essential", "Sometimes needed", "Rarely needed"], w: 3},
-                    { q: "View on discussing past relationships?", o: ["Open book", "Some details okay", "Prefer not to discuss"], w: 3},
-                    { q: "Ideal vacation: Relaxing beach or exploring a new city?", o: ["Beach", "City Exploration", "Nature/Adventure"], w: 3},
-                    { q: "Approach to household chores?", o: ["Shared equally", "Whoever has time", "Prefer to outsource"], w: 3},
-                    { q: "Frequency of contact with extended family?", o: ["Daily/Weekly", "Monthly", "Holidays/Special Occasions"], w: 3}
-                ],
-                advanced: [ /* Add 5 more questions to intermediate */
-                     ...[ // Copy intermediate
-                        { q: "Weekend preference: Cozy night in or adventurous outing?", o: ["Cozy Night In", "Adventurous Outing", "Depends on mood"], w: 3},
-                        { q: "Financial priority: Saving for future or enjoying the present?", o: ["Saving Focus", "Enjoying Present", "Balanced Approach"], w: 3},
-                        { q: "Communication style: Direct and to the point or gentle and suggestive?", o: ["Direct", "Gentle", "Mixture"], w: 3},
-                        { q: "Importance of shared hobbies?", o: ["Very Important", "Nice to Have", "Not Important"], w: 3},
-                        { q: "Attitude towards trying new foods/cuisines?", o: ["Love it!", "Sometimes", "Prefer Familiar"], w: 3},
-                        { q: "How important is alone time in a relationship?", o: ["Essential", "Sometimes needed", "Rarely needed"], w: 3},
-                        { q: "View on discussing past relationships?", o: ["Open book", "Some details okay", "Prefer not to discuss"], w: 3},
-                        { q: "Ideal vacation: Relaxing beach or exploring a new city?", o: ["Beach", "City Exploration", "Nature/Adventure"], w: 3},
-                        { q: "Approach to household chores?", o: ["Shared equally", "Whoever has time", "Prefer to outsource"], w: 3},
-                        { q: "Frequency of contact with extended family?", o: ["Daily/Weekly", "Monthly", "Holidays/Special Occasions"], w: 3}
-                    ],
-                    { q: "Thoughts on having children in the future?", o: ["Definitely want them", "Open to it", "Prefer not to have children", "Unsure"], w: 3},
-                    { q: "Perspective on 'Lobola' or similar cultural marriage traditions?", o: ["Very Important Tradition", "Respectful but Flexible", "Not a Priority for Me", "Unfamiliar/Neutral"], w: 3},
-                    { q: "How do you handle a partner's different political views?", o: ["Healthy Debate", "Agree to Disagree", "Avoid Topic", "Can be a Dealbreaker"], w: 3},
-                    { q: "Preferred way to receive affection/love?", o: ["Verbal Affirmation", "Acts of Service", "Gifts", "Quality Time", "Physical Touch"], w: 3},
-                    { q: "Long-term career aspirations and how they fit with a partnership?", o: ["High Priority, Partner Support Crucial", "Important, but Flexible", "Secondary to Relationship", "Still Figuring It Out"], w: 3}
-                ]
-            };
-            let currentQuickCompatLevel = 'basic';
-            let currentQuickCompatQuestions = [];
-            let currentQuickCompatIndex = 0;
-            let quickCompatAnswers = [];
-            
-            if(quickCompatWeightInput && quickCompatWeightValue) {
-                quickCompatWeightInput.oninput = function() { quickCompatWeightValue.innerHTML = this.value; }
-            }
-
-
-            quickCompatLevelSelector.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    currentQuickCompatLevel = e.target.dataset.level;
-                    currentQuickCompatQuestions = allQuestions[currentQuickCompatLevel];
-                    quickCompatTotalDisplay.textContent = currentQuickCompatQuestions.length;
-                    quickCompatQuizArea.style.display = 'block';
-                    quickCompatResultArea.style.display = 'none';
-                    quickCompatLevelSelector.style.display = 'none';
-                    resetQuickCompatQuiz(); // Start the selected quiz
-                }
-            });
-
-            function loadQuickCompatQuestion(index) {
-                if (index < currentQuickCompatQuestions.length) {
-                    const qData = currentQuickCompatQuestions[index];
-                    quickCompatQuestionText.textContent = qData.q;
-                    quickCompatOptionsArea.innerHTML = '';
-                    qData.o.forEach(option => {
-                        const button = document.createElement('button');
-                        button.textContent = option;
-                        button.addEventListener('click', () => handleQuickCompatAnswer(option, qData.w));
-                        quickCompatOptionsArea.appendChild(button);
-                    });
-                    quickCompatWeightInput.value = qData.w || 3; // Default weight if not specified
-                    quickCompatWeightValue.textContent = qData.w || 3;
-                    quickCompatFeedbackArea.textContent = "Select an option and adjust importance.";
-                    updateQuickCompatProgress();
-                } else {
-                    showQuickCompatResults();
-                }
-            }
-
-            function handleQuickCompatAnswer(answer, weight) {
-                const currentWeight = parseInt(quickCompatWeightInput.value);
-                quickCompatAnswers.push({ q: currentQuickCompatQuestions[currentQuickCompatIndex].q, a: answer, w: currentWeight });
-                // Mock feedback - in a real app, this would involve comparing two users' answers
-                quickCompatFeedbackArea.textContent = `Answered! Weight: ${currentWeight}. (In a real scenario, we'd compare with a partner's answer here).`;
-                currentQuickCompatIndex++;
-                 if (currentQuickCompatIndex < currentQuickCompatQuestions.length) {
-                    loadQuickCompatQuestion(currentQuickCompatIndex);
-                } else {
-                    quickCompatNextBtn.textContent = "Show Results";
-                    quickCompatNextBtn.onclick = showQuickCompatResults;
-                }
-            }
-             quickCompatNextBtn.addEventListener('click', () => {
-                // This button is now primarily for advancing if no option is auto-advancing.
-                // The main logic is in handleQuickCompatAnswer. If an answer is selected, it moves.
-                // If we want a separate next button, the logic in handleQuickCompatAnswer needs to change.
-                // For now, let's assume options auto-advance.
-                // If we reach here, it means the user clicked "Show Results"
-                if (currentQuickCompatIndex >= currentQuickCompatQuestions.length) {
-                    showQuickCompatResults();
-                } else {
-                    // If we want a manual next button, we'd call loadQuickCompatQuestion(currentQuickCompatIndex)
-                    // But this means an answer must be selected first.
-                    // For now, let's make it simple: options trigger next.
-                    // This button might be better as "Complete" or "See Results" when on last question.
-                    showAlert("Please select an answer to proceed.", "Selection Needed");
-                }
-            });
-
-
-            function updateQuickCompatProgress() {
-                 const progressPercent = (currentQuickCompatIndex / currentQuickCompatQuestions.length) * 100;
-                 quickCompatProgressBar.style.width = `${progressPercent}%`;
-                 quickCompatCounter.textContent = currentQuickCompatIndex + 1 > currentQuickCompatQuestions.length ? currentQuickCompatQuestions.length : currentQuickCompatIndex + 1;
-                 if (currentQuickCompatIndex >= currentQuickCompatQuestions.length -1) {
-                     quickCompatNextBtn.textContent = "Show Results";
-                 } else {
-                     quickCompatNextBtn.textContent = "Next (Select Answer First)";
-                 }
-            }
-
-            function showQuickCompatResults() {
-                quickCompatQuizArea.style.display = 'none';
-                quickCompatResultArea.style.display = 'block';
-                // Simplified result
-                let score = quickCompatAnswers.reduce((acc, ans) => acc + ans.w, 0);
-                quickCompatFinalFeedback.textContent = `Quick Sync Complete! Your answers suggest areas of focus with a total weight score of ${score}. A real sync would compare these with a partner.`;
-                console.log("Quick Compat Answers:", quickCompatAnswers);
-            }
-
-            window.resetQuickCompatQuiz = function() { // Make it global for the button
-                currentQuickCompatIndex = 0;
-                quickCompatAnswers = [];
-                quickCompatQuizArea.style.display = 'block';
-                quickCompatResultArea.style.display = 'none';
-                quickCompatLevelSelector.style.display = 'none'; // Keep it hidden once a level is chosen
-                loadQuickCompatQuestion(currentQuickCompatIndex);
-            }
-            
-            // Initial state for quick compat
-            quickCompatQuizArea.style.display = 'none';
-            quickCompatResultArea.style.display = 'none';
-
-
-            // --- Relationship Details Quiz Logic (Similar structure) ---
-            const detailsQuizArea = document.getElementById('relationshipDetailsQuizArea');
-            const detailsQuestionText = document.getElementById('detailsQuestionText');
-            const detailsOptionsArea = document.getElementById('detailsOptionsArea');
-            const detailsFeedbackArea = document.getElementById('detailsFeedbackArea');
-            const detailsProgressBar = document.getElementById('detailsProgressBar');
-            const detailsCounter = document.getElementById('detailsCounter');
-            const detailsTotalDisplay = document.getElementById('detailsTotal');
-            const detailsNextBtn = document.getElementById('detailsNextBtn');
-            const detailsResultArea = document.getElementById('detailsResultArea');
-            const detailsFinalFeedback = document.getElementById('detailsFinalFeedback');
-            const detailsWeightInput = document.getElementById('detailsWeight');
-            const detailsWeightValue = document.getElementById('detailsWeightValue');
-
-            const profileQuestions = [ // More detailed questions for individual profile
-                { q: "What is your primary love language for GIVING affection?", o: ["Words of Affirmation", "Acts of Service", "Receiving Gifts", "Quality Time", "Physical Touch"], w:3 },
-                { q: "What is your primary love language for RECEIVING affection?", o: ["Words of Affirmation", "Acts of Service", "Receiving Gifts", "Quality Time", "Physical Touch"], w:3 },
-                { q: "On a scale of 1 (not at all) to 5 (very), how important is financial transparency to you in a serious relationship?", o: ["1", "2", "3", "4", "5"], type: "scale", w:3 },
-                { q: "How do you typically handle stress or difficult emotions?", o: ["Talk it out", "Need alone time", "Distract myself", "Exercise/Activity"], w:3 },
-                { q: "What are your expectations regarding family involvement (e.g., holidays, major decisions)?", o: ["Very involved", "Moderately involved", "Minimal involvement"], w:3 },
-                { q: "How important is it for your partner to share your spiritual or religious beliefs?", o: ["Very important", "Somewhat important", "Not important"], w:3 },
-                { q: "What is your stance on having children?", o: ["Definitely want them", "Open to discussion", "Prefer not to have children", "Undecided"], w:3 },
-                { q: "How do you feel about discussing past relationships with a new partner?", o: ["Open book", "Some details are okay", "Prefer not to discuss much"], w:3 },
-                { q: "What role does 'Lobola' (or similar cultural marriage customs) play in your view of marriage, if any?", o: ["Essential tradition", "Important cultural aspect", "Open to modern interpretations/discussion", "Not applicable/relevant to me"], w:3 },
-                { q: "How do you envision division of household responsibilities in a cohabiting relationship?", o: ["Strictly 50/50", "Based on who has more time/skill", "Flexible, depends on circumstances", "Prefer to outsource some tasks"], w:3 }
-            ];
-            detailsTotalDisplay.textContent = profileQuestions.length;
-            let currentDetailsIndex = 0;
-            let detailsAnswers = [];
-
-            if(detailsWeightInput && detailsWeightValue) {
-                detailsWeightInput.oninput = function() { detailsWeightValue.innerHTML = this.value; }
-            }
-
-            function loadDetailsQuestion(index) {
-                if (index < profileQuestions.length) {
-                    const qData = profileQuestions[index];
-                    detailsQuestionText.textContent = qData.q;
-                    detailsOptionsArea.innerHTML = '';
-                    qData.o.forEach(option => {
-                        const button = document.createElement('button');
-                        button.textContent = option;
-                        button.addEventListener('click', () => handleDetailsAnswer(option, qData.w));
-                        detailsOptionsArea.appendChild(button);
-                    });
-                    detailsWeightInput.value = qData.w || 3;
-                    detailsWeightValue.textContent = qData.w || 3;
-                    detailsFeedbackArea.textContent = "Your answer helps build your profile.";
-                    updateDetailsProgress();
-                } else {
-                    showDetailsResults();
-                }
-            }
-            function handleDetailsAnswer(answer, weight) {
-                const currentWeight = parseInt(detailsWeightInput.value);
-                detailsAnswers.push({ q: profileQuestions[currentDetailsIndex].q, a: answer, w: currentWeight });
-                detailsFeedbackArea.textContent = `Answer noted! Weight: ${currentWeight}.`;
-                currentDetailsIndex++;
-                 if (currentDetailsIndex < profileQuestions.length) {
-                    loadDetailsQuestion(currentDetailsIndex);
-                } else {
-                    detailsNextBtn.textContent = "View Profile Summary";
-                    detailsNextBtn.onclick = showDetailsResults; // Change button action
-                }
-            }
-             detailsNextBtn.addEventListener('click', () => { // Similar to quick compat
-                if (currentDetailsIndex >= profileQuestions.length) {
-                    showDetailsResults();
-                } else {
-                     showAlert("Please select an answer to build your profile.", "Selection Needed");
-                }
-            });
-
-            function updateDetailsProgress() {
-                const progressPercent = (currentDetailsIndex / profileQuestions.length) * 100;
-                detailsProgressBar.style.width = `${progressPercent}%`;
-                detailsCounter.textContent = currentDetailsIndex + 1 > profileQuestions.length ? profileQuestions.length : currentDetailsIndex + 1;
-                 if (currentDetailsIndex >= profileQuestions.length -1) {
-                     detailsNextBtn.textContent = "View Profile Summary";
-                 } else {
-                     detailsNextBtn.textContent = "Next Question (Select Answer)";
-                 }
-            }
-            function showDetailsResults() {
-                detailsQuizArea.style.display = 'none';
-                detailsResultArea.style.display = 'block';
-                detailsFinalFeedback.textContent = `Your initial profile responses have been recorded. This information will help LifeSync provide more tailored insights when you connect with a partner.`;
-                console.log("Profile Details Answers:", detailsAnswers);
-                // Here, you'd ideally save 'detailsAnswers' to a user's profile (backend)
-            }
-            window.resetDetailsQuiz = function() { // Make global
-                currentDetailsIndex = 0; detailsAnswers = [];
-                detailsQuizArea.style.display = 'block'; detailsResultArea.style.display = 'none';
-                loadDetailsQuestion(currentDetailsIndex);
-            }
-            loadDetailsQuestion(0); // Load first profile question
-
-
-            // --- Dating Site Resources Logic ---
-            const datingSiteData = [
-                { name: "OkCupid", audience: "Broad, LGBTQ+ friendly, personality-focused", features: "Extensive questionnaires, high compatibility matching", popularityZA: 4, link: "https://www.okcupid.com" },
-                { name: "Tinder", audience: "Younger demographic, casual dating, quick matches", features: "Swipe-based, location-aware, simple interface", popularityZA: 5, link: "https://tinder.com" },
-                { name: "Bumble", audience: "Women make the first move, varied intentions", features: "Women-first messaging, different modes (Date, BFF, Bizz)", popularityZA: 4, link: "https://bumble.com" },
-                { name: "Hinge", audience: "Relationship-focused, 'designed to be deleted'", features: "Detailed profiles, prompts, limited likes", popularityZA: 3, link: "https://hinge.co" },
-                { name: "Match.com (SA)", audience: "Serious relationships, older demographic", features: "Profile matching, events, long-standing platform", popularityZA: 2, link: "https://za.match.com" },
-                { name: "SA People Dating", audience: "South Africans, local focus", features: "Community-oriented, local events (hypothetical)", popularityZA: 3, link: "#" },
-                { name: "EliteSingles (SA)", audience: "Educated professionals, serious relationships", features: "Personality testing, curated matches", popularityZA: 2, link: "https://www.elitesingles.co.za" },
-                 { name: "Grindr", audience: "Gay, bi, trans, queer people", features: "Location-based, chat, profiles", popularityZA: 4, link: "https://www.grindr.com" },
-                // Add more as needed
-            ];
-            let currentSortColumn = '';
-            let sortAscending = true;
-
-            function renderDatingSites(dataToRender) {
-                const tableBody = document.querySelector("#datingSiteTable tbody");
-                tableBody.innerHTML = ""; // Clear existing
-                dataToRender.forEach(site => {
-                    const row = tableBody.insertRow();
-                    row.insertCell().textContent = site.name;
-                    row.insertCell().textContent = site.audience;
-                    row.insertCell().textContent = site.features;
-                    row.insertCell().textContent = "⭐".repeat(site.popularityZA) + "☆".repeat(5-site.popularityZA);
-                    row.insertCell().innerHTML = `<a href="${site.link}" target="_blank" class="hover:text-[var(--accent-teal-bright)]">Visit Site <i class="fas fa-external-link-alt text-xs"></i></a>`;
-                });
-            }
-
-            function sortDatingSites(column) {
-                if (currentSortColumn === column) {
-                    sortAscending = !sortAscending;
-                } else {
-                    currentSortColumn = column;
-                    sortAscending = true;
-                }
-                
-                const sortedData = [...datingSiteData].sort((a, b) => {
-                    let valA = a[column];
-                    let valB = b[column];
-                    if (typeof valA === 'string') valA = valA.toLowerCase();
-                    if (typeof valB === 'string') valB = valB.toLowerCase();
-
-                    if (valA < valB) return sortAscending ? -1 : 1;
-                    if (valA > valB) return sortAscending ? 1 : -1;
-                    return 0;
-                });
-                renderDatingSites(sortedData);
-                updateSortIcons();
-            }
-            
-            function updateSortIcons() {
-                document.querySelectorAll("#datingSiteTable th i").forEach(icon => {
-                    icon.classList.remove("fa-sort-up", "fa-sort-down");
-                    icon.classList.add("fa-sort");
-                });
-                const activeTh = document.querySelector(`#datingSiteTable th[data-sort="${currentSortColumn}"]`);
-                if (activeTh) {
-                    const icon = activeTh.querySelector("i");
-                    icon.classList.remove("fa-sort");
-                    icon.classList.add(sortAscending ? "fa-sort-up" : "fa-sort-down");
-                }
-            }
-
-            document.querySelectorAll("#datingSiteTable th[data-sort]").forEach(th => {
-                th.addEventListener("click", () => sortDatingSites(th.dataset.sort));
-            });
-            
-            // Initial render of dating sites
-            renderDatingSites(datingSiteData);
-
-
-            // Notifications (Placeholder)
-            const bellIcon = document.createElement('button'); // Or find existing if you add one
-            bellIcon.innerHTML = '<i class="fas fa-bell"></i><span id="notificationCount" style="display:none; background:red; color:white; border-radius:50%; padding: 2px 5px; font-size:0.7rem; position:relative; top:-10px; right:5px;"></span>';
-            bellIcon.classList.add('auth-button', '!border-none', '!p-1.5'); // Re-use some styling
-            bellIcon.title = "Notifications";
-            document.querySelector('nav .nav-links').appendChild(bellIcon); // Add to nav
-            
-            const notificationsArea = document.getElementById('notificationsArea');
-            bellIcon.addEventListener('click', () => {
-                notificationsArea.style.display = notificationsArea.style.display === 'none' || !notificationsArea.style.display ? 'block' : 'none';
-            });
-            // Mock notification update
-            setTimeout(() => {
-                const countEl = document.getElementById('notificationCount');
-                countEl.textContent = '1';
-                countEl.style.display = 'inline';
-                document.getElementById('notificationList').innerHTML += '<div class="notification-item text-xs">Reminder: Anniversary with [Partner Name] is next week!</div>';
-            }, 15000);
-
-
-            // Initial section display
-            showSection('about'); 
-        });
-    </script>
-</body>
-</html>
+            },
+            zu: {
+                translation: {
+                    title: "LifeSync - Jula Ukuxhumana Kwakho",
+                    nav: {
+                        brand: "LifeSync",
+                        about: "Mayelana",
+                        assessments: "Ukuhlola",
+                        tools: "Amathuluzi",
+                        resources: "Izinsiza",
+                        profile: "Iphrofayili Yami",
+                        login: "Ngena",
+                        register: "Bhalisa",
+                        logout: "Phuma"
+                    },
+                    about: {
+                        title: "Vula Ukuxhumana Okujulile Nge-LifeSync",
+                        subtitle: "Dlula ekuswayipheni. Qonda lokho okubalulekile ngempela ekuthembekeni okuhlala njalo.",
+                        datingApps: {
+                            title: "Izinhlelo Zokuphola: Inhlansi",
+                            description: "Izinhlelo zokuphola zinhle kakhulu ekwaziseni kokuqala nasekutholeni abantu ongaba nabo ngokusekelwe ezintweni ozithandayo kanye nokukhangayo. Zikusiza ukuthola ukuthi ubani okhona lapho.",
+                            focusLabel: "Gxila:",
+                            focus: "Ukutholwa, Ukukhanga Kokuqala, Imigqa Ebanzi."
+                        },
+                        lifesync: {
+                            title: "LifeSync: Ukujula",
+                            description: "I-LifeSync iyisinyathelo sakho esilandelayo. Uma usuxhumene, sikusiza ukuthi uhlole izingqimba ezijulile zokuthembeka - ezezimali, izindinganiso, indlela yokuphila, izimo zamasiko, kanye nezinhloso zesikhathi eside.",
+                            focusLabel: "Gxila:",
+                            focus: "Ukutholakala Okujulile, Ukuvumelana Kwesikhathi Eside, Ikusasa Elihlanganyelwe."
+                        },
+                        whyTitle: "Kungani i-LifeSync?",
+                        why: {
+                            stageLabel: "Kuzo Zonke Izigaba Zobudlelwano:",
+                            stage: "Noma ngabe usanda kuhlangana, ucabanga ukuhlala ndawonye, uhlela umshado, noma uhamba nobudlelwano besikhathi eside, i-LifeSync inikeza ulwazi olufanele.",
+                            profileLabel: "Yakha Iphrofayili Yakho Eyingqayizivele:",
+                            profile: "Dala iphrofayili yakho eningilizayo, enezincazelo ezibucayi kuwe. Lesi yisisekelo sakho.",
+                            syncLabel: "Vumelanisa Nomlingani Wakho:",
+                            sync: "Khetha ukuthi yiziphi izinto ozowabelana ngazo futhi uqhathanise nomlingani wakho, ukhuthaze ukuxhumana okuvulekile nokwethembeka.",
+                            insightsLabel: "Ulwazi Olusekelwe Edatheni:",
+                            insights: "Qonda amaphethini akho okuthembeka, khomba amandla,
