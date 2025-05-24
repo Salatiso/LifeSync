@@ -3,1191 +3,876 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="siteTitle">Tee & Me - Our Story</title>
+    <title>LifeSync - Deepen Your Connections</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
-    <script src="https://unpkg.com/i18next-browser-languagedetector@7.1.0/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
-    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
-    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
-    <script src="xh_translations.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <style>
         :root {
-            /* LifeSync Inspired Palette */
-            --bg-dark-purple: #301934;
-            --bg-content-purple: rgba(45, 25, 55, 0.95); /* Slightly adjusted for content area */
+            --bg-dark-purple: #301934; 
+            --bg-content-purple: rgba(45, 25, 55, 0.97);
             --bg-content-purple-opaque: rgb(45, 25, 55);
-            --bg-card-purple: rgba(60, 30, 70, 0.9); /* For cards within sections */
-            --text-primary-light: #FDE7F3; /* Soft Pinkish White */
-            --text-secondary-lavender: #E9D5FF; /* Lighter Lavender */
-            --accent-pink-vibrant: #DB2777; /* Fuchsia - Tailwind Fuchsia 600 */
-            --accent-purple-medium: #A855F7; /* Tailwind Purple 500 */
-            --accent-teal-bright: #2DD4BF; /* Tailwind Teal 400 */
-            --border-color-lavender: rgba(168, 85, 247, 0.3); /* Purple 500, semi-transparent */
-            --border-color-strong: rgba(168, 85, 247, 0.6);
+            --bg-card-purple: rgba(60, 30, 70, 0.92);
+            --text-primary-light: #FDE7F3; 
+            --text-secondary-lavender: #E9D5FF; 
+            --accent-pink-vibrant: #DB2777; 
+            --accent-purple-medium: #A855F7; 
+            --accent-teal-bright: #2DD4BF; 
+            --border-color-lavender: rgba(168, 85, 247, 0.35); 
+            --border-color-strong: rgba(168, 85, 247, 0.65);
             --font-main: 'Poppins', sans-serif;
             --font-heading: 'Ubuntu', sans-serif;
         }
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: var(--font-main);
+        body {
             background-color: var(--bg-dark-purple);
             color: var(--text-primary-light);
+            font-family: var(--font-main);
+            margin: 0;
+            overflow: hidden;
         }
 
-        #videoBackground {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: brightness(0.2) contrast(1.1) blur(5px); /* Darker, more subtle */
+        #video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -10;
+            filter: brightness(0.25) contrast(1.1) blur(4px);
         }
 
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        header#appHeader {
-            background-color: rgba(30, 10, 40, 0.85);
-            backdrop-filter: blur(12px);
-            padding: 0.6rem 1.25rem; /* Adjusted padding */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 10px 30px; /* Adjusted padding */
             z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: rgba(30, 10, 40, 0.85); /* Darker purple */
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color-lavender);
         }
-        header#appHeader h1 {
+
+        nav a.nav-brand {
+            font-size: 1.5rem; /* Slightly smaller */
+            font-weight: 700; color: var(--accent-teal-bright);
             font-family: var(--font-heading);
-            color: var(--accent-teal-bright);
-            text-shadow: 0 0 6px var(--accent-teal-bright);
-            font-size: 1.25rem; /* Adjusted size */
+            text-shadow: 0 0 8px var(--accent-teal-bright);
         }
-        header#appHeader .language-switcher button {
-            background-color: transparent;
-            color: var(--text-secondary-lavender);
-            border: 1px solid var(--accent-purple-medium);
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-            padding: 0.25rem 0.6rem; /* Smaller lang buttons */
-            font-size: 0.7rem;
-            border-radius: 1rem;
+        nav a.nav-brand i { margin-right: 8px; }
+
+        nav .nav-links button, nav .nav-links .auth-button {
+            background: none; border: none; padding: 6px 12px; /* Compact buttons */
+            margin-left: 6px; cursor: pointer; font-size: 0.9rem; /* Smaller font */
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease, border-bottom-color 0.3s ease;
+            color: var(--text-secondary-lavender); font-family: var(--font-main);
+            border-bottom: 2px solid transparent;
         }
-         header#appHeader .language-switcher button:hover,
-         header#appHeader .language-switcher button.active-lang {
-            background-color: var(--accent-pink-vibrant);
-            border-color: var(--accent-pink-vibrant);
+        nav .nav-links button .fa-solid { margin-right: 6px; width: 18px; text-align: center; }
+        nav .nav-links button:hover, nav .nav-links .auth-button:hover {
             color: var(--text-primary-light);
+            text-shadow: 0 0 10px var(--accent-pink-vibrant);
+            transform: translateY(-1px);
         }
+         nav .nav-links button.active-nav {
+             color: var(--accent-teal-bright); font-weight: 600;
+             text-shadow: 0 0 8px rgba(72, 209, 204, 0.7);
+             border-bottom-color: var(--accent-teal-bright);
+         }
+         nav .nav-links .auth-button {
+            padding: 5px 10px; border: 1px solid var(--accent-pink-vibrant);
+            color: var(--accent-pink-vibrant); border-radius: 18px; font-size: 0.8rem;
+         }
+         nav .nav-links .auth-button:hover { background-color: var(--accent-pink-vibrant); color: var(--bg-dark-purple); text-shadow: none; }
+         nav .nav-links .auth-button.login-btn { border-color: var(--accent-purple-medium); color: var(--accent-purple-medium); }
+         nav .nav-links .auth-button.login-btn:hover { background-color: var(--accent-purple-medium); color: var(--bg-dark-purple); }
 
-        nav#mainNav {
-            background-color: rgba(40, 15, 50, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 0.4rem 0.5rem; /* Compact nav */
-            position: fixed;
-            left: 0;
-            width: 100%;
-            z-index: 999;
-            border-bottom: 1px solid var(--border-color-lavender);
-            /* top will be set by JS */
+        .page-container { display: flex; flex-direction: column; height: 100vh; padding-top: 60px; /* Adjusted for nav height */ box-sizing: border-box; }
+        .content-overlay {
+            flex-grow: 1; display: flex;
+            overflow-x: scroll; overflow-y: hidden;
+            scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            width: 100%; height: calc(100% - 50px); /* Adjusted for footer */
         }
-        nav#mainNav .nav-tab-container { /* Added for better scrollbar handling */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: auto;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        nav#mainNav .nav-tab-container::-webkit-scrollbar { display: none; /* Chrome, Safari, Opera */ }
-
-        nav#mainNav .nav-tab {
-            color: var(--text-secondary-lavender);
-            border-bottom: 2px solid transparent; /* Thinner underline */
-            transition: color 0.25s, border-bottom-color 0.25s;
-            white-space: nowrap;
-            padding: 0.5rem 0.75rem; /* Adjusted padding */
-            font-size: 0.8rem; /* Slightly smaller */
-            font-weight: 500;
-            cursor: pointer;
-        }
-        nav#mainNav .nav-tab:hover {
-            color: var(--text-primary-light);
-            border-bottom-color: var(--accent-pink-vibrant);
-        }
-        nav#mainNav .nav-tab.active-nav {
-            color: var(--accent-teal-bright);
-            border-bottom-color: var(--accent-teal-bright);
-            font-weight: 600;
-        }
-
-        .content-area-wrapper {
-            flex-grow: 1;
-            padding: 0.5rem; /* Reduced padding */
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* padding-top will be set by JS */
-        }
-
-        .content-area {
-            width: 100%;
-            height: 100%;
-            max-width: 1920px; /* Allow wider for large screens */
-            background-color: var(--bg-content-purple);
-            border-radius: 0.75rem; /* Slightly smaller radius */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+        .content-overlay::-webkit-scrollbar { display: none; }
+        .content-overlay { -ms-overflow-style: none; scrollbar-width: none; }
 
         .content-section {
-            display: none;
-            flex-direction: column;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            animation: fadeIn 0.4s ease-out;
-        }
-        .content-section.active { display: flex; }
-
-        .section-header {
-            padding: 0.6rem 1rem; /* Compact header */
-            text-align: center;
-            border-bottom: 1px solid var(--border-color-lavender);
-            flex-shrink: 0;
-        }
-        .section-header h2 {
-            font-size: 1.3rem; /* Compact title */
-            font-weight: 600;
-            color: var(--accent-pink-vibrant);
-            margin-bottom: 0;
-        }
-
-        .sub-nav-tabs {
-            display: flex;
-            justify-content: center;
-            padding: 0.4rem 0;
-            background-color: rgba(30, 10, 40, 0.6);
-            flex-shrink: 0;
-            border-bottom: 1px solid var(--border-color-lavender);
-        }
-        .sub-nav-tabs .sub-nav-tab {
-            padding: 0.3rem 0.75rem; /* Compact sub-tabs */
-            margin: 0 0.2rem;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            color: var(--text-secondary-lavender);
-            font-size: 0.75rem; /* Smaller sub-tab text */
-            font-weight: 500;
-        }
-        .sub-nav-tabs .sub-nav-tab:hover { color: var(--text-primary-light); }
-        .sub-nav-tabs .sub-nav-tab.active-sub-nav { color: var(--accent-teal-bright); border-bottom-color: var(--accent-teal-bright); }
-        
-        .section-content-wrapper {
-            flex-grow: 1;
-            overflow-y: auto; /* Scroll content within this wrapper */
-            padding: 0.75rem; /* Padding for content */
-        }
-        .sub-content { display: none; }
-        .sub-content.active-sub-content { display: block; animation: subContentFadeIn 0.3s ease-out; }
-        @keyframes subContentFadeIn { from { opacity: 0.3; } to { opacity: 1; } }
-
-        /* Overview Specific: Dashboard & Timeline Container */
-        #overview .section-content-wrapper { display: flex; flex-direction: column; }
-        .overview-main-content { flex-grow: 1; display: grid; grid-template-columns: repeat(12, 1fr); gap: 0.75rem; overflow-y: auto; padding-bottom: 0.5rem;}
-        .overview-left-column { grid-column: span 12 / span 12; lg:grid-column: span 5 / span 5; display: flex; flex-direction: column; gap: 0.75rem; }
-        .overview-right-column { grid-column: span 12 / span 12; lg:grid-column: span 7 / span 7; display: flex; flex-direction: column; gap: 0.75rem; }
-        
-        #overviewTimelineContainer {
-            height: 150px; /* More compact timeline */
-            background-color: rgba(30,10,40,0.6); /* Darker, distinct background */
-            border-top: 1px solid var(--border-color-strong);
-            padding: 0.75rem;
-            overflow-x: auto;
-            display: flex;
-            flex-shrink: 0; /* Important: prevent shrinking */
-            margin-top: 0.75rem; /* Space above timeline */
-        }
-        .timeline-event-card {
-            flex: 0 0 200px; /* Slightly narrower cards */
-            margin-right: 0.75rem;
-            padding: 0.6rem;
-            background-color: var(--bg-card-purple);
+            width: 100vw; height: 100%; flex-shrink: 0;
+            padding: 1.5rem 2rem; /* Adjusted padding */
+            border-radius: 0.5rem; /* Smaller radius */
+            overflow-y: auto; scroll-snap-align: start;
+            background-color: var(--bg-content-purple);
             border: 1px solid var(--border-color-lavender);
-            border-radius: 6px;
-            color: var(--text-secondary-lavender);
-            font-size: 0.75rem; /* Smaller text */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin: 8px; /* Spacing between sections */
+            box-sizing: border-box; opacity: 0;
+            animation: fadeIn 0.6s forwards;
+            color: var(--text-primary-light);
+            max-height: 100%;
         }
-        .timeline-event-card h4 { color: var(--accent-teal-bright); font-size: 0.8rem; margin-bottom: 0.2rem;}
-        .timeline-event-card .date { font-size: 0.65rem; color: var(--accent-purple-medium); margin-bottom: 0.2rem;}
-        .timeline-event-card p { font-size: 0.7rem; line-height: 1.3; }
+        .content-section:nth-child(n+2) { animation-delay: calc(0.1s * (n - 1)); }
 
 
-        /* Dashboard Styles */
-        .dashboard-card {
-            background-color: var(--bg-card-purple);
-            padding: 0.75rem 1rem; /* Adjusted padding */
-            border-radius: 8px;
-            border: 1px solid var(--border-color-lavender); /* Softer border */
-            box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(25px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        h1, h2, h3 { font-family: var(--font-heading); color: var(--text-primary-light); margin-bottom: 1.25rem; }
+         h1 { font-size: 2.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+         h2 { font-size: 1.6rem; color: var(--accent-teal-bright); }
+         h3 { font-size: 1.3rem; color: var(--accent-pink-vibrant); }
+        p { line-height: 1.65; color: var(--text-secondary-lavender); margin-bottom: 0.8rem; font-size: 0.9rem;}
+        ul { list-style: inside; margin-left: 1rem; margin-bottom: 0.8rem; }
+        li { margin-bottom: 0.4rem; }
+
+        /* Specific Section Styles */
+        .value-prop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .value-prop-card { background-color: var(--bg-card-purple); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color-strong); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .value-prop-card i { font-size: 2rem; color: var(--accent-teal-bright); margin-bottom: 0.75rem; }
+        .value-prop-card h4 { color: var(--accent-pink-vibrant); font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+        /* Assessment & Quiz Styles */
+        .assessment-container, .quiz-container {
+            background-color: var(--bg-card-purple); padding: 2rem; border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); width: 100%; max-width: 700px; margin: auto;
         }
-        .dashboard-card h3 { color: var(--accent-teal-bright); margin-bottom: 0.4rem; font-size: 0.9rem; font-weight: 600; }
-        .dashboard-metric-display { font-size: 1.5rem; font-weight: 700; color: var(--text-primary-light); }
-        .chart-placeholder { min-height: 180px; /* Ensure chart has space */ display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.15); border-radius: 6px; }
-        #overviewImageCarouselContainer { position: relative; width: 100%; height: 200px; lg:height: 100%; overflow: hidden; border-radius: 0.5rem; background-color: rgba(0,0,0,0.2); }
-        #overviewImageCarousel .carousel-item img { width:100%; height: 100%; object-fit: cover; }
+        .assessment-question, .quiz-question { margin-bottom: 1.5rem; }
+        .assessment-options button, .quiz-options button {
+            display: block; width: 100%; padding: 0.8rem 1rem; margin-bottom: 0.6rem;
+            background-color: var(--bg-content-purple-opaque); border: 1px solid var(--border-color-lavender);
+            color: var(--text-primary-light); border-radius: 5px; cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .assessment-options button:hover, .quiz-options button:hover { background-color: var(--accent-teal-bright); border-color: var(--accent-teal-bright); color: var(--bg-dark-purple); }
+        .assessment-feedback, .quiz-feedback { margin-top: 1.25rem; font-style: italic; color: var(--accent-pink-vibrant); min-height: 20px; font-size: 0.85rem; }
+        .progress-bar { width: 100%; background-color: var(--border-color-lavender); border-radius: 5px; overflow: hidden; margin-top: 1.25rem; }
+        .progress-bar-fill { height: 8px; width: 0%; background-color: var(--accent-teal-bright); transition: width 0.5s ease-in-out; }
+        .weight-slider { margin-top: 0.5rem; }
+        .weight-slider label { font-size: 0.8rem; color: var(--text-secondary-lavender); margin-right: 0.5rem;}
+        .weight-slider input[type="range"] { width: 60%; accent-color: var(--accent-pink-vibrant); }
+        .quiz-level-selector button { margin: 0 0.5rem; }
+
+        /* Resources Page - Dating Sites */
+        .dating-site-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .dating-site-table th, .dating-site-table td {
+            border: 1px solid var(--border-color-lavender); padding: 0.75rem; text-align: left;
+            font-size: 0.85rem;
+        }
+        .dating-site-table th { background-color: var(--bg-card-purple); color: var(--accent-teal-bright); cursor: pointer; }
+        .dating-site-table th .fa-sort, .dating-site-table th .fa-sort-up, .dating-site-table th .fa-sort-down { margin-left: 0.5rem; }
+        .dating-site-table tbody tr:nth-child(even) { background-color: rgba(0,0,0,0.1); }
+        .dating-site-table tbody tr:hover { background-color: rgba(var(--accent-purple-medium-rgb, 168, 85, 247), 0.15); }
+        .dating-site-table a { color: var(--accent-pink-vibrant); text-decoration: underline; }
+
+        /* Notifications Placeholder */
+        .notifications-area {
+            position: fixed; top: 70px; right: 20px; width: 300px;
+            background-color: var(--bg-card-purple); border-radius: 8px;
+            padding: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001; display: none; /* Toggle with JS */
+        }
+        .notifications-area h4 { color: var(--accent-teal-bright); margin-bottom: 0.5rem; }
+        .notification-item { font-size: 0.8rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color-lavender); }
+        .notification-item:last-child { border-bottom: none; }
+
+
+        /* Footer Styles */
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            padding: 12px 30px; /* Adjusted padding */
+            background-color: rgba(30, 10, 40, 0.9);
+            border-top: 1px solid var(--border-color-lavender);
+            text-align: center; font-size: 0.8rem; /* Smaller font */
+            color: var(--text-secondary-lavender); z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+         footer a { color: var(--accent-teal-bright); text-decoration: none; transition: color 0.3s; }
+         footer a:hover { color: var(--text-primary-light); }
+
+         /* Utility & Button Styles */
+         .btn {
+             padding: 0.6rem 1.25rem; border-radius: 20px; text-decoration: none;
+             font-weight: 600; transition: all 0.3s ease; cursor: pointer;
+             display: inline-block; margin-top: 0.8rem; border: 1px solid transparent;
+             text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.85rem;
+         }
+         .btn-primary { background-color: var(--accent-teal-bright); color: var(--bg-dark-purple); border-color: var(--accent-teal-bright); }
+         .btn-primary:hover { background-color: transparent; color: var(--accent-teal-bright); box-shadow: 0 0 10px var(--accent-teal-bright); }
+         .btn-secondary { background-color: var(--accent-pink-vibrant); color: var(--text-primary-light); border-color: var(--accent-pink-vibrant); }
+         .btn-secondary:hover { background-color: transparent; color: var(--accent-pink-vibrant); box-shadow: 0 0 10px var(--accent-pink-vibrant); }
+         .btn-purple { background-color: var(--accent-purple-medium); color: var(--text-primary-light); border-color: var(--accent-purple-medium); }
+         .btn-purple:hover { background-color: transparent; color: var(--accent-purple-medium); box-shadow: 0 0 10px var(--accent-purple-medium); }
 
         /* Modal Styles */
-        .modal-content { background-color: var(--bg-content-purple); border: 1px solid var(--border-color-strong); color: var(--text-primary-light); }
-        .modal-content h3 { color: var(--accent-pink-vibrant); }
-        .close-modal { color: var(--text-secondary-lavender); }
-        .close-modal:hover { color: var(--accent-pink-vibrant); }
-
-        /* Table Styles */
-        .data-table th { background-color: rgba(30,10,40,0.7); color: var(--accent-teal-bright); }
-        .data-table td { color: var(--text-secondary-lavender); }
-        .data-table tbody tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
-        .data-table tbody tr:hover { background-color: rgba(168, 85, 247, 0.1); } /* Purple hover */
-        .contribution-table th, .contribution-table td { padding: 0.3rem 0.5rem; font-size: 0.75rem; }
-        .contribution-table th { background-color: rgba(var(--accent-pink-vibrant-rgb), 0.1); color: var(--accent-pink-vibrant); } /* Pinkish header */
-
-        /* Form elements */
-        .input-field, .textarea-field, .select-field {
-            background-color: rgba(30,10,40,0.6); border: 1px solid var(--border-color-lavender); color: var(--text-primary-light);
-            font-size: 0.85rem; padding: 0.5rem 0.75rem;
-        }
-        .input-field::placeholder, .textarea-field::placeholder { color: var(--text-secondary-lavender); opacity: 0.6; }
-        .input-field:focus, .textarea-field:focus, .select-field:focus { border-color: var(--accent-teal-bright); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2); }
-        
-        .action-button {
-             background-color: var(--accent-pink-vibrant); color: var(--text-primary-light); border-color: var(--accent-pink-vibrant);
-             font-size: 0.75rem; padding: 0.5rem 1rem;
-        }
-        .action-button:hover { background-color: transparent; color: var(--accent-pink-vibrant); box-shadow: 0 0 8px var(--accent-pink-vibrant); }
-        .action-button.secondary { background-color: var(--accent-purple-medium); border-color: var(--accent-purple-medium); }
-        .action-button.secondary:hover { color: var(--accent-purple-medium); box-shadow: 0 0 8px var(--accent-purple-medium); }
-
-        /* Ensure Chart.js charts are styled for dark theme if needed */
-        canvas { display: block; max-width: 100%; }
-        .chart-container { position: relative; width:100%; height:100%; min-height: 150px; padding: 0.5rem; background-color: rgba(0,0,0,0.1); border-radius: 6px;}
-
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+        .modal-content { background-color: var(--bg-content-purple-opaque); margin: 10% auto; padding: 25px; border: 1px solid var(--border-color-strong); width: 90%; max-width: 550px; border-radius: 10px; text-align: center; position: relative; box-shadow: 0 5px 25px rgba(0,0,0,0.4); }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content h2 { font-family: var(--font-heading); color: var(--accent-pink-vibrant); font-size: 1.4rem; margin-bottom: 1rem; }
+        .modal-content label { display: block; margin-bottom: 0.3rem; text-align: left; font-size: 0.9rem; color: var(--text-secondary-lavender); }
+        .input-field { background-color: rgba(30,10,40,0.5); border: 1px solid var(--border-color-lavender); color: var(--text-primary-light); padding: 0.6rem 0.8rem; border-radius: 6px; width: 100%; margin-bottom: 0.75rem; font-size: 0.9rem; }
+        .input-field::placeholder { color: var(--text-secondary-lavender); opacity: 0.7; }
+        .input-field:focus { outline: none; border-color: var(--accent-teal-bright); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2); }
+        .close-button { color: var(--text-secondary-lavender); position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close-button:hover, .close-button:focus { color: var(--accent-pink-vibrant); }
 
     </style>
 </head>
 <body>
-    <video id="videoBackground" autoplay loop muted playsinline>
-        <source src="assets/videos/background.mp4" type="video/mp4">
+
+    <video id="video-background" autoplay muted loop playsinline>
+        <source src="https://www.coverr.co/s3/mp4/Abstract_Plexus.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <div class="app-container">
-        <header id="appHeader">
-            <div class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-                <h1 class="text-lg sm:text-xl font-bold" data-i18n="siteTitle">Tee & Me - Our Story</h1>
-                <div class="language-switcher">
-                    <button id="langEN" class="px-2 py-1 text-xs rounded-md" data-i18n="langEN">EN</button>
-                    <button id="langXH" class="px-2 py-1 text-xs rounded-md ml-1" data-i18n="langXH">XH</button>
-                </div>
-            </div>
-        </header>
-
-        <nav id="mainNav" class="py-1.5"> <div class="nav-tab-container container mx-auto px-1 sm:px-2 flex justify-center items-center">
-                <button class="nav-tab" data-section="overview" data-i18n="navOverview">Overview</button>
-                <button class="nav-tab" data-section="analysis" data-i18n="navAnalysis">Analysis Hub</button>
-                <button class="nav-tab" data-section="media" data-i18n="navMedia">Media & Travel</button>
-                <button class="nav-tab" data-section="connect" data-i18n="navConnect">Connect & Resolve</button>
-                <button class="nav-tab" data-section="lifesyncFun" data-i18n="navLifeSync">LifeSync & Fun</button>
-            </div>
-        </nav>
-        
-        <div class="content-area-wrapper" id="contentAreaWrapper">
-            <main class="content-area">
-                <section id="overview" class="content-section">
-                    <div class="section-header"> <h2 data-i18n="overview.title">Our Journey Snapshot</h2> </div>
-                    <div class="section-content-wrapper flex flex-col"> {/* Make this flex-col */}
-                        <div class="overview-main-content flex-grow"> {/* This grid will take available space */}
-                            <div class="overview-left-column space-y-3">
-                                <div class="dashboard-card flex-shrink-0">
-                                    <h3 data-i18n="overview.dashboardTitle" class="text-center"></h3>
-                                    <div class="grid grid-cols-2 gap-3">
-                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.affectionLevel" class="!text-xs"></h3> <p id="affection-metric" class="dashboard-metric-display !text-lg">--</p> </div>
-                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.supportScore" class="!text-xs"></h3> <p id="support-metric" class="dashboard-metric-display !text-lg">--</p> </div>
-                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.foodContribution" class="!text-xs"></h3> <p id="food-metric" class="dashboard-metric-display !text-lg">--</p> </div>
-                                        <div class="dashboard-metric-card !p-2 !bg-opacity-50"> <h3 data-i18n="overview.safetyFeeling" class="!text-xs"></h3> <p id="safety-metric" class="dashboard-metric-display !text-lg">--</p> </div>
-                                    </div>
-                                </div>
-                                <div class="dashboard-card text-center flex-shrink-0">
-                                    <h3 data-i18n="overview.ourSong"></h3>
-                                    <p id="specialSongTitle" class="text-xs mb-1">"Thank You Baby! (For Makin' Someday Come So Soon)"</p>
-                                    <a href="#" id="ourSongLink" target="_blank" class="action-button !text-xs !py-1 !px-2.5"> <i class="fas fa-headphones-alt mr-1"></i> <span data-i18n="overview.listenToSong">Listen</span> </a>
-                                </div>
-                                <div class="dashboard-card flex-grow">
-                                    <h3 data-i18n="overview.dashboardTitle">Relationship Trends</h3>
-                                     <select id="dashboardMetricSelect" class="select-field !w-full !py-1 !text-xs mb-2">
-                                        </select>
-                                    <div class="chart-container relative h-40 md:h-full"> <canvas id="dashboardChart"></canvas> </div>
-                                </div>
-                            </div>
-                            <div class="overview-right-column">
-                                <div id="overviewImageCarouselContainer" class="relative h-full w-full rounded-lg shadow-lg overflow-hidden">
-                                    <div id="overviewImageCarousel" class="h-full"></div> {/* JS will populate this */}
-                                    <button id="overview-img-prev" class="carousel-nav-btn prev absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/60 p-2 rounded-full z-10"><i class="fas fa-chevron-left text-white"></i></button>
-                                    <button id="overview-img-next" class="carousel-nav-btn next absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/60 p-2 rounded-full z-10"><i class="fas fa-chevron-right text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="overviewTimelineContainer" class="flex-shrink-0">
-                            <div class="timeline-event-card"><h4>Event 1</h4><p class="date">Date</p><p>Details...</p></div>
-                             <div class="timeline-event-card"><h4>Event 2</h4><p class="date">Date</p><p>Details...</p></div>
-                             <div class="timeline-event-card"><h4>Event 3</h4><p class="date">Date</p><p>Details...</p></div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="analysis" class="content-section">
-                    <div class="section-header"> <h2 data-i18n="navAnalysis">Analysis Hub</h2> </div>
-                    <div class="sub-nav-tabs">
-                        <button class="sub-nav-tab" data-subtarget="analysis-tracking" data-i18n="tabTracking">Tracking</button>
-                        <button class="sub-nav-tab" data-subtarget="analysis-contributions" data-i18n="tabContributions">Contributions</button>
-                        <button class="sub-nav-tab" data-subtarget="analysis-reinforcement" data-i18n="tabReinforcement">Reinforcement</button>
-                    </div>
-                    <div class="section-content-wrapper">
-                        <div id="analysis-tracking" class="sub-content">
-                            <div class="mb-3 text-center">
-                                <label for="trackingMetricSelect" class="mr-2 font-medium text-sm" data-i18n="tracking.selectAspect">Track Aspect:</label>
-                                <select id="trackingMetricSelect" class="select-field !w-auto !inline-block !py-1.5 !text-sm"></select>
-                            </div>
-                            <div class="chart-placeholder h-64 md:h-96"><canvas id="trackingChart"></canvas></div>
-                        </div>
-                        <div id="analysis-contributions" class="sub-content">
-                            <div class="mb-3 text-center">
-                                <label for="contributionFilterWeek" class="mr-2 font-medium text-sm" data-i18n="contributions.filterWeek">Filter by Week:</label>
-                                <select id="contributionFilterWeek" class="select-field !w-auto !inline-block !py-1.5 !text-sm"></select>
-                            </div>
-                            <div class="table-wrapper"><table class="data-table"><thead><tr><th data-i18n="parameter">Parameter</th><th data-i18n="salatiso">Salatiso</th><th data-i18n="tee">Tee</th><th data-i18n="notes">Details</th></tr></thead><tbody id="contributionsTableBody"></tbody></table></div>
-                        </div>
-                        <div id="analysis-reinforcement" class="sub-content">
-                            <div class="table-wrapper"><table class="data-table"><thead><tr><th data-i18n="wordAction">Word/Action</th><th data-i18n="purpose">Purpose</th><th data-i18n="salatiso">Salatiso (Wks)</th><th data-i18n="tee">Tee (Wks)</th><th data-i18n="joint">Joint (Wks)</th></tr></thead><tbody id="reinforcementTableBody"></tbody></table></div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="media" class="content-section">
-                    <div class="section-header"> <h2 data-i18n="navMedia">Media & Travel</h2> </div>
-                    <div class="sub-nav-tabs">
-                        <button class="sub-nav-tab" data-subtarget="media-songs" data-i18n="tabSongs">Shared Songs</button>
-                        <button class="sub-nav-tab" data-subtarget="media-photos" data-i18n="tabPhotos">Photo Moments</button>
-                        <button class="sub-nav-tab" data-subtarget="travel-visited" data-i18n="tabVisited">Visited Places</button>
-                        <button class="sub-nav-tab" data-subtarget="travel-desired" data-i18n="tabDream">Dream Trips</button>
-                    </div>
-                    <div class="section-content-wrapper">
-                        <div id="media-songs" class="sub-content"><div id="songListContainer" class="space-y-2"></div></div>
-                        <div id="media-photos" class="sub-content"><div id="photoGalleryContainer" class="media-gallery-grid"></div></div>
-                        <div id="travel-visited" class="sub-content"><div id="visitedPlacesContainer" class="space-y-3"></div></div>
-                        <div id="travel-desired" class="sub-content"><div id="desiredPlacesContainer" class="space-y-3"></div></div>
-                    </div>
-                </section>
-
-                <section id="connect" class="content-section">
-                    <div class="section-header"> <h2 data-i18n="navConnect">Connect & Resolve</h2> </div>
-                     <div class="sub-nav-tabs">
-                        <button class="sub-nav-tab" data-subtarget="connect-feedback" data-i18n="tabFeedback">Feedback</button>
-                        <button class="sub-nav-tab" data-subtarget="connect-actions" data-i18n="tabActions">Actions</button>
-                        <button class="sub-nav-tab" data-subtarget="connect-logs" data-i18n="tabLogs">Logs</button>
-                    </div>
-                    <div class="section-content-wrapper grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div id="connect-feedback" class="sub-content space-y-4">
-                            <div class="dashboard-card">
-                                <h3 data-i18n="feedback.giveFeedback"></h3>
-                                <form id="feedbackForm" class="space-y-3">
-                                    <div><label for="feedbackSender" class="block text-xs font-medium" data-i18n="feedback.sender"></label><select id="feedbackSender" class="select-field"></select></div>
-                                    <div><label for="feedbackRecipient" class="block text-xs font-medium" data-i18n="feedback.recipient"></label><select id="feedbackRecipient" class="select-field"></select></div>
-                                    <div><label for="feedbackMessage" class="block text-xs font-medium" data-i18n="feedback.message"></label><textarea id="feedbackMessage" rows="3" class="textarea-field" data-i18n-placeholder="feedbackPlaceholder"></textarea></div>
-                                    <button type="submit" id="sendFeedbackBtn" class="action-button w-full" data-i18n="sendFeedback">Send</button>
-                                </form>
-                            </div>
-                             <div class="dashboard-card flex-grow flex flex-col">
-                                <h3 data-i18n="feedback.receivedFeedback" class="flex-shrink-0"></h3>
-                                <div id="feedbackLogContainer" class="flex-grow overflow-y-auto space-y-2 text-xs"></div>
-                            </div>
-                        </div>
-                        <div id="connect-actions" class="sub-content space-y-3">
-                            <div class="relationship-action-form dashboard-card"> <h4 data-i18n="relationshipActions.apology.title"></h4> <select id="apologyFrom" class="select-field !text-xs !py-1 mb-1"></select> <textarea id="apologyMessage" class="textarea-field !min-h-[40px] !text-xs" data-i18n-placeholder="relationshipActions.apology.messagePlaceholder"></textarea> <button id="sendApologyBtn" class="action-button mt-0.5 w-full !text-xs !py-1" data-i18n="relationshipActions.apology.sendButton"></button> </div>
-                            </div>
-                        <div id="connect-logs" class="sub-content dashboard-card md:col-span-2 flex flex-col">
-                             <h3 data-i18n="relationshipActions.logTitleShort" class="flex-shrink-0"></h3>
-                             <div id="relationshipActionLogContainer" class="flex-grow overflow-y-auto space-y-2 text-xs"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="lifesyncFun" class="content-section">
-                    <div class="section-header"> <h2 data-i18n="navLifeSync">LifeSync & Fun</h2> </div>
-                    <div class="sub-nav-tabs">
-                        <button class="sub-nav-tab" data-subtarget="fun-compatibility" data-i18n="tabCompatibility">Compatibility</button>
-                        <button class="sub-nav-tab" data-subtarget="fun-quizzes" data-i18n="tabQuizzes">Quizzes</button>
-                        <button class="sub-nav-tab" data-subtarget="lifesync-reports" data-i18n="tabReports">LifeSync Reports</button>
-                    </div>
-                    <div class="section-content-wrapper">
-                        <div id="fun-compatibility" class="sub-content space-y-4">
-                            <div class="dashboard-card">
-                                <h3 data-i18n="astrologyTitle"></h3>
-                                <div class="grid grid-cols-2 gap-2 mb-2">
-                                    <div><label for="salatisoBirthday" class="block text-xs">Salatiso's Birthday:</label><input id="salatisoBirthday" type="date" class="input-field !text-xs"></div>
-                                    <div><label for="teeBirthday" class="block text-xs">Tee's Birthday:</label><input id="teeBirthday" type="date" class="input-field !text-xs"></div>
-                                </div>
-                                <button id="checkCompatibility" class="action-button secondary !text-xs !py-1" data-i18n="checkCompatibility">Check</button>
-                                <p id="compatibilityResult" class="text-sm mt-2 min-h-[20px]"></p>
-                            </div>
-                            <div class="dashboard-card text-center">
-                                <h3 data-i18n="valuesAlignment"></h3>
-                                <button class="action-button !text-xs !py-1 compatibility-test-btn" data-test="values" data-i18n="startTest">Start Test</button>
-                                <p class="text-xs mt-1" data-i18n="comingSoon"></p>
-                            </div>
-                        </div>
-                        <div id="fun-quizzes" class="sub-content text-center"><p data-i18n="comingSoon"></p></div>
-                        <div id="lifesync-reports" class="sub-content text-center">
-                            <select id="reportPeriod" class="select-field !w-auto !inline-block !py-1.5 !text-sm mr-2"></select>
-                            <select id="reportMetrics" class="select-field !w-auto !inline-block !py-1.5 !text-sm mr-2" multiple></select>
-                            <button id="generateReport" class="action-button !text-sm" data-i18n="generateReport">Generate</button>
-                            <div id="reportPreview" class="mt-4 text-left"></div>
-                        </div>
-                    </div>
-                </section>
-            </main>
+    <nav>
+        <a href="#" class="nav-brand"><i class="fas fa-sync-alt"></i> LifeSync</a>
+        <div class="nav-links">
+            <button class="active-nav" data-section="about"><i class="fa-solid fa-info-circle"></i>About</button>
+            <button data-section="assessments"><i class="fa-solid fa-tasks"></i>Assessments</button>
+            <button data-section="tools"><i class="fa-solid fa-tools"></i>Tools</button>
+            <button data-section="resources"><i class="fa-solid fa-book-open"></i>Resources</button>
+            <button data-section="profile"><i class="fa-solid fa-user-circle"></i>My Profile</button>
+            <button class="auth-button login-btn" id="loginBtnPlaceholder"><i class="fa-solid fa-sign-in-alt"></i> Login</button>
+            <button class="auth-button" id="registerBtnPlaceholder"><i class="fa-solid fa-user-plus"></i> Register</button>
         </div>
+    </nav>
 
-        <footer class="py-3 text-center text-xs fixed bottom-0 left-0 w-full" style="background-color: rgba(30, 10, 40, 0.8); border-top: 1px solid var(--border-color-lavender); color: var(--text-secondary-lavender); backdrop-filter: blur(5px);">
-            © <span id="currentYear"></span> Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#" class="hover:text-primary-light" style="color: var(--accent-teal-bright);">Privacy Policy</a> | <a href="#" class="hover:text-primary-light" style="color: var(--accent-teal-bright);">Terms of Service</a>
+    <div class="page-container">
+        <div class="content-overlay" id="content-overlay">
+
+            <section id="about" class="content-section active">
+                <h1 class="text-center">Unlock Deeper Connections with LifeSync</h1>
+                <p class="text-center text-lg mb-8" style="color: var(--accent-teal-bright);">Go beyond the swipe. Understand what truly matters for lasting compatibility.</p>
+
+                <div class="value-prop-grid">
+                    <div class="value-prop-card">
+                        <div class="text-center"><i class="fas fa-heart-broken"></i></div>
+                        <h4>Dating Apps: The Spark</h4>
+                        <p>Dating apps are fantastic for initial introductions and finding potential matches based on interests and attraction. They help you discover who's out there.</p>
+                        <p><strong>Focus:</strong> Discovery, Initial Attraction, Broad Strokes.</p>
+                    </div>
+                    <div class="value-prop-card">
+                         <div class="text-center"><i class="fas fa-sync-alt" style="color:var(--accent-pink-vibrant)"></i></div>
+                        <h4>LifeSync: The Depth</h4>
+                        <p>LifeSync is your next step. Once you've connected, we help you explore the deeper layers of compatibility – finances, values, lifestyle, cultural nuances, and long-term goals.</p>
+                        <p><strong>Focus:</strong> Deep Compatibility, Long-Term Alignment, Shared Future.</p>
+                    </div>
+                </div>
+
+                <h2 class="mt-10 text-center">Why LifeSync?</h2>
+                <ul class="list-disc list-inside space-y-2 mx-auto max-w-2xl">
+                    <li><strong>For Every Relationship Stage:</strong> Whether you've just met, are considering moving in, planning marriage, or navigating long-term partnership, LifeSync offers relevant insights.</li>
+                    <li><strong>Build Your Unique Profile:</strong> Create a rich, detailed personal profile covering aspects crucial to you. This is your foundation.</li>
+                    <li><strong>Sync with Your Partner:</strong> Choose what parameters to share and compare with your partner, fostering open and honest communication.</li>
+                    <li><strong>Data-Driven Insights:</strong> Understand your compatibility patterns, identify strengths, and pinpoint areas for growth and discussion.</li>
+                    <li><strong>Culturally Aware:</strong> Assessments consider diverse backgrounds, including specific cultural contexts like those in South Africa (e.g., lobola, family roles).</li>
+                    <li><strong>Track Your Journey:</strong> Log significant events, monitor changes in alignment, and celebrate milestones together.</li>
+                    <li><strong>Empower Your Choices:</strong> Make informed decisions about your relationship's future, built on transparency and mutual understanding.</li>
+                </ul>
+                 <div class="text-center mt-8">
+                    <button class="btn btn-primary" onclick="showSection('assessments')">Explore Assessments <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
+            </section>
+
+            <section id="assessments" class="content-section">
+                <h2 class="text-center">Discover Your Compatibility</h2>
+                <p class="text-center mb-6">Engage with our assessments to gain valuable insights into your relationship dynamics. Assign weights to what matters most to you!</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="assessment-container">
+                        <h3><i class="fas fa-rocket mr-2"></i>Quick Compatibility Check</h3>
+                        <p>A fast way for you and a potential partner to get an initial feel for alignment. Choose your depth!</p>
+                        <div id="quickCompatLevelSelector" class="my-4">
+                            <button class="btn btn-secondary !text-xs" data-level="basic">Quick Sync (5 Q's)</button>
+                            <button class="btn btn-secondary !text-xs" data-level="intermediate">Deeper Dive (10 Q's)</button>
+                            <button class="btn btn-secondary !text-xs" data-level="advanced">Full Spectrum (15 Q's)</button>
+                        </div>
+                        <div id="quickCompatQuizArea" style="display:none;">
+                            <div class="quiz-question">
+                                <h4 id="quickCompatQuestionText" class="text-lg mb-2">Sample Question for Quick Check?</h4>
+                                <div class="quiz-options" id="quickCompatOptionsArea">
+                                    </div>
+                                <div class="weight-slider mt-3">
+                                     <label for="quickCompatWeight">Importance (1-5):</label>
+                                     <input type="range" id="quickCompatWeight" name="quickCompatWeight" min="1" max="5" value="3" class="w-1/2">
+                                     <span id="quickCompatWeightValue">3</span>
+                                 </div>
+                            </div>
+                            <div class="quiz-feedback" id="quickCompatFeedbackArea"></div>
+                            <p class="text-xs mt-3">Question <span id="quickCompatCounter">1</span> of <span id="quickCompatTotal">5</span></p>
+                            <div class="progress-bar mt-2"><div class="progress-bar-fill" id="quickCompatProgressBar"></div></div>
+                            <button id="quickCompatNextBtn" class="btn btn-primary mt-4">Next</button>
+                        </div>
+                         <div id="quickCompatResultArea" style="display:none;" class="mt-4">
+                            <h4 class="text-xl" style="color: var(--accent-teal-bright);">Quick Sync Results!</h4>
+                            <p id="quickCompatFinalFeedback" class="my-2"></p>
+                            <button class="btn btn-secondary" onclick="resetQuickCompatQuiz()">Try Another Level</button>
+                        </div>
+                    </div>
+
+                    <div class="assessment-container">
+                        <h3><i class="fas fa-user-edit mr-2"></i>My Relationship Profile Builder</h3>
+                        <p>Start building your detailed LifeSync profile by answering these initial questions about your views and preferences. This forms the basis for future syncs.</p>
+                        <div id="relationshipDetailsQuizArea">
+                             <div class="quiz-question">
+                                <h4 id="detailsQuestionText" class="text-lg mb-2">What is your primary love language?</h4>
+                                 <div class="quiz-options" id="detailsOptionsArea">
+                                     <button data-value="words">Words of Affirmation</button>
+                                     <button data-value="acts">Acts of Service</button>
+                                     <button data-value="gifts">Receiving Gifts</button>
+                                     <button data-value="quality_time">Quality Time</button>
+                                     <button data-value="touch">Physical Touch</button>
+                                 </div>
+                                 <div class="weight-slider mt-3">
+                                     <label for="detailsWeight">How crucial is this for you? (1-5):</label>
+                                     <input type="range" id="detailsWeight" name="detailsWeight" min="1" max="5" value="3" class="w-1/2">
+                                     <span id="detailsWeightValue">3</span>
+                                 </div>
+                             </div>
+                             <div class="quiz-feedback" id="detailsFeedbackArea"></div>
+                             <p class="text-xs mt-3">Question <span id="detailsCounter">1</span> of <span id="detailsTotal">10</span></p>
+                             <div class="progress-bar mt-2"><div class="progress-bar-fill" id="detailsProgressBar"></div></div>
+                             <button id="detailsNextBtn" class="btn btn-primary mt-4">Next Question</button>
+                        </div>
+                        <div id="detailsResultArea" style="display:none;" class="mt-4">
+                            <h4 class="text-xl" style="color: var(--accent-teal-bright);">Profile Section Complete!</h4>
+                            <p id="detailsFinalFeedback" class="my-2"></p>
+                            <button class="btn btn-secondary" onclick="resetDetailsQuiz()">Review Answers</button>
+                            <button class="btn btn-primary" onclick="showSection('profile')">View My Profile</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-8 text-sm">More in-depth assessments on finances, cultural values (e.g., lobola discussions, family roles), lifestyle, and long-term goals are available once you create your profile and connect with a partner.</p>
+            </section>
+
+            <section id="tools" class="content-section">
+                <h2 class="text-center">Relationship Enhancement Tools</h2>
+                <p class="text-center mb-6">Access a suite of tools designed to foster communication, track progress, and navigate challenges together.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="value-prop-card text-center">
+                        <i class="fas fa-comments text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
+                        <h4>Communication Guides</h4>
+                        <p>Structured prompts and guides for discussing sensitive topics like finances, family expectations, and future plans.</p>
+                        <button class="btn btn-secondary !text-xs mt-3">Explore (Coming Soon)</button>
+                    </div>
+                    <div class="value-prop-card text-center">
+                        <i class="fas fa-calendar-check text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
+                        <h4>Milestone & Date Tracker</h4>
+                        <p>Log important dates, anniversaries, and relationship milestones. Get reminders and celebrate together.</p>
+                        <button class="btn btn-secondary !text-xs mt-3">Set Up (Coming Soon)</button>
+                    </div>
+                    <div class="value-prop-card text-center">
+                        <i class="fas fa-chart-line text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
+                        <h4>Parameter Monitoring</h4>
+                        <p>Track changes in key relationship aspects (e.g., frequency of affirming words, shared activities) and get gentle nudges.</p>
+                        <button class="btn btn-secondary !text-xs mt-3">Configure (Coming Soon)</button>
+                    </div>
+                    <div class="value-prop-card text-center">
+                        <i class="fas fa-hands-helping text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
+                        <h4>Conflict Resolution Aids</h4>
+                        <p>Tools to help navigate disagreements constructively, including structured feedback exchange.</p>
+                        <button class="btn btn-secondary !text-xs mt-3">Learn More (Coming Soon)</button>
+                    </div>
+                     <div class="value-prop-card text-center">
+                        <i class="fas fa-gift text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
+                        <h4>Shared Goals & Dreams</h4>
+                        <p>Define and track progress towards shared aspirations as a couple.</p>
+                        <button class="btn btn-secondary !text-xs mt-3">Start Planning (Coming Soon)</button>
+                    </div>
+                     <div class="value-prop-card text-center">
+                        <i class="fas fa-user-minus text-3xl mb-3" style="color: var(--accent-purple-medium);"></i>
+                        <h4>Relationship Closure (If Needed)</h4>
+                        <p>Tools to facilitate a respectful and clear process if a relationship ends.</p>
+                        <button class="btn btn-secondary !text-xs mt-3">Understand (Coming Soon)</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources" class="content-section">
+                <h2 class="text-center">Find Your Connection - Dating Platform Guide</h2>
+                <p class="text-center mb-6">Explore popular dating platforms to make new connections. LifeSync is here for when you're ready to deepen that bond. (Data below is for illustrative purposes).</p>
+                <div class="mb-4 text-sm">
+                    <label for="countryFilter" class="mr-2">Filter by Country (Illustrative):</label>
+                    <select id="countryFilter" class="p-2 rounded bg-[var(--bg-card-purple)] border border-[var(--border-color-lavender)] text-sm">
+                        <option value="all">All Countries</option>
+                        <option value="ZA">South Africa</option>
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                    </select>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="datingSiteTable" class="dating-site-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="name">Platform <i class="fas fa-sort"></i></th>
+                                <th data-sort="audience">Target Audience <i class="fas fa-sort"></i></th>
+                                <th data-sort="features">Key Features <i class="fas fa-sort"></i></th>
+                                <th data-sort="popularityZA">Popularity (SA) <i class="fas fa-sort"></i></th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="profile" class="content-section">
+                <h2 class="text-center">My LifeSync Profile</h2>
+                <p class="text-center mb-6">This is where your detailed individual profile will be displayed, managed, and where you can initiate syncing with a partner. (Full functionality coming soon).</p>
+                <div class="assessment-container max-w-3xl mx-auto">
+                    <h3 id="profileNameDisplay">Your Name</h3>
+                    <p>Email: user@example.com (placeholder)</p>
+                    <div class="mt-4">
+                        <h4>Completed Assessments:</h4>
+                        <ul id="completedAssessmentsList" class="list-disc pl-5 text-sm">
+                            <li>Relationship Details Quiz (Score: 85%)</li>
+                            <li>Values Alignment (Partial)</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4">
+                        <h4>Synced Partners:</h4>
+                        <p class="text-sm">No partner synced yet.</p>
+                        <button class="btn btn-purple mt-2 !text-xs">Connect with Partner (Coming Soon)</button>
+                    </div>
+                     <div class="mt-6">
+                        <h4>Profile Data & Preferences:</h4>
+                        <p class="text-sm">This area will show your answers to various profile-building questions and allow you to manage sharing preferences for each data category when synced with a partner.</p>
+                        <p class="text-xs mt-2 italic">Example: Your views on "Lobola" importance (Weight: 4/5), your preferred "Financial Management Style", your "Relationship with Extended Family" details.</p>
+                    </div>
+                </div>
+            </section>
+
+             <div id="notificationsArea" class="notifications-area">
+                <h4>Notifications</h4>
+                <div id="notificationList">
+                    <div class="notification-item">Welcome to LifeSync! Complete your profile to get started.</div>
+                    </div>
+            </div>
+
+
+        </div> <footer>
+            &copy; <span id="currentYear"></span> Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | Built with <i class="fa-solid fa-heart" style="color: var(--accent-pink-vibrant)"></i> for LifeSync.
         </footer>
+    </div> <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+            <h2><i class="fa-solid fa-sign-in-alt mr-2" style="color:var(--accent-purple-medium)"></i>Login to LifeSync</h2>
+            <p class="text-sm mb-4">Access your profile, assessments, and synced data.</p>
+            <form>
+                <div class="mb-3"><label for="loginEmail">Email:</label><input type="email" id="loginEmail" class="input-field" placeholder="your@email.com"></div>
+                <div class="mb-4"><label for="loginPassword">Password:</label><input type="password" id="loginPassword" class="input-field" placeholder="Your password"></div>
+                <button type="submit" class="btn btn-primary w-full">Login (Coming Soon)</button>
+            </form>
+        </div>
+    </div>
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="document.getElementById('registerModal').style.display='none'">&times;</span>
+            <h2><i class="fa-solid fa-user-plus mr-2" style="color:var(--accent-pink-vibrant)"></i>Create Your LifeSync Account</h2>
+            <p class="text-sm mb-4">Start building your insightful relationship profile.</p>
+            <form>
+                <div class="mb-3"><label for="registerName">Name:</label><input type="text" id="registerName" class="input-field" placeholder="Your Name"></div>
+                <div class="mb-3"><label for="registerEmail">Email:</label><input type="email" id="registerEmail" class="input-field" placeholder="your@email.com"></div>
+                <div class="mb-4"><label for="registerPassword">Password:</label><input type="password" id="registerPassword" class="input-field" placeholder="Create a password"></div>
+                <button type="submit" class="btn btn-secondary w-full">Register (Coming Soon)</button>
+            </form>
+        </div>
     </div>
 
-    <div id="detailsModal" class="modal"><div class="modal-content"><span class="close-modal" id="closeDetailsModal">×</span><h3 id="modalTitle" class="text-xl font-semibold mb-3" style="color:var(--accent-pink-vibrant);"></h3><div id="modalBody" class="text-sm max-h-[70vh] overflow-y-auto"></div></div></div>
-    <div id="alertModal" class="modal"><div class="modal-content !max-w-md"><span class="close-modal" id="closeAlertModal">×</span><h3 id="alertModalTitle" class="text-lg font-semibold mb-2" style="color:var(--accent-pink-vibrant);"></h3><p id="alertModalMessage" class="mb-4 text-sm"></p><button id="alertModalOk" class="action-button">OK</button></div></div>
-    <div id="playlistModal" class="modal"><div class="modal-content"><span class="close-modal" id="closePlaylistModalBtn">×</span><h3 data-i18n="playlist.title" class="text-xl font-semibold mb-3" style="color:var(--accent-pink-vibrant);"></h3><iframe id="playlistFrame" width="100%" height="315" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe><p class="mt-2 text-xs" data-i18n="playlist.note"></p></div></div>
-
-    <button id="playlistButton" title="Our Playlist" class="text-xl"> <i class="fas fa-music"></i> </button>
 
     <script>
-        // --- Global State & Config ---
-        console.log("Tee & Me - Relationship Tracker v1.1 (LifeSync Design)");
-        const APP_NAME = "TeeAndMe";
-        let currentMainSection = 'overview';
-        let currentSubTargets = {
-            overview: null, 
-            analysis: 'analysis-tracking',
-            media: 'media-songs',
-            connect: 'connect-feedback',
-            lifesyncFun: 'fun-compatibility'
-        };
-        let dashboardMainChart, analysisTrackingChart; 
-        let overviewImageCarouselInterval;
-        let overviewImageCarouselCurrentIndex = 0;
-        let modalCarouselItems = [];
-        let currentModalCarouselIndex = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('nav .nav-links button[data-section]');
+            const contentOverlay = document.getElementById('content-overlay');
+            const sections = document.querySelectorAll('.content-section');
+            const currentYearEl = document.getElementById('currentYear');
+            if(currentYearEl) currentYearEl.textContent = new Date().getFullYear();
 
-        // --- Sample Data (To be replaced with actual data loading mechanism) ---
-        const relationshipData = { 
-            playlistUrl: "https://www.youtube.com/embed/playlist?list=YOUR_PLAYLIST_ID_HERE", 
-            ourSpecialSongUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", 
-            photoFileNames: [ 
-                "https://placehold.co/600x400/E8117F/white?text=Memory+1",
-                "https://placehold.co/600x400/7c3aed/white?text=Memory+2",
-                "https://placehold.co/600x400/16a34a/white?text=Memory+3",
-                "https://placehold.co/600x400/f59e0b/white?text=Memory+4"
-            ],
-            weeks: [
-                {
-                    weekNumber: 1, startDate: "2024-05-20",
-                    contributions: {
-                        affection: { salatiso: 7, tee: 8, notesKey: "timeline.week1.affectionNotes"},
-                        food: {salatisoActions:["Groceries (R300)"], teeActions:["Cooked Mon, Wed"], score:7, notesKey:"timeline.week1.foodNotes"},
-                        safety: {salatisoActions:["Locked up"], teeActions:["Checked stove"], score:9, notesKey:"timeline.week1.safetyNotes"},
-                        finances:{salatiso:300, tee:50, category:"Household", notesKey:"timeline.week1.financeNotes"},
-                        support: { salatiso: 6, tee: 7, notesKey: "timeline.week1.supportNotes" },
-                        communication: { salatiso: 8, tee: 8, notesKey: "timeline.week1.commNotes" }
-                    },
-                    summaryKey: "timeline.week1.summary",
-                    events: [
-                        {type:"music", songTitleKey:"overview.songName_shaggy", artist:"Shaggy", songUrl:"https://www.youtube.com/watch?v=dQw4w9WgXcQ", sharedBy:"Salatiso", textKey: "timeline.sharedThankYouBaby"},
-                        {type:"event", textKey:"timeline.week1.event1"}
-                    ]
-                },
-                 { 
-                    weekNumber: 2, startDate: "2024-05-27", 
-                    contributions: { 
-                        affection: { salatiso: 8, tee: 7, notesKey: "timeline.week2.affectionNotes"}, 
-                        support:{salatiso:9, tee:8, notesKey:"timeline.week2.supportNotes"},
-                        food: {salatisoActions:["Weekend Braai Prep"], teeActions:["Made Desserts"], score:8, notesKey:"timeline.week2.foodNotes"}, 
-                        safety: {salatisoActions:["Checked alarms"], teeActions:["Ensured windows closed"], score:8, notesKey:"timeline.week2.safetyNotes"},
-                        communication: { salatiso: 7, tee: 9, notesKey: "timeline.week2.commNotes" }
-                    }, 
-                    summaryKey: "timeline.week2.summary", 
-                    events: [{type:"event", textKey:"timeline.week2.event1"}]
+            // --- Navigation ---
+            function showSection(sectionId) {
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    contentOverlay.scrollTo({ left: targetSection.offsetLeft - 8, behavior: 'smooth' }); // 8 for margin
+                    navButtons.forEach(btn => {
+                        btn.classList.remove('active-nav');
+                        if (btn.dataset.section === sectionId) btn.classList.add('active-nav');
+                    });
                 }
-            ],
-            reinforcementWords: [
-                { wordActionKey: "reinforcement.words.safe", purposeKey: "reinforcement.purpose.reassurance", occurrences: { salatiso: [1], tee: [1,2], joint: [] } },
-            ],
-            feedbackLog: [
-                { id: Date.now() + 1, sender: "Salatiso", recipient: "Tee", message: "Appreciated you making coffee this morning! It was a great start to the day.", timestamp: new Date(2024, 4, 21, 8, 0, 0).toISOString(), response: "You're welcome! Glad you enjoyed it. ❤️", responseTimestamp: new Date(2024, 4, 21, 9, 30, 0).toISOString(), read: true },
-            ],
-            actionLog: [
-                 { id: Date.now() + 1, type: "apology", actor: "Salatiso", target: "Tee", message: "So sorry for being late to our virtual date last night. Work ran over.", timestamp: new Date(2024, 4, 22, 10, 0, 0).toISOString(), details: {} },
-            ],
-            travelLog: [
-                { id: 1, type: "visited", destinationKey: "travel.dest.durban", dates: "2023-07-10 to 2023-07-15", roles: { salatisoKey: "travel.roles.durban.salatiso", teeKey: "travel.roles.durban.tee" }, highlightsKey: "travel.durban.highlights", photos: ["https://placehold.co/300x200/1abc9c/white?text=Durban+1"] }
-            ],
-            desiredTravel: [ { id: 1, destination: "Cape Town Wine Route", description: "Explore Stellenbosch and Franschhoek", priority: "High" } ],
-            sharedSongs: [ { titleKey: "overview.songName_shaggy", artist: "Shaggy", sharedBy: "Salatiso", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" } ]
-        };
+            }
+            window.showSection = showSection; // Expose globally
 
-        // --- i18next Configuration ---
-        const translations = {
-            en: {
-                translation: { 
-                    siteTitle: "Tee & Me - Our Story", headerTitle: "Tee & Me",
-                    navOverview: "Overview", navAnalysis: "Analysis Hub", navMedia: "Media & Travel", navConnect: "Connect & Resolve", navLifeSync: "LifeSync & Fun",
-                    overview: { title: "Our Journey Snapshot", dashboardTitle: "Relationship Dashboard", affectionLevel: "Affection Level", supportScore: "Support Score", foodContribution: "Food Prep Score", safetyFeeling: "Safety Feeling", ourSong: "Our Special Song", songName_shaggy: "\"Thank You Baby! (For Makin' Someday Come So Soon)\"", listenToSong: "Listen", quickTimeline: "Recent Milestones" },
-                    tabTracking: "Tracking", tabContributions: "Contributions", tabReinforcement: "Reinforcement",
-                    tabSongs: "Shared Songs", tabPhotos: "Photo Moments", tabVisited: "Visited Places", tabDream: "Dream Trips",
-                    tabFeedback: "Feedback", tabActions: "Actions", tabLogs: "Logs",
-                    tabCompatibility: "Compatibility Checks", tabQuizzes: "Quizzes", tabReports: "LifeSync Reports",
-                    parameter: "Parameter", salatiso: "Salatiso", tee: "Tee", notes: "Notes", details: "Details",
-                    wordAction: "Word/Action", purpose: "Purpose", joint: "Joint",
-                    feedbackPlaceholder: "Type your feedback...", sendFeedback: "Send Feedback",
-                    makeApology: "Make an Apology", apologyPlaceholder: "Type your apology...", submitApology: "Submit Apology",
-                    astrologyTitle: "Astrology Compatibility", checkCompatibility: "Check Compatibility", valuesAlignment: "Values Alignment", startTest: "Start Test",
-                    comingSoon: "Coming Soon!", last3Months: "Last 3 Months", allTime: "All Time", generateReport: "Generate Report", ok: "OK",
-                    footer: { text: "© 2025 Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved." },
-                    langEN: "EN", langXH: "XH",
-                    timeline: { week1: { summary: "Our journey began!", event1: "Created 'Us' group.", affectionNotes: "Lots of love.", foodNotes: "Shared cooking.", safetyNotes: "Felt secure.", financeNotes: "Budget talk.", supportNotes: "Mutual support.", commNotes: "Good talks." }, week2: { summary: "Growing closer.", event1: "Supported each other.", affectionNotes: "Very affectionate.", foodNotes: "Tried new recipes.", safetyNotes: "Very secure.", supportNotes: "Always there.", commNotes: "Deep convos." } , sharedThankYouBaby: "Shared 'Thank You Baby!'", noEvents: "No timeline events recorded yet." },
-                    insights: { week1: { affection: "Great affection shown.", intimacy: "Opened up emotionally."} },
-                    tracking: { selectAspect: "Track Aspect:", affectionLevel: "Affection", supportScore: "Support", communicationFrequency: "Communication", foodContribution: "Food Prep", safetyFeeling: "Safety Score", financialTeamwork: "Finances", feedbackResponseTime: "Feedback Response", noResponseData: "No data for this metric." },
-                    contributions: { filterWeek: "Filter by Week:", table: { parameter: "Parameter", salatiso: "Salatiso", tee: "Tee", details: "Details" }, params: { food: "Food Prep", safety: "Safety & Security", chores: "Household Chores", planning: "Joint Planning", finances: "Financials", affection: "Affection", support: "Support", communication: "Communication" }, noDataForWeek: "No contribution data for this week.", noneReported: "N/A" },
-                    reinforcement: { table: { wordAction: "Word/Action", purpose: "Purpose", salatisoOccurrences: "Salatiso (Wks)", teeOccurrences: "Tee (Wks)", jointOccurrences: "Joint (Wks)"}, words: { safe: "'I'm safe'", loveYou: "'I love you'", helpRequest: "Help Request" }, purpose: { reassurance: "Reassurance", affection: "Affection", supportSeeking: "Support Seeking" }},
-                    mediaGallery: { sharedSongs: "Shared Songs", photoMoments: "Photo Moments", photoNote: "(Placeholder images)", noSongs: "No songs logged yet.", noPhotos: "No photos available." },
-                    travel: { visitedTitle: "Places We've Been", desiredTitle: "Our Dream Trips", rolesTitle: "Our Roles", highlightsTitle: "Highlights", noVisited: "No past travels logged.", noDesired: "No dream trips added yet.", dest: { durban: "Durban Beach Escape"}, roles: {durban: {salatiso: "Logistics & Fun Planner", tee: "Foodie & Vibe Curator"}}, durban: {highlights: "Morning beach walks, trying new seafood, relaxing by the ocean."} },
-                    relationshipActions: { titleShort: "Log Action", logTitleShort: "Action Log", title: "Connect & Resolve Actions", salatiso: "Salatiso", tee: "Tee", apology: { title: "Make an Apology", from: "From:", messagePlaceholder: "Your heartfelt apology...", sendButton: "Send Apology", success: "Apology sent and logged." }, dissatisfaction: { title: "Express Dissatisfaction", from: "From:", messagePlaceholder: "Describe your dissatisfaction...", sendButton: "Log Dissatisfaction", success: "Dissatisfaction logged." }, bookDate: { title: "Book a Date", booker: "Booked by:", activityPlaceholder: "E.g., Dinner at [Restaurant]", proposeButton: "Propose Date", success: "Date proposal logged." }, terminate: { title: "Initiate Termination", terminator: "Initiated by:", reason: "Reason:", reasons: { irreconcilable: "Irreconcilable Differences", communication: "Communication Breakdown", paths: "Different Life Paths", other: "Other" }, otherReasonPlaceholder: "Specify other reason...", initiateButton: "Initiate Termination", success: "Termination initiated and logged.", confirmMessage: "Are you sure you want to initiate termination? This action will be logged.", specifyOther: "Please specify 'Other' reason if selected." }, logTitle: "Relationship Actions Log", actionBy: "Action by {actor}", actionType: "Type: {type}", actionDetails: "Details: {details}", noActionsYet: "No actions logged yet." },
-                    funtools: { quizzes: { title: "Fun Quizzes", placeholder:"Relationship quizzes coming soon!" }, astrology: { title: "Astrology Compatibility", salatisoBday: "Salatiso's Bday:", teeBday: "Tee's Bday:", checkButton: "Check Compatibility", invalidDate: "Invalid dates provided.", salatisoIsA: "Salatiso is a", teeIsA: "Tee is a", virgoTaurus: "Virgo & Taurus: An earthy and stable match, often sharing practical goals and a love for comfort. Strong potential for a lasting bond!", general: "Explore your unique dynamic based on your signs!" } },
-                    compatibilityTests: { startTest: "Start Test", values: { title: "Values Alignment", description: "Align your core values." }, communication: { title: "Communication Styles", description: "Understand communication." }, proverbs: { title: "African Proverbs Wisdom", description: "Wisdom from proverbs." }, comingSoon: "Test coming soon!" },
-                    lifesync: { title: "LifeSync Integration", reportGen: "Generate LifeSync Report", last3Months: "Last 3 Months", last6Months: "Last 6 Months", lastYear: "Last Year", allTime: "All Time", generateButton: "Generate", reportNote: "(This is a conceptual LifeSync report based on your data.)" },
-                    feedback: { title: "Feedback Channel", giveFeedback: "Give Feedback", sender: "From:", recipient: "To:", tee: "Tee", salatiso: "Salatiso", message: "Message:", sendButton: "Send Feedback", receivedFeedback: "Feedback Log", feedbackFrom: "From {sender}", respondedIn: "Responded: {duration}", pendingResponse: "Pending", markAsRead: "Acknowledge", messageEmpty: "Feedback message cannot be empty.", success: "Feedback sent and logged.", senderRecipientSame: "Sender and recipient cannot be the same.", noFeedbackYet: "No feedback messages yet." },
-                    modal: { detailsTitle: "Details for Week {weekNumber}", contributionDetailsTitle: "Contribution Details: {parameter} - Week {weekNumber}" },
-                    alert: { defaultTitle: "Notification", actionLogged: "Action Logged Successfully", fillAllFields: "Please fill all required fields.", messageEmpty: "Message cannot be empty." },
-                    playlist: { title: "Our Shared Playlist", note: "If the embedded player fails, it might be due to viewing restrictions or an invalid link." }
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', function() { showSection(this.dataset.section); });
+            });
+            
+            // Placeholder for Login/Register Modals
+            document.getElementById('loginBtnPlaceholder')?.addEventListener('click', () => document.getElementById('loginModal').style.display = 'flex');
+            document.getElementById('registerBtnPlaceholder')?.addEventListener('click', () => document.getElementById('registerModal').style.display = 'flex');
+            document.querySelectorAll('.close-button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('loginModal').style.display = 'none';
+                    document.getElementById('registerModal').style.display = 'none';
+                });
+            });
+
+
+            // --- Guest Assessment / Quick Compatibility Check Logic ---
+            const quickCompatLevelSelector = document.getElementById('quickCompatLevelSelector');
+            const quickCompatQuizArea = document.getElementById('quickCompatQuizArea');
+            const quickCompatQuestionText = document.getElementById('quickCompatQuestionText');
+            const quickCompatOptionsArea = document.getElementById('quickCompatOptionsArea');
+            const quickCompatFeedbackArea = document.getElementById('quickCompatFeedbackArea');
+            const quickCompatProgressBar = document.getElementById('quickCompatProgressBar');
+            const quickCompatCounter = document.getElementById('quickCompatCounter');
+            const quickCompatTotalDisplay = document.getElementById('quickCompatTotal');
+            const quickCompatNextBtn = document.getElementById('quickCompatNextBtn');
+            const quickCompatResultArea = document.getElementById('quickCompatResultArea');
+            const quickCompatFinalFeedback = document.getElementById('quickCompatFinalFeedback');
+            const quickCompatWeightInput = document.getElementById('quickCompatWeight');
+            const quickCompatWeightValue = document.getElementById('quickCompatWeightValue');
+
+
+            const allQuestions = { // Mock questions
+                basic: [
+                    { q: "Weekend preference: Cozy night in or adventurous outing?", o: ["Cozy Night In", "Adventurous Outing", "Depends on mood"], w: 3},
+                    { q: "Financial priority: Saving for future or enjoying the present?", o: ["Saving Focus", "Enjoying Present", "Balanced Approach"], w: 3},
+                    { q: "Communication style: Direct and to the point or gentle and suggestive?", o: ["Direct", "Gentle", "Mixture"], w: 3},
+                    { q: "Importance of shared hobbies?", o: ["Very Important", "Nice to Have", "Not Important"], w: 3},
+                    { q: "Attitude towards trying new foods/cuisines?", o: ["Love it!", "Sometimes", "Prefer Familiar"], w: 3}
+                ],
+                intermediate: [ /* Add 5 more questions */
+                    ...[ // Copy basic
+                        { q: "Weekend preference: Cozy night in or adventurous outing?", o: ["Cozy Night In", "Adventurous Outing", "Depends on mood"], w: 3},
+                        { q: "Financial priority: Saving for future or enjoying the present?", o: ["Saving Focus", "Enjoying Present", "Balanced Approach"], w: 3},
+                        { q: "Communication style: Direct and to the point or gentle and suggestive?", o: ["Direct", "Gentle", "Mixture"], w: 3},
+                        { q: "Importance of shared hobbies?", o: ["Very Important", "Nice to Have", "Not Important"], w: 3},
+                        { q: "Attitude towards trying new foods/cuisines?", o: ["Love it!", "Sometimes", "Prefer Familiar"], w: 3}
+                    ],
+                    { q: "How important is alone time in a relationship?", o: ["Essential", "Sometimes needed", "Rarely needed"], w: 3},
+                    { q: "View on discussing past relationships?", o: ["Open book", "Some details okay", "Prefer not to discuss"], w: 3},
+                    { q: "Ideal vacation: Relaxing beach or exploring a new city?", o: ["Beach", "City Exploration", "Nature/Adventure"], w: 3},
+                    { q: "Approach to household chores?", o: ["Shared equally", "Whoever has time", "Prefer to outsource"], w: 3},
+                    { q: "Frequency of contact with extended family?", o: ["Daily/Weekly", "Monthly", "Holidays/Special Occasions"], w: 3}
+                ],
+                advanced: [ /* Add 5 more questions to intermediate */
+                     ...[ // Copy intermediate
+                        { q: "Weekend preference: Cozy night in or adventurous outing?", o: ["Cozy Night In", "Adventurous Outing", "Depends on mood"], w: 3},
+                        { q: "Financial priority: Saving for future or enjoying the present?", o: ["Saving Focus", "Enjoying Present", "Balanced Approach"], w: 3},
+                        { q: "Communication style: Direct and to the point or gentle and suggestive?", o: ["Direct", "Gentle", "Mixture"], w: 3},
+                        { q: "Importance of shared hobbies?", o: ["Very Important", "Nice to Have", "Not Important"], w: 3},
+                        { q: "Attitude towards trying new foods/cuisines?", o: ["Love it!", "Sometimes", "Prefer Familiar"], w: 3},
+                        { q: "How important is alone time in a relationship?", o: ["Essential", "Sometimes needed", "Rarely needed"], w: 3},
+                        { q: "View on discussing past relationships?", o: ["Open book", "Some details okay", "Prefer not to discuss"], w: 3},
+                        { q: "Ideal vacation: Relaxing beach or exploring a new city?", o: ["Beach", "City Exploration", "Nature/Adventure"], w: 3},
+                        { q: "Approach to household chores?", o: ["Shared equally", "Whoever has time", "Prefer to outsource"], w: 3},
+                        { q: "Frequency of contact with extended family?", o: ["Daily/Weekly", "Monthly", "Holidays/Special Occasions"], w: 3}
+                    ],
+                    { q: "Thoughts on having children in the future?", o: ["Definitely want them", "Open to it", "Prefer not to have children", "Unsure"], w: 3},
+                    { q: "Perspective on 'Lobola' or similar cultural marriage traditions?", o: ["Very Important Tradition", "Respectful but Flexible", "Not a Priority for Me", "Unfamiliar/Neutral"], w: 3},
+                    { q: "How do you handle a partner's different political views?", o: ["Healthy Debate", "Agree to Disagree", "Avoid Topic", "Can be a Dealbreaker"], w: 3},
+                    { q: "Preferred way to receive affection/love?", o: ["Verbal Affirmation", "Acts of Service", "Gifts", "Quality Time", "Physical Touch"], w: 3},
+                    { q: "Long-term career aspirations and how they fit with a partnership?", o: ["High Priority, Partner Support Crucial", "Important, but Flexible", "Secondary to Relationship", "Still Figuring It Out"], w: 3}
+                ]
+            };
+            let currentQuickCompatLevel = 'basic';
+            let currentQuickCompatQuestions = [];
+            let currentQuickCompatIndex = 0;
+            let quickCompatAnswers = [];
+            
+            if(quickCompatWeightInput && quickCompatWeightValue) {
+                quickCompatWeightInput.oninput = function() { quickCompatWeightValue.innerHTML = this.value; }
+            }
+
+
+            quickCompatLevelSelector.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    currentQuickCompatLevel = e.target.dataset.level;
+                    currentQuickCompatQuestions = allQuestions[currentQuickCompatLevel];
+                    quickCompatTotalDisplay.textContent = currentQuickCompatQuestions.length;
+                    quickCompatQuizArea.style.display = 'block';
+                    quickCompatResultArea.style.display = 'none';
+                    quickCompatLevelSelector.style.display = 'none';
+                    resetQuickCompatQuiz(); // Start the selected quiz
                 }
-            },
-            xh: { translation: typeof xhosaTranslations !== 'undefined' ? xhosaTranslations : {} }
-        };
+            });
 
-        // --- App Initialization ---
-        function initializeApp() {
-            console.log("Tee & Me App Initializing...");
-            i18next.use(i18nextBrowserLanguageDetector).init({
-                debug: false, fallbackLng: 'en', resources: translations
-            }, (err, t) => {
-                if (err) { console.error("i18next initialization error:", err); return; }
+            function loadQuickCompatQuestion(index) {
+                if (index < currentQuickCompatQuestions.length) {
+                    const qData = currentQuickCompatQuestions[index];
+                    quickCompatQuestionText.textContent = qData.q;
+                    quickCompatOptionsArea.innerHTML = '';
+                    qData.o.forEach(option => {
+                        const button = document.createElement('button');
+                        button.textContent = option;
+                        button.addEventListener('click', () => handleQuickCompatAnswer(option, qData.w));
+                        quickCompatOptionsArea.appendChild(button);
+                    });
+                    quickCompatWeightInput.value = qData.w || 3; // Default weight if not specified
+                    quickCompatWeightValue.textContent = qData.w || 3;
+                    quickCompatFeedbackArea.textContent = "Select an option and adjust importance.";
+                    updateQuickCompatProgress();
+                } else {
+                    showQuickCompatResults();
+                }
+            }
+
+            function handleQuickCompatAnswer(answer, weight) {
+                const currentWeight = parseInt(quickCompatWeightInput.value);
+                quickCompatAnswers.push({ q: currentQuickCompatQuestions[currentQuickCompatIndex].q, a: answer, w: currentWeight });
+                // Mock feedback - in a real app, this would involve comparing two users' answers
+                quickCompatFeedbackArea.textContent = `Answered! Weight: ${currentWeight}. (In a real scenario, we'd compare with a partner's answer here).`;
+                currentQuickCompatIndex++;
+                 if (currentQuickCompatIndex < currentQuickCompatQuestions.length) {
+                    loadQuickCompatQuestion(currentQuickCompatIndex);
+                } else {
+                    quickCompatNextBtn.textContent = "Show Results";
+                    quickCompatNextBtn.onclick = showQuickCompatResults;
+                }
+            }
+             quickCompatNextBtn.addEventListener('click', () => {
+                // This button is now primarily for advancing if no option is auto-advancing.
+                // The main logic is in handleQuickCompatAnswer. If an answer is selected, it moves.
+                // If we want a separate next button, the logic in handleQuickCompatAnswer needs to change.
+                // For now, let's assume options auto-advance.
+                // If we reach here, it means the user clicked "Show Results"
+                if (currentQuickCompatIndex >= currentQuickCompatQuestions.length) {
+                    showQuickCompatResults();
+                } else {
+                    // If we want a manual next button, we'd call loadQuickCompatQuestion(currentQuickCompatIndex)
+                    // But this means an answer must be selected first.
+                    // For now, let's make it simple: options trigger next.
+                    // This button might be better as "Complete" or "See Results" when on last question.
+                    showAlert("Please select an answer to proceed.", "Selection Needed");
+                }
+            });
+
+
+            function updateQuickCompatProgress() {
+                 const progressPercent = (currentQuickCompatIndex / currentQuickCompatQuestions.length) * 100;
+                 quickCompatProgressBar.style.width = `${progressPercent}%`;
+                 quickCompatCounter.textContent = currentQuickCompatIndex + 1 > currentQuickCompatQuestions.length ? currentQuickCompatQuestions.length : currentQuickCompatIndex + 1;
+                 if (currentQuickCompatIndex >= currentQuickCompatQuestions.length -1) {
+                     quickCompatNextBtn.textContent = "Show Results";
+                 } else {
+                     quickCompatNextBtn.textContent = "Next (Select Answer First)";
+                 }
+            }
+
+            function showQuickCompatResults() {
+                quickCompatQuizArea.style.display = 'none';
+                quickCompatResultArea.style.display = 'block';
+                // Simplified result
+                let score = quickCompatAnswers.reduce((acc, ans) => acc + ans.w, 0);
+                quickCompatFinalFeedback.textContent = `Quick Sync Complete! Your answers suggest areas of focus with a total weight score of ${score}. A real sync would compare these with a partner.`;
+                console.log("Quick Compat Answers:", quickCompatAnswers);
+            }
+
+            window.resetQuickCompatQuiz = function() { // Make it global for the button
+                currentQuickCompatIndex = 0;
+                quickCompatAnswers = [];
+                quickCompatQuizArea.style.display = 'block';
+                quickCompatResultArea.style.display = 'none';
+                quickCompatLevelSelector.style.display = 'none'; // Keep it hidden once a level is chosen
+                loadQuickCompatQuestion(currentQuickCompatIndex);
+            }
+            
+            // Initial state for quick compat
+            quickCompatQuizArea.style.display = 'none';
+            quickCompatResultArea.style.display = 'none';
+
+
+            // --- Relationship Details Quiz Logic (Similar structure) ---
+            const detailsQuizArea = document.getElementById('relationshipDetailsQuizArea');
+            const detailsQuestionText = document.getElementById('detailsQuestionText');
+            const detailsOptionsArea = document.getElementById('detailsOptionsArea');
+            const detailsFeedbackArea = document.getElementById('detailsFeedbackArea');
+            const detailsProgressBar = document.getElementById('detailsProgressBar');
+            const detailsCounter = document.getElementById('detailsCounter');
+            const detailsTotalDisplay = document.getElementById('detailsTotal');
+            const detailsNextBtn = document.getElementById('detailsNextBtn');
+            const detailsResultArea = document.getElementById('detailsResultArea');
+            const detailsFinalFeedback = document.getElementById('detailsFinalFeedback');
+            const detailsWeightInput = document.getElementById('detailsWeight');
+            const detailsWeightValue = document.getElementById('detailsWeightValue');
+
+            const profileQuestions = [ // More detailed questions for individual profile
+                { q: "What is your primary love language for GIVING affection?", o: ["Words of Affirmation", "Acts of Service", "Receiving Gifts", "Quality Time", "Physical Touch"], w:3 },
+                { q: "What is your primary love language for RECEIVING affection?", o: ["Words of Affirmation", "Acts of Service", "Receiving Gifts", "Quality Time", "Physical Touch"], w:3 },
+                { q: "On a scale of 1 (not at all) to 5 (very), how important is financial transparency to you in a serious relationship?", o: ["1", "2", "3", "4", "5"], type: "scale", w:3 },
+                { q: "How do you typically handle stress or difficult emotions?", o: ["Talk it out", "Need alone time", "Distract myself", "Exercise/Activity"], w:3 },
+                { q: "What are your expectations regarding family involvement (e.g., holidays, major decisions)?", o: ["Very involved", "Moderately involved", "Minimal involvement"], w:3 },
+                { q: "How important is it for your partner to share your spiritual or religious beliefs?", o: ["Very important", "Somewhat important", "Not important"], w:3 },
+                { q: "What is your stance on having children?", o: ["Definitely want them", "Open to discussion", "Prefer not to have children", "Undecided"], w:3 },
+                { q: "How do you feel about discussing past relationships with a new partner?", o: ["Open book", "Some details are okay", "Prefer not to discuss much"], w:3 },
+                { q: "What role does 'Lobola' (or similar cultural marriage customs) play in your view of marriage, if any?", o: ["Essential tradition", "Important cultural aspect", "Open to modern interpretations/discussion", "Not applicable/relevant to me"], w:3 },
+                { q: "How do you envision division of household responsibilities in a cohabiting relationship?", o: ["Strictly 50/50", "Based on who has more time/skill", "Flexible, depends on circumstances", "Prefer to outsource some tasks"], w:3 }
+            ];
+            detailsTotalDisplay.textContent = profileQuestions.length;
+            let currentDetailsIndex = 0;
+            let detailsAnswers = [];
+
+            if(detailsWeightInput && detailsWeightValue) {
+                detailsWeightInput.oninput = function() { detailsWeightValue.innerHTML = this.value; }
+            }
+
+            function loadDetailsQuestion(index) {
+                if (index < profileQuestions.length) {
+                    const qData = profileQuestions[index];
+                    detailsQuestionText.textContent = qData.q;
+                    detailsOptionsArea.innerHTML = '';
+                    qData.o.forEach(option => {
+                        const button = document.createElement('button');
+                        button.textContent = option;
+                        button.addEventListener('click', () => handleDetailsAnswer(option, qData.w));
+                        detailsOptionsArea.appendChild(button);
+                    });
+                    detailsWeightInput.value = qData.w || 3;
+                    detailsWeightValue.textContent = qData.w || 3;
+                    detailsFeedbackArea.textContent = "Your answer helps build your profile.";
+                    updateDetailsProgress();
+                } else {
+                    showDetailsResults();
+                }
+            }
+            function handleDetailsAnswer(answer, weight) {
+                const currentWeight = parseInt(detailsWeightInput.value);
+                detailsAnswers.push({ q: profileQuestions[currentDetailsIndex].q, a: answer, w: currentWeight });
+                detailsFeedbackArea.textContent = `Answer noted! Weight: ${currentWeight}.`;
+                currentDetailsIndex++;
+                 if (currentDetailsIndex < profileQuestions.length) {
+                    loadDetailsQuestion(currentDetailsIndex);
+                } else {
+                    detailsNextBtn.textContent = "View Profile Summary";
+                    detailsNextBtn.onclick = showDetailsResults; // Change button action
+                }
+            }
+             detailsNextBtn.addEventListener('click', () => { // Similar to quick compat
+                if (currentDetailsIndex >= profileQuestions.length) {
+                    showDetailsResults();
+                } else {
+                     showAlert("Please select an answer to build your profile.", "Selection Needed");
+                }
+            });
+
+            function updateDetailsProgress() {
+                const progressPercent = (currentDetailsIndex / profileQuestions.length) * 100;
+                detailsProgressBar.style.width = `${progressPercent}%`;
+                detailsCounter.textContent = currentDetailsIndex + 1 > profileQuestions.length ? profileQuestions.length : currentDetailsIndex + 1;
+                 if (currentDetailsIndex >= profileQuestions.length -1) {
+                     detailsNextBtn.textContent = "View Profile Summary";
+                 } else {
+                     detailsNextBtn.textContent = "Next Question (Select Answer)";
+                 }
+            }
+            function showDetailsResults() {
+                detailsQuizArea.style.display = 'none';
+                detailsResultArea.style.display = 'block';
+                detailsFinalFeedback.textContent = `Your initial profile responses have been recorded. This information will help LifeSync provide more tailored insights when you connect with a partner.`;
+                console.log("Profile Details Answers:", detailsAnswers);
+                // Here, you'd ideally save 'detailsAnswers' to a user's profile (backend)
+            }
+            window.resetDetailsQuiz = function() { // Make global
+                currentDetailsIndex = 0; detailsAnswers = [];
+                detailsQuizArea.style.display = 'block'; detailsResultArea.style.display = 'none';
+                loadDetailsQuestion(currentDetailsIndex);
+            }
+            loadDetailsQuestion(0); // Load first profile question
+
+
+            // --- Dating Site Resources Logic ---
+            const datingSiteData = [
+                { name: "OkCupid", audience: "Broad, LGBTQ+ friendly, personality-focused", features: "Extensive questionnaires, high compatibility matching", popularityZA: 4, link: "https://www.okcupid.com" },
+                { name: "Tinder", audience: "Younger demographic, casual dating, quick matches", features: "Swipe-based, location-aware, simple interface", popularityZA: 5, link: "https://tinder.com" },
+                { name: "Bumble", audience: "Women make the first move, varied intentions", features: "Women-first messaging, different modes (Date, BFF, Bizz)", popularityZA: 4, link: "https://bumble.com" },
+                { name: "Hinge", audience: "Relationship-focused, 'designed to be deleted'", features: "Detailed profiles, prompts, limited likes", popularityZA: 3, link: "https://hinge.co" },
+                { name: "Match.com (SA)", audience: "Serious relationships, older demographic", features: "Profile matching, events, long-standing platform", popularityZA: 2, link: "https://za.match.com" },
+                { name: "SA People Dating", audience: "South Africans, local focus", features: "Community-oriented, local events (hypothetical)", popularityZA: 3, link: "#" },
+                { name: "EliteSingles (SA)", audience: "Educated professionals, serious relationships", features: "Personality testing, curated matches", popularityZA: 2, link: "https://www.elitesingles.co.za" },
+                 { name: "Grindr", audience: "Gay, bi, trans, queer people", features: "Location-based, chat, profiles", popularityZA: 4, link: "https://www.grindr.com" },
+                // Add more as needed
+            ];
+            let currentSortColumn = '';
+            let sortAscending = true;
+
+            function renderDatingSites(dataToRender) {
+                const tableBody = document.querySelector("#datingSiteTable tbody");
+                tableBody.innerHTML = ""; // Clear existing
+                dataToRender.forEach(site => {
+                    const row = tableBody.insertRow();
+                    row.insertCell().textContent = site.name;
+                    row.insertCell().textContent = site.audience;
+                    row.insertCell().textContent = site.features;
+                    row.insertCell().textContent = "⭐".repeat(site.popularityZA) + "☆".repeat(5-site.popularityZA);
+                    row.insertCell().innerHTML = `<a href="${site.link}" target="_blank" class="hover:text-[var(--accent-teal-bright)]">Visit Site <i class="fas fa-external-link-alt text-xs"></i></a>`;
+                });
+            }
+
+            function sortDatingSites(column) {
+                if (currentSortColumn === column) {
+                    sortAscending = !sortAscending;
+                } else {
+                    currentSortColumn = column;
+                    sortAscending = true;
+                }
                 
-                updateNavStickiness();
-                populateAllSelects(); 
-                setupEventListeners();
-                navigateToSection(currentMainSection); 
-                updateContentAll(); 
-                
-                document.getElementById('currentYear').textContent = new Date().getFullYear();
-                document.getElementById('ourSongLink').href = relationshipData.ourSpecialSongUrl;
-                document.getElementById('playlistFrame').src = relationshipData.playlistUrl;
-                console.log("Tee & Me App Initialized & Ready.");
-            });
-        }
+                const sortedData = [...datingSiteData].sort((a, b) => {
+                    let valA = a[column];
+                    let valB = b[column];
+                    if (typeof valA === 'string') valA = valA.toLowerCase();
+                    if (typeof valB === 'string') valB = valB.toLowerCase();
 
-        function updateNavStickiness() {
-            const header = document.getElementById('appHeader');
-            const nav = document.getElementById('mainNav');
-            const contentWrapper = document.getElementById('contentAreaWrapper');
-            if (header && nav && contentWrapper) {
-                const headerHeight = header.offsetHeight;
-                const navHeight = nav.offsetHeight;
-                nav.style.top = `${headerHeight}px`;
-                contentWrapper.style.paddingTop = `${headerHeight + navHeight}px`;
+                    if (valA < valB) return sortAscending ? -1 : 1;
+                    if (valA > valB) return sortAscending ? 1 : -1;
+                    return 0;
+                });
+                renderDatingSites(sortedData);
+                updateSortIcons();
             }
-        }
-
-        function populateAllSelects() {
-            const trackingMetrics = { affection: "tracking.affectionLevel", support: "tracking.supportScore", communication: "tracking.communicationFrequency", food: "tracking.foodContribution", safety: "tracking.safetyFeeling", finances: "tracking.financialTeamwork", feedbackResponse: "tracking.feedbackResponseTime" };
-            populateSelectWithOptions('trackingMetricSelect', trackingMetrics);
-            populateSelectWithOptions('dashboardMetricSelect', trackingMetrics);
-
-
-            const weekOptions = relationshipData.weeks.reduce((acc, week) => {
-                acc[week.weekNumber] = `Week ${week.weekNumber} (${week.startDate})`;
-                return acc;
-            }, {});
-            populateSelectWithOptions('contributionFilterWeek', weekOptions, false);
-
-            const people = { Salatiso: "salatiso", Tee: "tee" };
-            ['feedbackSender', 'feedbackRecipient', 'apologyFrom', 'dissatisfactionFrom', 'dateBooker', 'terminator'].forEach(id => populateSelectWithOptions(id, people));
             
-            const terminationReasons = { irreconcilable: "relationshipActions.terminate.reasons.irreconcilable", communication: "relationshipActions.terminate.reasons.communication", paths: "relationshipActions.terminate.reasons.paths", other: "relationshipActions.terminate.reasons.other" };
-            populateSelectWithOptions('terminationReason', terminationReasons);
-            
-            const lifesyncPeriods = { last3Months: "lifesync.last3Months", allTime: "allTime" };
-            populateSelectWithOptions('lifesyncPeriodSelect', lifesyncPeriods);
-
-             const reportMetricsOptions = { affection: "overview.affectionLevel", support: "overview.supportScore", finances: "overview.foodContribution", conflict: "overview.safetyFeeling" };
-            populateSelectWithOptions('reportMetrics', reportMetricsOptions, true, true); 
-        }
-
-        function populateSelectWithOptions(selectId, optionsObject, useI18nForText = true, isMultiple = false) {
-            const selectElement = document.getElementById(selectId);
-            if (!selectElement) { console.warn(`Select element '${selectId}' not found.`); return; }
-            selectElement.innerHTML = '';
-            if (isMultiple) selectElement.multiple = true;
-
-            for (const value in optionsObject) {
-                const option = document.createElement('option');
-                option.value = value;
-                option.textContent = useI18nForText ? i18next.t(optionsObject[value]) : optionsObject[value];
-                selectElement.appendChild(option);
-            }
-        }
-        
-        function navigateToSection(sectionId) {
-            currentMainSection = sectionId;
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId)?.classList.add('active');
-
-            document.querySelectorAll('#mainNav .nav-tab').forEach(btn => {
-                btn.classList.toggle('active-nav', btn.dataset.section === sectionId);
-            });
-            
-            const activeSectionElement = document.getElementById(sectionId);
-            const firstSubNavTab = activeSectionElement?.querySelector('.sub-nav-tab');
-            if (firstSubNavTab) { // If section has sub-tabs, activate the default/current one
-                navigateToSubSection(sectionId, currentSubTargets[sectionId] || firstSubNavTab.dataset.subtarget, true);
-            } else { // If no sub-tabs (like Overview), just render its content
-                renderActiveSectionContent(); 
-            }
-        }
-
-        function navigateToSubSection(mainSectionId, subTargetId, isInitialSectionLoad = false) {
-            currentSubTargets[mainSectionId] = subTargetId;
-            const mainSectionElement = document.getElementById(mainSectionId);
-            mainSectionElement?.querySelectorAll('.sub-nav-tab').forEach(tab => tab.classList.toggle('active-sub-nav', tab.dataset.subtarget === subTargetId));
-            mainSectionElement?.querySelectorAll('.sub-content').forEach(content => content.classList.toggle('active-sub-content', content.id === subTargetId));
-            
-            if (!isInitialSectionLoad) renderActiveSectionContent();
-        }
-
-        function renderActiveSectionContent() {
-            console.log(`Rendering main: ${currentMainSection}, sub: ${currentSubTargets[currentMainSection]}`);
-            switch (currentMainSection) {
-                case 'overview': renderOverviewSection(); break;
-                case 'analysis': renderAnalysisHubSection(); break;
-                case 'media': renderMediaTravelHubSection(); break;
-                case 'connect': renderConnectResolveSection(); break;
-                case 'lifesyncFun': renderLifesyncFunSection(); break;
-            }
-            updateContentAll(); 
-        }
-
-        function renderOverviewSection() { 
-            updateDashboardMetrics(); 
-            updateDashboardChart(); 
-            renderOverviewTimelineCarousel(); 
-            renderOverviewImageCarousel(); 
-            startOverviewImageCarousel();
-        }
-        
-        function updateDashboardMetrics() {
-            const latestWeek = relationshipData.weeks.length > 0 ? relationshipData.weeks[relationshipData.weeks.length - 1] : null;
-            const getScore = (metric) => (latestWeek && latestWeek.contributions[metric]) ? (( (latestWeek.contributions[metric].salatiso || 0) + (latestWeek.contributions[metric].tee || 0) ) / 2).toFixed(1) + "/10" : '--';
-            
-            document.getElementById('affection-metric').textContent = getScore('affection');
-            document.getElementById('support-metric').textContent = getScore('support');
-            document.getElementById('food-metric').textContent = (latestWeek && latestWeek.contributions.food) ? `${latestWeek.contributions.food.score || '--'}/10` : '--';
-            document.getElementById('safety-metric').textContent = (latestWeek && latestWeek.contributions.safety) ? `${latestWeek.contributions.safety.score || '--'}/10` : '--';
-        }
-
-        function renderOverviewTimelineCarousel() {
-            const container = document.getElementById('overviewTimelineContainer'); 
-            if(!container) { return; }
-            container.innerHTML = ''; 
-
-            const timelineEvents = relationshipData.weeks.flatMap(week => 
-                (week.events || []).map(event => ({...event, weekNumber: week.weekNumber, startDate: week.startDate}))
-            ).sort((a,b) => new Date(a.startDate) - new Date(b.startDate)).slice(-7).reverse(); // Get last 7 chronological events, newest first
-
-            if (timelineEvents.length === 0) {
-                container.innerHTML = `<p class="text-sm text-center w-full">${i18next.t('timeline.noEvents') || 'No timeline events yet.'}</p>`;
-                return;
-            }
-
-            timelineEvents.forEach(event => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'timeline-event-card';
-                let eventText = i18next.t(event.textKey) || event.text || "Timeline Event";
-                if (event.type === 'music') {
-                    const songTitle = event.songTitleKey ? i18next.t(event.songTitleKey) : (event.songTitle || "A song");
-                    eventText = `${i18next.t('timeline.sharedSong', { song: songTitle, artist: event.artist, sharer: event.sharedBy })}`;
+            function updateSortIcons() {
+                document.querySelectorAll("#datingSiteTable th i").forEach(icon => {
+                    icon.classList.remove("fa-sort-up", "fa-sort-down");
+                    icon.classList.add("fa-sort");
+                });
+                const activeTh = document.querySelector(`#datingSiteTable th[data-sort="${currentSortColumn}"]`);
+                if (activeTh) {
+                    const icon = activeTh.querySelector("i");
+                    icon.classList.remove("fa-sort");
+                    icon.classList.add(sortAscending ? "fa-sort-up" : "fa-sort-down");
                 }
-                itemDiv.innerHTML = `
-                    <h4>${eventText.substring(0,30)}${eventText.length > 30 ? '...' : ''}</h4>
-                    <p class="date">${new Date(event.startDate).toLocaleDateString()}</p>
-                    <p>${i18next.t(relationshipData.weeks.find(w=>w.weekNumber === event.weekNumber)?.summaryKey)?.substring(0,50) || 'Weekly summary...'}</p>
-                `;
-                container.appendChild(itemDiv);
-            });
-        }
-        
-        function renderOverviewImageCarousel() {
-            const container = document.getElementById('overviewImageCarousel');
-            if (!container) { return; }
-            container.innerHTML = ''; 
-
-            if (!relationshipData.photoFileNames || relationshipData.photoFileNames.length === 0) {
-                container.innerHTML = `<div class="flex items-center justify-center h-full text-gray-400 text-sm">${i18next.t('mediaGallery.noPhotos')}</div>`;
-                return;
             }
-            relationshipData.photoFileNames.forEach((fileName, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'carousel-item absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-1000 ease-in-out';
-                itemDiv.innerHTML = `<img src="${fileName}" alt="Overview Image ${index + 1}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error';">`;
-                container.appendChild(itemDiv);
-            });
-            if (relationshipData.photoFileNames.length > 0) {
-                showOverviewImage(overviewImageCarouselCurrentIndex); 
-            }
-        }
 
-        function showOverviewImage(index) {
-            const items = document.querySelectorAll('#overviewImageCarousel .carousel-item');
-            if (items.length === 0) return;
-            overviewImageCarouselCurrentIndex = (index + items.length) % items.length; 
-            items.forEach(item => item.classList.remove('opacity-100', 'z-10'));
-            items[overviewImageCarouselCurrentIndex].classList.add('opacity-100', 'z-10');
-        }
-        function nextOverviewImage() { showOverviewImage(overviewImageCarouselCurrentIndex + 1); }
-        function prevOverviewImage() { showOverviewImage(overviewImageCarouselCurrentIndex - 1); }
-        
-        function startOverviewImageCarousel() {
-            if (overviewImageInterval) clearInterval(overviewImageInterval);
-            if (relationshipData.photoFileNames.length > 1) {
-                overviewImageInterval = setInterval(nextOverviewImage, 6000); 
-            }
-        }
-        function stopOverviewImageCarousel() { clearInterval(overviewImageInterval); }
-
-        function updateDashboardChart() {
-            const el = document.getElementById('dashboardChart');
-            if (!el) { return; } 
-            const ctx = el.getContext('2d'); 
-            const selectedMetric = document.getElementById('dashboardMetricSelect')?.value || 'affection';
-            const labels = relationshipData.weeks.map(w => `Wk ${w.weekNumber}`);
-            const dataS = relationshipData.weeks.map(w => w.contributions[selectedMetric]?.salatiso || (w.contributions[selectedMetric]?.score / 2 ) || 0);
-            const dataT = relationshipData.weeks.map(w => w.contributions[selectedMetric]?.tee || (w.contributions[selectedMetric]?.score / 2 ) || 0);
-            const metricLabel = i18next.t(`overview.${selectedMetric}Level`) || selectedMetric;
-
-            if (dashboardMainChart) dashboardMainChart.destroy();
-            dashboardMainChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        { label: `${i18next.t('salatiso')} - ${metricLabel}`, data: dataS, borderColor: 'var(--accent-pink-vibrant)', backgroundColor: 'rgba(231, 84, 128, 0.1)', tension: 0.3, borderWidth: 1.5, pointBackgroundColor: 'var(--accent-pink-vibrant)', pointRadius: 3, fill: true },
-                        { label: `${i18next.t('tee')} - ${metricLabel}`, data: dataT, borderColor: 'var(--accent-teal-bright)', backgroundColor: 'rgba(72, 209, 204, 0.1)', tension: 0.3, borderWidth: 1.5, pointBackgroundColor: 'var(--accent-teal-bright)', pointRadius: 3, fill: true }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 10, ticks:{color: 'var(--text-secondary-lavender)', font: {size: 10}}, grid:{color: 'var(--border-color-lavender)'} }, x:{ticks:{color: 'var(--text-secondary-lavender)', font: {size: 10}}, grid:{color: 'var(--border-color-lavender)'}} }, plugins: { legend: { position: 'top', labels:{color: 'var(--text-primary-light)', font: {size: 10}} } } }
-            });
-        }
-        
-        function renderAnalysisHubSection() {
-            const activeSub = currentSubTargets.analysis;
-            if (activeSub === 'analysis-tracking') updateTrackingChart(document.getElementById('trackingMetricSelect')?.value || 'affection');
-            else if (activeSub === 'analysis-contributions') renderContributionsTable(document.getElementById('contributionFilterWeek')?.value || (relationshipData.weeks.length > 0 ? relationshipData.weeks[0].weekNumber.toString() : '1'));
-            else if (activeSub === 'analysis-reinforcement') renderReinforcementTable();
-        }
-
-        function updateTrackingChart(metricKey = 'affection') {
-            const el = document.getElementById('trackingChart'); 
-            if(!el) { return; } 
-            const ctx = el.getContext('2d'); 
-            const labels = relationshipData.weeks.map(w => `Wk ${w.weekNumber} (${w.startDate})`);
-            let dataS = [], dataT = [];
-            let metricLabel = i18next.t(`tracking.${metricKey}`);
-
-            relationshipData.weeks.forEach(w => {
-                const contrib = w.contributions[metricKey];
-                if (contrib) { dataS.push(contrib.salatiso || (contrib.score / 2 ) || 0); dataT.push(contrib.tee || (contrib.score / 2 ) || 0); } 
-                else { dataS.push(0); dataT.push(0); }
+            document.querySelectorAll("#datingSiteTable th[data-sort]").forEach(th => {
+                th.addEventListener("click", () => sortDatingSites(th.dataset.sort));
             });
             
-            if (dataS.every(val => val === 0) && dataT.every(val => val === 0) && metricKey !== 'feedbackResponseTime') {
-                 metricLabel += ` (${i18next.t('tracking.noResponseData')})`;
-            }
+            // Initial render of dating sites
+            renderDatingSites(datingSiteData);
 
-            if (analysisTrackingChart) analysisTrackingChart.destroy();
-            analysisTrackingChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        { label: `${i18next.t('salatiso')} - ${metricLabel}`, data: dataS, backgroundColor: 'rgba(231, 84, 128, 0.3)', borderColor: 'var(--accent-pink-vibrant)', borderWidth: 1.5, tension: 0.3, fill: true },
-                        { label: `${i18next.t('tee')} - ${metricLabel}`, data: dataT, backgroundColor: 'rgba(72, 209, 204, 0.3)', borderColor: 'var(--accent-teal-bright)', borderWidth: 1.5, tension: 0.3, fill: true }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: (metricKey === 'finances' ? undefined : 10), ticks:{color: 'var(--text-secondary-lavender)'}, grid:{color: 'var(--border-color-lavender)'} }, x:{ticks:{color: 'var(--text-secondary-lavender)'}, grid:{color: 'var(--border-color-lavender)'}} }, plugins: { legend: { position: 'top', labels:{color: 'var(--text-primary-light)'} } } }
-            });
-        }
-        
-        function renderContributionsTable(weekNumStr) {
-            const tableBody = document.getElementById('contributionsTableBody');
-            if (!tableBody) { return; }
-            tableBody.innerHTML = ''; 
 
-            const weekNumber = parseInt(weekNumStr);
-            const weekData = relationshipData.weeks.find(w => w.weekNumber === weekNumber);
-
-            if (!weekData || !weekData.contributions) {
-                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4">${i18next.t('contributions.noDataForWeek')}</td></tr>`;
-                return;
-            }
-
-            const parameters = i18next.t('contributions.params', { returnObjects: true });
-            Object.keys(parameters).forEach(paramKey => {
-                const contrib = weekData.contributions[paramKey];
-                const tr = tableBody.insertRow();
-                tr.insertCell().textContent = parameters[paramKey];
-                
-                const formatContrib = (personData) => {
-                    if (!personData) return i18next.t('contributions.noneReported');
-                    let text = personData.score !== undefined ? `${personData.score}` : '';
-                    if (personData.actions && personData.actions.length > 0) {
-                        text += (text ? ' (' : '') + personData.actions.join(', ') + (text ? ')' : '');
-                    }
-                    return text || i18next.t('contributions.noneReported');
-                };
-
-                tr.insertCell().textContent = formatContrib(contrib?.salatiso);
-                tr.insertCell().textContent = formatContrib(contrib?.tee);
-                
-                const notesKey = contrib?.notesKey;
-                const notesText = notesKey ? i18next.t(notesKey) : (contrib?.notes || '');
-                tr.insertCell().textContent = notesText;
-            });
-        }
-
-        function renderReinforcementTable() {
-            const tableBody = document.getElementById('reinforcementTableBody');
-            if (!tableBody) { return; }
-            tableBody.innerHTML = '';
-
-            relationshipData.reinforcementWords.forEach(item => {
-                const tr = tableBody.insertRow();
-                tr.insertCell().textContent = i18next.t(item.wordActionKey);
-                tr.insertCell().textContent = i18next.t(item.purposeKey);
-                tr.insertCell().textContent = item.occurrences.salatiso.length > 0 ? item.occurrences.salatiso.join(', ') : '0';
-                tr.insertCell().textContent = item.occurrences.tee.length > 0 ? item.occurrences.tee.join(', ') : '0';
-                tr.insertCell().textContent = item.occurrences.joint.length > 0 ? item.occurrences.joint.join(', ') : '0';
-            });
-        }
-
-        function renderMediaTravelHubSection() {
-            const activeSub = currentSubTargets.media;
-            if (activeSub === 'media-songs') renderSongList();
-            else if (activeSub === 'media-photos') renderPhotoGallery();
-            else if (activeSub === 'travel-visited') renderTravelLog('visitedPlacesContainer', relationshipData.travelLog.filter(t => t.type === 'visited'), 'visited');
-            else if (activeSub === 'travel-desired') renderTravelLog('desiredPlacesContainer', relationshipData.desiredTravel, 'desired');
-        }
-        
-        function renderSongList() {
-            const container = document.getElementById('songListContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            if (!relationshipData.sharedSongs || relationshipData.sharedSongs.length === 0) {
-                container.innerHTML = `<p class="text-sm text-center">${i18next.t('mediaGallery.noSongs')}</p>`; return;
-            }
-            relationshipData.sharedSongs.forEach(song => {
-                const songItem = document.createElement('div');
-                songItem.className = 'song-item p-3 rounded-md shadow-sm flex justify-between items-center';
-                songItem.style.backgroundColor = "var(--bg-card-purple)";
-                const title = song.titleKey ? i18next.t(song.titleKey) : song.title;
-                songItem.innerHTML = `
-                    <div class="song-item-info">
-                        <h4 class="font-semibold text-sm" style="color: var(--accent-pink-vibrant);">${title}</h4>
-                        <p class="text-xs" style="color: var(--text-secondary-lavender);">Artist: ${song.artist} - Shared by: ${song.sharedBy}</p>
-                    </div>
-                    <div class="song-item-actions">
-                        <a href="${song.link}" target="_blank" title="Listen" class="text-lg" style="color: var(--accent-teal-bright);"><i class="fas fa-play-circle"></i></a>
-                    </div>`;
-                container.appendChild(songItem);
-            });
-        }
-
-        function renderPhotoGallery() {
-            const container = document.getElementById('photoGalleryContainer');
-            if (!container) return;
-            container.innerHTML = '';
-             if (!relationshipData.photoFileNames || relationshipData.photoFileNames.length === 0) {
-                container.innerHTML = `<p class="text-sm text-center">${i18next.t('mediaGallery.noPhotos')}</p>`; return;
-            }
-            relationshipData.photoFileNames.forEach((fileName, index) => {
-                const item = document.createElement('div');
-                item.className = 'media-gallery-item relative group cursor-pointer';
-                item.innerHTML = `<img src="${fileName}" alt="Photo ${index + 1}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/300x300/4B0082/FFFFFF?text=Error';">`;
-                // Add click to open in modal later
-                container.appendChild(item);
-            });
-        }
-
-        function renderTravelLog(containerId, items, type) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = '';
-            const noItemsKey = type === 'visited' ? 'travel.noVisited' : 'travel.noDesired';
-            if (!items || items.length === 0) {
-                container.innerHTML = `<p class="text-sm text-center">${i18next.t(noItemsKey)}</p>`; return;
-            }
-            items.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'travel-item p-3 rounded-md shadow-sm';
-                itemDiv.style.backgroundColor = "var(--bg-card-purple)";
-                let content = `<h4>${item.destinationKey ? i18next.t(item.destinationKey) : item.destination}</h4>`;
-                if (type === 'visited') {
-                    content += `<p class="text-xs"><strong>Dates:</strong> ${item.dates}</p>
-                                <p class="text-xs"><strong>${i18next.t('travel.highlightsTitle')}:</strong> ${i18next.t(item.highlightsKey)}</p>
-                                <p class="text-xs"><strong>${i18next.t('travel.rolesTitle')}</strong> Salatiso: ${i18next.t(item.roles.salatisoKey)}, Tee: ${i18next.t(item.roles.teeKey)}</p>`;
-                    if (item.photos && item.photos.length > 0) {
-                        content += `<div class="photos-grid mt-1.5 grid grid-cols-3 gap-1">
-                            ${item.photos.map(pUrl => `<img src="${pUrl}" alt="Travel photo" class="rounded object-cover h-16 w-full" onerror="this.onerror=null;this.src='https://placehold.co/100x100/4B0082/FFFFFF?text=X';">`).join('')}
-                        </div>`;
-                    }
-                } else { // desired
-                    content += `<p class="text-xs">${item.description}</p><p class="text-xs"><strong>Priority:</strong> ${item.priority}</p>`;
-                }
-                itemDiv.innerHTML = content;
-                container.appendChild(itemDiv);
-            });
-        }
-
-        function renderConnectResolveSection() {
-            const activeSub = currentSubTargets.connect;
-            if (activeSub === 'connect-feedback') renderFeedbackLog();
-            else if (activeSub === 'connect-logs') renderRelationshipActionLog();
-        }
-
-        function renderFeedbackLog() {
-            const container = document.getElementById('feedbackLogContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            if (relationshipData.feedbackLog.length === 0) {
-                container.innerHTML = `<p class="text-center">${i18next.t('feedback.noFeedbackYet')}</p>`; return;
-            }
-            relationshipData.feedbackLog.slice().reverse().forEach(fb => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'feedback-item p-2.5 border rounded-md mb-2';
-                itemDiv.style.borderColor = "var(--border-color-lavender)";
-                itemDiv.style.backgroundColor = "rgba(255,255,255,0.05)";
-                const senderName = i18next.t(fb.sender === "Salatiso" ? "salatiso" : "tee");
-                const recipientName = i18next.t(fb.recipient === "Salatiso" ? "salatiso" : "tee");
-                let responseHtml = `<p class="response-status text-xs mt-1" style="color: var(--accent-purple-medium);">${i18next.t('feedback.pendingResponse')}</p>`;
-                if (fb.responseTimestamp) {
-                    responseHtml = `<p class="text-xs mt-1 pt-1 border-t" style="border-color: var(--border-color-lavender);"><strong>Response from ${recipientName}</strong> (${new Date(fb.responseTimestamp).toLocaleString()}):<br>${fb.response}</p>`;
-                }
-                itemDiv.innerHTML = `
-                    <p class="font-medium text-sm">${i18next.t('feedback.feedbackFrom', { sender: senderName })} to ${recipientName}:</p>
-                    <p class="text-sm">${fb.message}</p>
-                    <p class="timestamp text-xs mt-1">Sent: ${new Date(fb.timestamp).toLocaleString()}</p>
-                    ${responseHtml}`;
-                container.appendChild(itemDiv);
-            });
-        }
-
-        function renderRelationshipActionLog() {
-            const container = document.getElementById('relationshipActionLogContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            if (relationshipData.actionLog.length === 0) {
-                container.innerHTML = `<p class="text-center">${i18next.t('relationshipActions.noActionsYet')}</p>`; return;
-            }
-            relationshipData.actionLog.slice().reverse().forEach(log => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'action-log-item p-2.5 border rounded-md mb-2';
-                itemDiv.style.borderColor = "var(--border-color-lavender)";
-                itemDiv.style.backgroundColor = "rgba(255,255,255,0.05)";
-                const actorName = i18next.t(log.actor === "Salatiso" ? "salatiso" : "tee");
-                let detailsText = log.message || '';
-                 if (log.type === "dateProposal" && log.details) {
-                    detailsText = `Activity: ${log.details.activity}, Proposed: ${log.details.proposedDate}. ${log.message || ''}`;
-                } else if (log.type === "termination" && log.details) {
-                    detailsText = `Reason: ${i18next.t(log.details.reasonKey)}. ${log.details.otherReason || ''} ${log.message || ''}`;
-                }
-                itemDiv.innerHTML = `
-                    <p class="font-medium text-sm"><strong>${i18next.t(`relationshipActions.${log.type}.title`, {defaultValue: log.type})}</strong></p>
-                    <p class="text-xs">${i18next.t('relationshipActions.actionBy', { actor: actorName })}</p>
-                    ${detailsText ? `<p class="text-sm mt-1">${i18next.t('relationshipActions.actionDetails', { details: detailsText })}</p>` : ''}
-                    <p class="timestamp text-xs mt-1">Logged: ${new Date(log.timestamp).toLocaleString()}</p>`;
-                container.appendChild(itemDiv);
-            });
-        }
-
-        function renderLifesyncFunSection() { /* Placeholder */ }
-        
-        // --- Event Listeners Setup ---
-        function setupEventListeners() {
-            document.querySelectorAll('#mainNav .nav-tab').forEach(button => button.addEventListener('click', handleNavClick));
-            document.querySelectorAll('.content-section .sub-nav-tab').forEach(tab => tab.addEventListener('click', handleSubNavClick));
-            document.getElementById('langEN')?.addEventListener('click', () => i18next.changeLanguage('en', updateContentAll));
-            document.getElementById('langXH')?.addEventListener('click', () => i18next.changeLanguage('xh', updateContentAll));
+            // Notifications (Placeholder)
+            const bellIcon = document.createElement('button'); // Or find existing if you add one
+            bellIcon.innerHTML = '<i class="fas fa-bell"></i><span id="notificationCount" style="display:none; background:red; color:white; border-radius:50%; padding: 2px 5px; font-size:0.7rem; position:relative; top:-10px; right:5px;"></span>';
+            bellIcon.classList.add('auth-button', '!border-none', '!p-1.5'); // Re-use some styling
+            bellIcon.title = "Notifications";
+            document.querySelector('nav .nav-links').appendChild(bellIcon); // Add to nav
             
-            ['closeDetailsModal', 'closeAlertModal', 'closePlaylistModalBtn'].forEach(id => {
-                document.getElementById(id)?.addEventListener('click', () => document.getElementById(id.replace('close', '').toLowerCase() + (id.includes('Playlist') ? 'Modal' : 'Modal')).style.display = 'none');
+            const notificationsArea = document.getElementById('notificationsArea');
+            bellIcon.addEventListener('click', () => {
+                notificationsArea.style.display = notificationsArea.style.display === 'none' || !notificationsArea.style.display ? 'block' : 'none';
             });
-            document.getElementById('alertModalOk')?.addEventListener('click', () => document.getElementById('alertModal').style.display = 'none');
-            document.getElementById('playlistButton')?.addEventListener('click', () => document.getElementById('playlistModal').style.display = 'flex');
+            // Mock notification update
+            setTimeout(() => {
+                const countEl = document.getElementById('notificationCount');
+                countEl.textContent = '1';
+                countEl.style.display = 'inline';
+                document.getElementById('notificationList').innerHTML += '<div class="notification-item text-xs">Reminder: Anniversary with [Partner Name] is next week!</div>';
+            }, 15000);
 
-            document.getElementById('overview-img-prev')?.addEventListener('click', () => { prevOverviewImage(); stopOverviewImageCarousel(); });
-            document.getElementById('overview-img-next')?.addEventListener('click', () => { nextOverviewImage(); stopOverviewImageCarousel(); });
-            document.getElementById('dashboardMetricSelect')?.addEventListener('change', updateDashboardChart);
-            document.getElementById('trackingMetricSelect')?.addEventListener('change', (e) => { if(currentSubTargets.analysis === 'analysis-tracking') updateTrackingChart(e.target.value); });
-            document.getElementById('contributionFilterWeek')?.addEventListener('change', (e) => { if(currentSubTargets.analysis === 'analysis-contributions') renderContributionsTable(e.target.value); });
-            
-            document.getElementById('feedbackForm')?.addEventListener('submit', handleSendFeedback);
-            document.getElementById('apologyForm')?.addEventListener('submit', handleSendApology);
-            
-            document.getElementById('checkCompatibility')?.addEventListener('click', handleAstrologyCheck);
-            document.querySelectorAll('.compatibility-test-btn').forEach(btn => btn.addEventListener('click', () => showAlert(i18next.t('comingSoon'))));
-            document.getElementById('generateReport')?.addEventListener('click', () => showAlert(i18next.t('lifesync.reportNote')));
 
-            window.addEventListener('resize', updateNavStickiness);
-        }
-        
-        // --- Event Handlers ---
-        function handleNavClick(event) {
-            const sectionId = event.currentTarget.dataset.section;
-            if (sectionId) {
-                if (currentMainSection === 'overview' && sectionId !== 'overview') stopOverviewImageCarousel();
-                navigateToSection(sectionId);
-                if (sectionId === 'overview') startOverviewImageCarousel();
-            }
-        }
-
-        function handleSubNavClick(event) {
-            const subTargetId = event.currentTarget.dataset.subtarget;
-            const mainSection = event.currentTarget.closest('.content-section');
-            if (subTargetId && mainSection) {
-                navigateToSubSection(mainSection.id, subTargetId);
-            }
-        }
-        
-        function handleSendFeedback(e) {
-            e.preventDefault();
-            const sender = document.getElementById('feedbackSender').value;
-            const recipient = document.getElementById('feedbackRecipient').value;
-            const message = document.getElementById('feedbackMessage').value.trim();
-            if (!message) { showAlert(i18next.t('feedback.messageEmpty')); return; }
-            if (sender === recipient) { showAlert(i18next.t('feedback.senderRecipientSame')); return; }
-            relationshipData.feedbackLog.push({ id: Date.now(), sender, recipient, message, timestamp: new Date().toISOString(), response: null, read: false });
-            showAlert(i18next.t('feedback.success'));
-            document.getElementById('feedbackMessage').value = '';
-            if (currentSubTargets.connect === 'connect-feedback') renderFeedbackLog();
-        }
-
-        function handleSendApology(e) {
-            e.preventDefault();
-            const from = document.getElementById('apologyFrom').value;
-            const message = document.getElementById('apologyMessage').value.trim();
-            if (!message) { showAlert(i18next.t('alert.messageEmpty')); return; }
-            logRelationshipAction('apology', from, (from === "Salatiso" ? "Tee" : "Salatiso"), message);
-            document.getElementById('apologyMessage').value = '';
-        }
-        
-        function handleAstrologyCheck() {
-            const salatisoBdayStr = document.getElementById('salatisoBirthday').value;
-            const teeBdayStr = document.getElementById('teeBirthday').value;
-            const resultDiv = document.getElementById('compatibilityResult');
-            if (!resultDiv) return;
-            if (!salatisoBdayStr || !teeBdayStr) { resultDiv.textContent = i18next.t('funtools.astrology.invalidDate'); return; }
-            const salatisoSign = getZodiacSign(new Date(salatisoBdayStr));
-            const teeSign = getZodiacSign(new Date(teeBdayStr));
-            let msg = `${i18next.t('funtools.astrology.salatisoIsA')} ${salatisoSign}. ${i18next.t('funtools.astrology.teeIsA')} ${teeSign}. `;
-            if ((salatisoSign === "Virgo" && teeSign === "Taurus") || (salatisoSign === "Taurus" && teeSign === "Virgo")) {
-                msg += i18next.t('funtools.astrology.virgoTaurus');
-            } else { msg += i18next.t('funtools.astrology.general'); }
-            resultDiv.textContent = msg;
-        }
-
-        // --- Utility Functions ---
-        function updateContentAll() { 
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                const optionsAttr = el.getAttribute('data-i18n-options');
-                let options = {};
-                if (optionsAttr) { try { options = JSON.parse(optionsAttr); } catch (e) { console.warn(`Error parsing i18n options for ${key}:`, e); } }
-                const translation = i18next.t(key, options);
-                if (el.hasAttribute('data-i18n-placeholder')) { el.placeholder = translation; }
-                else if (el.tagName === 'TITLE') { el.textContent = translation; }
-                else { el.innerHTML = translation; } 
-            });
-            populateAllSelects(); 
-            renderActiveSectionContent(); // Re-render active content after translation change
-        }
-        
-        function getZodiacSign(date) { 
-            if (!(date instanceof Date) || isNaN(date)) return "Invalid Date";
-            const day = date.getDate(); const month = date.getMonth() + 1;
-            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius";
-            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces";
-            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries";
-            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus";
-            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini";
-            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer";
-            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo";
-            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo";
-            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra";
-            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio";
-            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius";
-            if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn";
-            return "Unknown";
-        }
-        function logRelationshipAction(type, actor, target, message, details = {}) { 
-             const newAction = { id: Date.now(), type, actor, target, message, timestamp: new Date().toISOString(), details };
-            relationshipData.actionLog.push(newAction);
-            showAlert(i18next.t('alert.actionLogged'));
-            if (currentSubTargets.connect === 'connect-logs') renderRelationshipActionLog();
-        }
-        function showAlert(message, title = i18next.t('alert.defaultTitle')) { 
-            const modal = document.getElementById('alertModal'); 
-            const titleEl = document.getElementById('alertModalTitle'); 
-            const messageEl = document.getElementById('alertModalMessage'); 
-            if (modal && titleEl && messageEl) {
-                titleEl.textContent = title;
-                messageEl.textContent = message;
-                modal.style.display = 'flex'; 
-            }
-        }
-
-        // --- Initial Call ---
-        document.addEventListener('DOMContentLoaded', initializeApp);
+            // Initial section display
+            showSection('about'); 
+        });
     </script>
 </body>
 </html>
