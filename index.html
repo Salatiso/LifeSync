@@ -12,11 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
     <script src="https://unpkg.com/i18next-browser-languagedetector@7.1.0/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-
     <style>
         /* --- Root Variables for Theming --- */
         :root {
@@ -565,17 +564,13 @@
                     </div>
                 </div>
             </section>
-        </div>
-
-        <div id="notificationsArea" class="notifications-area">
+        </div> <div id="notificationsArea" class="notifications-area">
             <h4 data-i18n="notifications.title">Notifications</h4>
             <div id="notificationList">
                 <div class="notification-item" data-i18n="notifications.welcome">Welcome to LifeSync! Complete your profile to get started.</div>
             </div>
         </div>
-    </div>
-
-    <footer>
+    </div> <footer>
         &copy; <span id="currentYear"></span> Salatiso Lonwabo Mdeni - Father, OHS & Risk Expert, Author. All Rights Reserved. | 
         <a href="#" data-i18n="footer.privacy">Privacy Policy</a> | 
         <a href="#" data-i18n="footer.terms">Terms of Service</a> | 
@@ -684,23 +679,23 @@
 
 <script>
     // --- Firebase Configuration ---
-    // IMPORTANT: Replace with your actual Firebase configuration.
-    // The apiKey is user-provided, ensure other details match your Firebase project.
+    // This configuration uses the exact details you provided.
     const firebaseConfig = {
-        apiKey: "AIzaSyAW0SakPbUUfpK-gD4SHMIQzlEhpMLzUbI", // User Provided
-        authDomain: "lifesyncapp-391ab.firebaseapp.com",   // User Provided
-        projectId: "lifesyncapp-391ab",                   // User Provided
-        storageBucket: "lifesyncapp-391ab.appspot.com",   // Corrected: .appspot.com for storage
-        messagingSenderId: "617714109567",                // User Provided
-        appId: "1:617714109567:web:b7f3cf016d6f7348b1434a", // User Provided
-        measurementId: "G-7XKHR48S14"                     // User Provided
+        apiKey: "AIzaSyAW0SakPbUUfpK-gD4SHMIQzlEhpMLzUbI",
+        authDomain: "lifesyncapp-391ab.firebaseapp.com",
+        projectId: "lifesyncapp-391ab",
+        storageBucket: "lifesyncapp-391ab.firebasestorage.app", // Corrected as per your latest info
+        messagingSenderId: "617714109567",
+        appId: "1:617714109567:web:b7f3cf016d6f7348b1434a",
+        measurementId: "G-7XKHR48S14"
     };
 
-    // Initialize Firebase
+    // Initialize Firebase using the compatibility libraries
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth(); // Firebase Authentication service
     const db = firebase.firestore(); // Firebase Firestore service
-    // const storage = firebase.storage(); // Firebase Storage service (if needed for file uploads beyond profile import)
+    // const storage = firebase.storage(); // Firebase Storage service (uncomment if needed)
+    // const analytics = firebase.analytics(); // Firebase Analytics (uncomment if needed)
 
 
     // --- i18next Internationalization Configuration ---
@@ -832,121 +827,220 @@
                     closure: { title: "Relationship Closure (If Needed)", description: "Tools to facilitate a respectful and clear process if a relationship ends." },
                     comingSoon: "Coming Soon" 
                 },
-                resources: { // Resources page translations
+                resources: { // Resources page translations - EXTENSIVELY POPULATED
                     pageTitle: "Relationship Resources Hub",
                     pageSubtitle: "Explore a curated list of tools, services, and information to support your relationship journey. Click on a category to learn more.",
                     backToCategories: "Back to Categories",
                     visitSite: "Visit Site",
                     noItemsInCategory: "No items listed in this category yet.",
-                    category: { // Titles for resource categories
+                    // Category Titles from PDF
+                    category: {
                         dating: "Dating & Meeting Platforms",
-                        assessment: "Personality & Compatibility Assessments",
-                        legal: "Legal Services & Marriage Laws",
-                        counseling: "Relationship Counseling & Therapy",
+                        personalityAssessments: "Personality & Compatibility Assessments",
                         christian: "Christian Relationship Resources",
                         astrology: "Astrology & Spiritual Compatibility",
-                        divorce: "Separation & Divorce Support",
-                        abuse: "Domestic Abuse & GBV Support",
+                        counseling: "Relationship Counseling & Therapy",
+                        legal: "Legal Services & Marriage Laws",
+                        preMarriage: "Pre-Marriage Services",
+                        marriageEnhancement: "Marriage Enhancement",
                         familyPlanning: "Family Planning & Parenting",
+                        crisisSupport: "Crisis & Support Services",
+                        separationDivorce: "Separation & Divorce Services",
+                        postDivorce: "Post-Divorce Support",
                         lgbtq: "LGBTQ+ Specific Services",
-                        emergency: "Emergency Contacts"
+                        culturalTraditional: "Cultural & Traditional Services",
+                        additionalGov: "Government & Educational Resources", // Combined from PDF's "Additional Resources"
+                        emergency: "Emergency Contacts Summary"
                     },
-                    // Descriptions for individual resource items (keys match resourcesData object)
+                    // Descriptions for resource items (keys match resourcesData object)
+                    // Example: resources.datingDesc.tinder, etc.
                     datingDesc: {
-                        tinder: "Global swipe-based app for casual or serious dating. Widely used in SA.",
-                        bumble: "Women-first app for dating, friendship (BFF), and networking (Bizz). Popular in SA.",
-                        okcupid: "LGBTQIA+ friendly dating site/app with in-depth profile questions. Supports 60+ gender identities.",
-                        hinge: "Relationship-focused app with prompts, 'designed to be deleted'. Available in SA.",
-                        pof: "Free dating site with a large userbase, claims to be #1 free dating site in SA.",
-                        saCupid: "Niche site from CupidMedia targeting South African singles, over 200,000 local users.",
-                        afroIntroductions: "Niche site from CupidMedia targeting African singles more broadly.",
-                        singles2meet: "A 100%-free South African dating site, active for over 10 years with a large local user base.",
-                        salt: "Christian-focused dating app with over 1M users, allows filtering by denomination. SA presence.",
-                        grindr: "Popular global app for gay, bi, trans, and queer people, primarily men.",
-                        her: "Dating and community app for lesbian, bi, and queer women.",
-                        millionaireMatch: "Premium platform for ambitious and successful African singles, including South Africa."
+                        tinder: "Most popular swipe-based dating app globally. Free with premium options. Available in SA.",
+                        bumble: "Women make the first move. For dating, friendship, and business networking. Available in SA.",
+                        hinge: "App 'designed to be deleted,' uses profile prompts for deeper connections. Available in SA.",
+                        okcupid: "Extensive questionnaire matching. Free with premium features. Available in SA.",
+                        matchCom: "Established dating platform, subscription-based. Available in SA.",
+                        pof: "Plenty of Fish. Free messaging, large user base. Available in SA.",
+                        saDating: "Local South African dating site.",
+                        meetSouthAfricans: "Community-focused platform for South Africans.",
+                        afroRomance: "Interracial dating focus. Available in SA.",
+                        singleMuslimsSA: "Islamic community dating for South Africans.",
+                        eHarmony: "Scientific compatibility matching, premium service. Available in SA.",
+                        christianMingle: "Faith-based dating for Christians. Available in SA.",
+                        jdate: "Jewish community dating. Available in SA.",
+                        eliteSingles: "Professional/educated focus for dating. Available in SA."
                     },
-                    assessmentDesc: {
-                        "16personalities": "Free Myers-Briggs (MBTI) style personality test providing detailed type descriptions.",
-                        fiveLoveLanguages: "Official quiz to discover your primary love language (Words, Acts, Gifts, Time, Touch).",
-                        attachmentProjectQuiz: "Free quiz to determine your attachment style (e.g., anxious, avoidant, secure).",
-                        gottmanCheckup: "Online assessment by The Gottman Institute to evaluate relationship health (free with registration).",
-                        papi: "Personality and Preference Inventory (P.A.P.I.) by Talogy, primarily for corporate HR and talent management.",
-                        oceanBig5: "OCEAN (Big Five) personality test by InterACT Global, measures 5 universal personality dimensions, mainly for HR.",
-                        psychCentralAttach: "PsychCentral's Relationship Attachment Style Quiz to learn about how you relate to others.",
-                        psychCentralLoveLust: "PsychCentral's quiz to help determine if feelings are love or lust."
-                    },
-                    legalDesc: {
-                        legalAidSA: "Provides free legal advice and representation in civil matters, including divorce, to qualifying South Africans. Offers a Divorce Guide.",
-                        dha: "South African Department of Home Affairs. Manages registration of marriages, civil unions, and customary marriages. Provides information on legal requirements.",
-                        marriageAct: "Marriage Act 25 of 1961: Governs civil marriages in South Africa (monogamous, by a marriage officer).",
-                        civilUnionAct: "Civil Union Act 17 of 2006: Allows any two adults (same- or opposite-sex) to register a legally recognized union.",
-                        customaryMarriagesAct: "Recognition of Customary Marriages Act 120 of 1998: Recognizes and regulates customary (indigenous) law marriages.",
-                        divorceAct: "Divorce Act 70 of 1979: Governs divorce procedures in South Africa."
-                    },
-                    counselingDesc: {
-                        psychologyTodaySA: "Online directory to find verified psychologists, counsellors, and therapists in South Africa, including couples counsellors.",
-                        therapyNow: "Offers online and in-person counselling nationwide for individuals and couples. Sessions from ~R850.",
-                        kenaHealth: "Mobile app for telemedicine, including online counselling sessions with registered therapists from ~R235.",
-                        lifeLineSA: "National 24/7 anonymous crisis counselling line (011-422-4242 or 0861 322 322) for various issues including marital stress.",
-                        sadag: "South African Depression & Anxiety Group. Offers multiple 24/7 helplines, support groups, and referrals for mental health.",
-                        famsa: "Family and Marriage Society of South Africa. Specialises in relationship counselling, education, and training. National network.",
-                        talkToAngel: "Global online counseling platform accessible to South African users, offering relationship and marriage therapy."
+                    personalityAssessmentsDesc: {
+                        "16personalities": "Myers-Briggs Type Indicator (MBTI) based. Comprehensive personality analysis. Free.",
+                        bigFive: "Scientific personality assessment (OpenPsychometrics). Multiple versions available. Free.",
+                        enneagramInstitute: "Free basic Enneagram test available. Nine personality types.",
+                        loveLanguageQuiz: "Gary Chapman's Five Love Languages. Relationship communication styles. Free.",
+                        attachmentStyleQuiz: "Various providers. Understand secure, anxious, avoidant, disorganized relationship patterns. Free.",
+                        cliftonStrengths: "Strengths-based personality assessment by Gallup. Relationship applications. Paid.",
+                        discAssessment: "Behavioral style assessment. Communication preferences. Multiple providers. Paid.",
+                        jungTypology: "Professional MBTI assessment (HumanMetrics). Career and relationship insights. Paid.",
+                        gottmanCheckup: "Evidence-based relationship assessment by Gottman Institute. Professional counselor developed.",
+                        prepareEnrich: "Pre-marital and marital assessment. Used by counselors and therapists."
                     },
                     christianDesc: {
-                        focusOnFamilySA: "Provides Christian-based counselling, marriage resources, parenting support, and seminars in South Africa.",
-                        marriageCourseAlpha: "A 7-session, Biblically-based premarital and marriage enrichment course widely run in SA churches (Alpha/Hillsong).",
-                        lamWorkshop: "Love After Marriage (LAM) workshop by Nothing Hidden Ministries SA, for Christian couples to deepen intimacy.",
-                        christianMatrimony: "Global Christian matrimony site with a specific section for South African Christians.",
-                        christianCafe: "International Christian dating site with a presence in South Africa, offering a free trial.",
-                        cdff: "Christian Dating For Free (CDFF) is a large, free Christian dating site and app.",
-                        bryanStoudt: "Website with Christian books, articles, and courses on relationships, marriage, and sexual purity."
+                        eharmonyChristian: "Faith-based matching within eHarmony.",
+                        christianConnection: "Christian dating and community. Focus on shared faith.",
+                        focusOnFamily: "Marriage assessments and resources. Christian relationship guidance.",
+                        ccaSA: "Christian Counsellors Association of SA - Professional network.",
+                        rhemaCounseling: "Rhema Family Church Counseling - Johannesburg-based.",
+                        hisPeopleCounseling: "His People Church Counseling - Cape Town.",
+                        gatewayFamilyServices: "Gateway Church Family Services - Multiple locations.",
+                        loveRespectAssessment: "Emerson Eggerichs' Love and Respect assessment.",
+                        sacredMarriageResources: "Gary Thomas' Sacred Marriage resources.",
+                        marriageCourseAlpha: "Alpha International's Marriage Course.",
+                        preMarriageCourseChurches: "Various churches offer pre-marriage courses."
                     },
                     astrologyDesc: {
-                        coStar: "Personalized astrology app using NASA data for daily horoscopes and compatibility with friends.",
-                        thePattern: "Astrology app providing insights into personality ('Your Pattern') and relationship compatibility ('Bonds').",
-                        astroMatrix: "Offers free birth chart and synastry reports for astrological insights.",
-                        timePassagesApp: "Mobile app for astrology, providing birth charts, daily horoscopes, and compatibility reports."
+                        astroSeek: "Synastry compatibility charts, composite relationship charts. Free.",
+                        cafeAstrology: "Love compatibility reports, relationship astrology guides. Free.",
+                        astroCom: "Professional-grade charts, relationship analysis tools. Free.",
+                        coStar: "Modern astrology app, daily compatibility insights. Free.",
+                        astrologySA: "Local South African astrologers directory.",
+                        psychicWorldSA: "Various spiritual advisors in South Africa.",
+                        africanAstrologyNetwork: "Traditional and Western astrology network in Africa.",
+                        numerology: "Various online calculators for numerology compatibility.",
+                        tarotSpreads: "Multiple online platforms for tarot relationship spreads.",
+                        crystalHealing: "Local metaphysical shops for crystal healing for relationships."
                     },
-                    divorceDesc: {
-                        legalAidDivorce: "Legal Aid SA offers a free Divorce Guide for uncontested cases and legal advice for those unable to afford a lawyer.",
-                        familyAdvocate: "Family Advocate offices (Dept. of Justice) assist with child custody, contact, and maintenance orders post-divorce.",
-                        parentCentreCoParenting: "The Parent Centre offers resources, guides (e.g., 'Do's and Don'ts of Co-Parenting'), and support for co-parenting after separation.",
-                        familyAssistSA: "Provides mediation, parenting plan development, and support services for uncontested divorces and separations."
+                    counselingDesc: {
+                        saamft: "South African Association for Marriage and Family Therapy - Professional body.",
+                        psyssa: "Psychological Society of South Africa - Professional body.",
+                        sacssp: "South African Council for Social Service Professions - Regulatory body.",
+                        lifeLineSA: "Crisis counseling and support. Multiple locations nationwide. 24/7 helpline.",
+                        famsa: "Family and Marriage Society of SA. Marriage and family counseling. National coverage.",
+                        akesoClinics: "Mental health and relationship therapy. Private healthcare.",
+                        betterHelp: "International online therapy platform, available in South Africa.",
+                        talkspace: "Text-based therapy, relationship counseling available. International, accessible in SA.",
+                        saOnlineTherapy: "Local online counseling services for South Africans."
                     },
-                    abuseDesc: {
-                        nsmsa: "National Shelter Movement of South Africa. Operates a 24-hour toll-free shelter helpline (0800-001-005) for abused women and children.",
-                        saartjieBaartman: "One-stop centre in Cape Town for survivors of domestic/sexual abuse, offering counselling, legal referrals, and shelter.",
-                        gbvCommandCentre: "SAPS Gender-Based Violence Command Centre. National helpline 0800-428-428 for 24/7 crisis support.",
-                        childlineAbuse: "Childline South Africa (116 or 0800-055-555) provides support and reporting for abused children.",
-                        tearsFoundation: "Provides crisis intervention, advocacy, counselling, and prevention education for victims of domestic violence, sexual assault, and child sexual abuse. Helpline: *134*7355#."
+                    legalDesc: {
+                        marriageAct1961: "Marriage Act 25 of 1961 - Governs civil marriages.",
+                        customaryMarriagesAct1998: "Recognition of Customary Marriages Act 120 of 1998 - For traditional marriages.",
+                        civilUnionAct2006: "Civil Union Act 17 of 2006 - For same-sex and civil partnerships.",
+                        divorceAct1979: "Divorce Act 70 of 1979 - Governs divorce procedures and requirements.",
+                        legalAidSA: "Free legal assistance for qualifying individuals, including family law services.",
+                        lawSocietySA: "Find qualified attorneys, including family law specialists.",
+                        attorneysJHB: "Examples: Webber Wentzel, ENSafrica, Cliffe Dekker Hofmeyr (Johannesburg).",
+                        attorneysCT: "Examples: Bowmans, Norton Rose Fulbright, Adams & Adams (Cape Town).",
+                        attorneysDBN: "Examples: Shepstone & Wylie, Bell Dewar & Hall (Durban).",
+                        attorneysPTA: "Examples: Werksmans Attorneys, Hurter Spies Inc (Pretoria).",
+                        dhaMarriageReg: "Department of Home Affairs for marriage registration and certificates, designated marriage officers.",
+                        religiousMarriageOfficers: "Various denominations have their own registered marriage officers.",
+                        magistrateCourts: "Civil ceremony venues for marriages."
+                    },
+                    preMarriageDesc: {
+                        famsaPreMarriage: "FAMSA Pre-Marriage Program - Structured preparation course.",
+                        churchPrograms: "Various denominations offer pre-marriage courses.",
+                        privateCounseling: "Individual and couple sessions with private counselors for pre-marital preparation.",
+                        weddingPlannersSA: "Wedding Planners Association of SA.",
+                        bridalMagazines: "Bridal magazine resources for wedding planning.",
+                        localVendors: "Local wedding vendors directories.",
+                        ancAttorneys: "Antenuptial contract attorneys for marriage regime advice.",
+                        fpiSA: "Financial Planners Association (FPI) for financial advice.",
+                        independentFinancialAdvisors: "Joint financial planning with independent advisors."
+                    },
+                    marriageEnhancementDesc: {
+                        marriageEncounter: "Marriage Encounter Weekends - Catholic-based but open to all.",
+                        weekendToRemember: "FamilyLife marriage conferences for enhancement.",
+                        localChurchRetreats: "Various denominations offer marriage retreats.",
+                        gottmanWorkshops: "Gottman Method Workshops - Evidence-based approach for couples.",
+                        eftWorkshops: "Emotionally Focused Therapy (EFT) Workshops for couples.",
+                        communicationTraining: "Various providers offer communication skills training for couples.",
+                        sevenPrinciplesBook: "Book: 'The Seven Principles for Making Marriage Work' by John Gottman.",
+                        holdMeTightBook: "Book: 'Hold Me Tight' by Sue Johnson.",
+                        loveRespectBook: "Book: 'Love and Respect' by Emerson Eggerichs.",
+                        sacredMarriageBook: "Book: 'Sacred Marriage' by Gary Thomas."
                     },
                     familyPlanningDesc: {
-                        deptHealthFP: "National Department of Health provides free contraception (pills, IUDs, injectables, condoms) at public clinics.",
-                        marieStopesSA: "Largest non-profit provider of contraception, safe abortion services, and reproductive health in SA. National contact: 0800 11 77 85.",
-                        privateFertilityClinics: "Various private clinics (e.g., Cape Fertility, Netcare Fertility, Medfem) offer IVF, IUI, and donor services.",
-                        nurtureEggDonation: "Egg donation agency in SA, lists fertility counsellors and provides support/advice for intended parents.",
-                        abbaAdoptions: "SA NGO with 20+ years' experience in domestic and inter-country adoptions.",
-                        bethanySA: "International NGO partnering with local agencies for foster care and adoptions in SA.",
-                        parentCentreParenting: "The Parent Centre offers early parenting classes, counselling, and support programs.",
-                        tripleP: "Triple P - Positive Parenting Program. An evidence-based parenting program being introduced and evaluated in South Africa."
+                        fertilityClinicsSA: "Fertility Clinics of SA - Multiple locations.",
+                        medfem: "Medfem Fertility Clinic - Johannesburg.",
+                        capeFertility: "Cape Fertility Clinic - Cape Town.",
+                        vitalab: "Vitalab - Multiple cities for fertility services.",
+                        parentingHub: "Parenting resources and advice. Expert articles and support.",
+                        laLecheLeagueSA: "Breastfeeding support in South Africa.",
+                        perinatalMentalHealth: "Perinatal Mental Health Project - Maternal mental health support.",
+                        marieStopesSA: "Reproductive health services, family planning counseling."
+                    },
+                    crisisSupportDesc: {
+                        tearsFoundation: "Domestic violence support. 24/7 helpline: 010 590 5920.",
+                        powa: "People Opposing Women Abuse (POWA). Women's rights and safety, crisis intervention.",
+                        lifeLineCrisis: "LifeLine SA - 0861 322 322. 24/7 emotional support, relationship crisis counseling.",
+                        sadag: "South African Depression and Anxiety Group (SADAG). Mental health support, suicide prevention: 0800 567 567.",
+                        naSA: "Narcotics Anonymous SA - Support for drug addiction.",
+                        aaSA: "Alcoholics Anonymous SA - Support for alcohol addiction.",
+                        sanca: "SANCA - Substance abuse counseling, family support programs."
+                    },
+                    separationDivorceDesc: {
+                        collaborativeDivorceAttorneys: "Mediation-focused approach to divorce.",
+                        familyLawSpecialists: "Litigation when necessary for divorce.",
+                        legalAidDivorce: "Legal Aid divorce services for qualifying low-income individuals.",
+                        divorceMediationSA: "Divorce Mediation Association of SA.",
+                        adrasa: "Alternative Dispute Resolution Association of SA (ADRASA).",
+                        independentMediators: "Private practice professionals for family mediation.",
+                        divorceFinancialPlanners: "Specialized advisors for financial planning during divorce.",
+                        forensicAccountants: "Asset valuation and discovery during divorce.",
+                        actuariesDivorce: "Pension and retirement fund valuations in divorce cases.",
+                        familyAdvocateOffice: "Department of Justice - Child custody investigations, maintenance court services.",
+                        officeFamilyAdvocateChildRep: "Court-appointed child representatives."
+                    },
+                    postDivorceDesc: {
+                        divorceCare: "Christian-based divorce recovery. Weekly support group meetings.",
+                        singleParentsSA: "Online and offline communities for single parents.",
+                        freshStartDivorce: "Fresh Start Divorce Recovery - Various locations.",
+                        ourFamilyWizard: "Co-parenting communication platform. Expense tracking and scheduling.",
+                        coParentingCounselors: "Specialized therapists for co-parenting.",
+                        parentingCoordinators: "Court-appointed facilitators for co-parenting.",
+                        divorcedDatingSA: "Specialized platforms for dating after divorce in SA.",
+                        singleParentDatingGroups: "Social meetups for single parents dating.",
+                        therapyPostDivorceDating: "Relationship readiness counseling for dating after divorce."
                     },
                     lgbtqDesc: {
-                        outWellbeing: "OUT LGBT Well-being provides free health services (MSM), human rights advocacy, and training for the LGBTQ+ community in SA.",
-                        triangleProject: "Cape Town based NGO offering health services, support, and community building for LGBTQI+ persons.",
-                        grindrApp: "Widely used global dating and social networking app for gay, bi, trans, and queer people.",
-                        herApp: "Dating and community app specifically for lesbian, bisexual, and queer women and gender-diverse individuals.",
-                        taimiApp: "Inclusive LGBTQ+ dating and social networking app for all gender identities and sexual orientations.",
-                        believrApp: "An LGBTQ+ Christian dating and community app focused on values-based matching.",
-                        galaArchive: "GALA Queer Archive preserves and shares the history and experiences of LGBTQ+ people in Southern Africa."
+                        triangleProject: "LGBTQ+ rights and support. Cape Town based.",
+                        outWellbeing: "Advocacy and support services for LGBTQ+ individuals. Pretoria based.",
+                        gala: "Gay and Lesbian Memory in Action (GALA). Community resources and history.",
+                        pinkTherapy: "Pink Therapy Directory - LGBTQ+ friendly counselors.",
+                        lgbtiPsychologists: "Association for LGBTI Psychologists - Professional network.",
+                        civilUnionRegServices: "Legal services for same-sex marriage registration.",
+                        lgbtqRightsAttorneys: "Attorneys for discrimination and family law concerning LGBTQ+ individuals.",
+                        lgbtqAdoptionServices: "LGBTQ+ friendly adoption agencies."
                     },
-                    emergencyDesc: {
-                        sapsEmergency: "South African Police Service (SAPS) Emergency Line: 10111.",
-                        gbvHelpline: "Gender-Based Violence Command Centre: 0800 428 428 (24/7 crisis support).",
-                        lifeLineCrisis: "LifeLine South Africa Crisis Line: 0861 322 322 or 011 422 4242 (24/7 anonymous counselling).",
-                        sadagSuicide: "SADAG Suicide Crisis Helpline: 0800 567 567.",
-                        childlineEmergency: "Childline SA Toll-Free Line: 116 or 0800 055 555 (for children in distress/danger).",
-                        nsmsaShelterHelpline: "National Shelter Movement of SA 24-hour Toll-Free Shelter Helpline: 0800 001 005."
+                    culturalTraditionalDesc: {
+                        traditionalHealersOrg: "Traditional Healers Organization for cultural marriage customs.",
+                        customaryMarriageRegDHA: "Department of Home Affairs for customary marriage registration.",
+                        culturalCommunityCentres: "Various ethnic groups' cultural community centers.",
+                        interfaithMarriageCounselors: "Specialized therapists for interfaith marriages.",
+                        culturalIntegrationWorkshops: "Workshops by various communities for cultural integration.",
+                        languageExchange: "Language exchange programs for multicultural couples.",
+                        hinduMarriageServices: "Services for Tamil, Telugu, Gujarati communities.",
+                        islamicMarriageServices: "Nikah ceremonies and counseling.",
+                        jewishCommunityServices: "Marriage and family support within the Jewish community.",
+                        africanTraditionalMarriage: "Specialists for various ethnic group traditional marriages."
+                    },
+                    additionalGovDesc: {
+                        dsd: "Department of Social Development - Family preservation programs, social grants.",
+                        dhaGeneral: "Department of Home Affairs - Marriage registration, immigration for spouses.",
+                        uniFamilyTherapy: "University Family Therapy Programs - Training clinics with reduced fees.",
+                        communityCollegeCourses: "Community College Relationship Courses - Continuing education.",
+                        relationshipApps: "Examples: Lasting, Relish, Paired.",
+                        communicationApps: "Examples: Couple, Love Nudge, Happy Couple.",
+                        calendarSharing: "Examples: Google Calendar, Apple Family Sharing.",
+                        jointBanking: "All major SA banks offer joint banking services.",
+                        couplesInsurance: "Life, disability, health insurance for couples.",
+                        investmentPlanningCouples: "Retirement and savings planning for couples.",
+                        estatePlanningCouples: "Wills, trusts, and estate attorneys for couples."
+                    },
+                    emergencyDesc: { // From the summary page of PDF
+                        lifeLineSAEmergency: "LifeLine SA: 0861 322 322 (24/7 emotional support).",
+                        sadagSuicideHelpline: "SADAG Suicide Helpline: 0800 567 567.",
+                        tearsFoundationEmergency: "Tears Foundation (Domestic Violence): 010 590 5920.",
+                        gbvCommandCentreEmergency: "Gender-Based Violence Command Centre: 0800 428 428.",
+                        policeEmergency: "Police Emergency: 10111.",
+                        legalAidSAEmergency: "Legal Aid SA: 0800 110 110."
                     }
                 },
                 profile: { // Profile page translations
@@ -1058,14 +1152,13 @@
        .init({
             resources: translations, // Provide translation resources
             fallbackLng: 'en',       // Fallback language if detection fails or translation missing
-            debug: true,             // Enable debug logging (set to false in production)
+            debug: false,             // Set to true for development debugging
             interpolation: {
                 escapeValue: false // Not needed for React as it escapes by default, but good for vanilla JS
             }
         }, function(err, t) { // Callback after initialization
             if (err) return console.error('i18next init error:', err);
             updateUIWithTranslations(); // Apply translations to the UI
-            // Initialize dynamic content after i18n is ready
             initializeDynamicContent(); 
         });
 
@@ -1085,7 +1178,6 @@
                     if (elem.type === 'submit' || elem.type === 'button') {
                         elem.value = translation; // For button text
                     }
-                    // For other input types, placeholder is handled above
                 } else {
                     elem.innerHTML = translation; // For general elements
                 }
@@ -1102,8 +1194,7 @@
     document.getElementById('languageSelector').addEventListener('change', function() {
         i18next.changeLanguage(this.value, (err, t) => {
             if (err) return console.error('Error changing language:', err);
-            updateUIWithTranslations(); // Re-apply translations
-            // Re-initialize or update dynamic content that depends on translations
+            updateUIWithTranslations(); 
             initializeDynamicContent(); 
         });
     });
@@ -1111,57 +1202,50 @@
     // Function to initialize or re-initialize content that depends on translations
     function initializeDynamicContent() {
         if (document.getElementById('resources').classList.contains('active')) {
-            displayResourceCategories(); // Re-render categories if on resources page
-            // If detail view is active, re-render items too
+            displayResourceCategories(); 
             const currentCategory = document.getElementById('resourceDetailView').dataset.currentCategory;
             if (currentCategory && resourcesData[currentCategory]) {
                  displayResourceItems(currentCategory);
             }
         }
         if (document.getElementById('quickCompatQuizArea').style.display === 'block' && currentQuickCompatQuiz) {
-            loadQuickCompatQuestion(); // Reload current question with new language
+            loadQuickCompatQuestion(); 
         }
         if (document.getElementById('relationshipDetailsQuizArea').style.display === 'block' && currentDetailsQuiz) {
-            loadDetailsQuestion(); // Reload current question with new language
+            loadDetailsQuestion(); 
         }
-        updateProfileDisplay(auth.currentUser, JSON.parse(localStorage.getItem('tempProfile'))); // Refresh profile display
+        updateProfileDisplay(auth.currentUser, JSON.parse(localStorage.getItem('tempProfile'))); 
     }
 
 
     // --- Modal Handling ---
-    // Get modal elements
     const loginModalEl = document.getElementById('loginModal');
     const registerModalEl = document.getElementById('registerModal');
     const tempProfileModalEl = document.getElementById('tempProfileModal');
     const tempProfileLoginModalEl = document.getElementById('tempProfileLoginModal');
     const searchModalEl = document.getElementById('searchModal');
 
-    // Get button elements that trigger modals or auth actions
     const loginBtnEl = document.getElementById('loginBtn');
     const registerBtnEl = document.getElementById('registerBtn');
     const logoutBtnEl = document.getElementById('logoutBtn');
     const navProfileBtnEl = document.getElementById('navProfileBtn');
 
-    // Generic functions to show/hide modals
     function showModal(modalId) { document.getElementById(modalId).classList.add('active'); }
     function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
 
-    // Event listeners for opening modals
     loginBtnEl.addEventListener('click', () => showModal('loginModal'));
     registerBtnEl.addEventListener('click', () => showModal('registerModal'));
     document.getElementById('createTempProfileFromLoginBtn').addEventListener('click', () => { closeModal('loginModal'); showModal('tempProfileModal'); });
     document.getElementById('loginWithTempProfileBtn').addEventListener('click', () => { closeModal('loginModal'); showModal('tempProfileLoginModal'); });
     document.getElementById('searchBtn').addEventListener('click', () => showModal('searchModal'));
     
-    // Event listeners for closing modals via close buttons
     document.getElementById('closeLoginModal').addEventListener('click', () => closeModal('loginModal'));
     document.getElementById('closeRegisterModal').addEventListener('click', () => closeModal('registerModal'));
     document.getElementById('closeTempProfileModal').addEventListener('click', () => closeModal('tempProfileModal'));
     document.getElementById('closeTempProfileLoginModal').addEventListener('click', () => closeModal('tempProfileLoginModal'));
     document.getElementById('closeSearchModal').addEventListener('click', () => closeModal('searchModal'));
-    document.getElementById('tempProfileGotItBtn').addEventListener('click', () => closeModal('tempProfileModal')); // For "Got It" button in temp profile modal
+    document.getElementById('tempProfileGotItBtn').addEventListener('click', () => closeModal('tempProfileModal')); 
 
-    // Function to close all modals, useful after successful login/registration
     function closeAllModals() {
         ['loginModal', 'registerModal', 'tempProfileModal', 'tempProfileLoginModal', 'searchModal'].forEach(closeModal);
     }
@@ -1171,71 +1255,60 @@
     const navButtonsEls = document.querySelectorAll('nav .nav-links button[data-section]');
 
     function showSection(sectionId) {
-        // Hide all sections and remove active class from nav buttons
         document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
         navButtonsEls.forEach(button => button.classList.remove('active-nav'));
 
         const targetSection = document.getElementById(sectionId);
         const targetButton = document.querySelector(`nav .nav-links button[data-section="${sectionId}"]`);
 
-        // Show target section and set corresponding nav button to active
         if (targetSection) targetSection.classList.add('active');
         if (targetButton) targetButton.classList.add('active-nav');
         
-        // Scroll the content overlay to the target section
         if (targetSection) {
             const sectionMargin = parseInt(window.getComputedStyle(targetSection).marginLeft) || 0;
             contentOverlayEl.scrollTo({ left: targetSection.offsetLeft - sectionMargin, behavior: 'smooth' });
         }
         
-        // Special handling for resources page: ensure categories are displayed when navigating to it
         if (sectionId === 'resources') {
-            displayResourceCategories(); // This will also handle i18n updates if called after language change
+            displayResourceCategories(); 
         }
-        // Special handling for profile page: ensure profile data is up-to-date
         if (sectionId === 'profile') {
             updateProfileDisplay(auth.currentUser, JSON.parse(localStorage.getItem('tempProfile')));
         }
     }
 
-    // Add click listeners to navigation buttons
     navButtonsEls.forEach(button => {
         button.addEventListener('click', () => showSection(button.dataset.section));
     });
 
-    // Set current year in footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
     // --- Firebase Authentication State Change & UI Updates ---
     auth.onAuthStateChanged(user => {
-        if (user) { // User is signed in (Firebase auth user)
+        if (user) { 
             loginBtnEl.style.display = 'none';
             registerBtnEl.style.display = 'none';
             logoutBtnEl.style.display = 'inline-block';
             navProfileBtnEl.style.display = 'inline-block';
-            updateProfileDisplay(user); // Update profile section with user data
+            updateProfileDisplay(user); 
             closeAllModals();
-            localStorage.removeItem('tempProfile'); // Clear any lingering temp profile
-        } else { // User is signed out or no Firebase user
-            // Check for an active temporary profile
+            localStorage.removeItem('tempProfile'); 
+        } else { 
             const tempProfile = JSON.parse(localStorage.getItem('tempProfile'));
-            if (tempProfile && tempProfile.id && new Date(tempProfile.expiresAt) > new Date()) {
-                // Active temporary profile exists
+            if (tempProfile && tempProfile.id && tempProfile.expiresAt && new Date(tempProfile.expiresAt) > new Date()) {
                 loginBtnEl.style.display = 'none';
                 registerBtnEl.style.display = 'none';
-                logoutBtnEl.style.display = 'inline-block'; // Allow logout from temp profile
+                logoutBtnEl.style.display = 'inline-block'; 
                 navProfileBtnEl.style.display = 'inline-block';
-                updateProfileDisplay(null, tempProfile); // Update profile with temp data
+                updateProfileDisplay(null, tempProfile); 
             } else {
-                // No Firebase user and no (or expired) temporary profile
                 loginBtnEl.style.display = 'inline-block';
                 registerBtnEl.style.display = 'inline-block';
                 logoutBtnEl.style.display = 'none';
                 navProfileBtnEl.style.display = 'none';
-                updateProfileDisplay(null); // Clear profile for guest view
-                if (tempProfile) localStorage.removeItem('tempProfile'); // Clean up expired temp profile
+                updateProfileDisplay(null); 
+                if (tempProfile) localStorage.removeItem('tempProfile'); 
             }
-            // Modals remain accessible for login/register
         }
     });
     
@@ -1246,18 +1319,14 @@
         const password = document.getElementById('loginPassword').value;
         auth.signInWithEmailAndPassword(email, password)
            .then((userCredential) => {
-                // alert(i18next.t('alerts.loginSuccess')); // Using custom modal/notification instead of alert
                 showNotification(i18next.t('alerts.loginSuccess'), 'success');
-                // onAuthStateChanged will handle UI updates and modal closing
             })
            .catch(err => {
-                // alert(i18next.t('alerts.loginFailed') + `\nError: ${err.message}`);
                 showNotification(i18next.t('alerts.loginFailed') + ` ${err.message}`, 'error');
             });
     });
 
     // --- Google Login/Register Button ---
-    // This button can be used for both login and registration with Google
     document.getElementById('googleLoginBtn').addEventListener('click', handleGoogleAuth);
     document.getElementById('googleRegisterBtn').addEventListener('click', handleGoogleAuth);
 
@@ -1270,21 +1339,18 @@
                 showNotification(message, 'success');
                 
                 if (result.additionalUserInfo.isNewUser) {
-                    // If new user, create a document in Firestore
                     db.collection('users').doc(user.uid).set({
                         name: user.displayName,
                         email: user.email,
                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        assessments: [], // Initialize with empty assessments array
-                        profileData: []  // Initialize with empty profile data array
-                    }, { merge: true }); // merge:true in case there's a race condition or partial data
+                        assessments: [], 
+                        profileData: []  
+                    }, { merge: true }); 
                 }
-                // onAuthStateChanged will handle further UI updates and modal closing
             })
            .catch(err => {
-                // alert(i18next.t('alerts.loginFailed') + `\nError: ${err.code} - ${err.message}`);
                 showNotification(i18next.t('alerts.loginFailed') + ` ${err.code} - ${err.message}`, 'error');
-                console.error("Google Sign-In Error:", err); // Log detailed error
+                console.error("Google Sign-In Error:", err); 
             });
     }
     
@@ -1296,26 +1362,21 @@
         const password = document.getElementById('registerPassword').value;
         auth.createUserWithEmailAndPassword(email, password)
            .then(userCredential => {
-                // Update the user's profile with the name
                 return userCredential.user.updateProfile({ displayName: name })
                    .then(() => {
-                        // Create a user document in Firestore
                         return db.collection('users').doc(userCredential.user.uid).set({
                             name: name,
                             email: email,
                             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            assessments: [], // Initialize
-                            profileData: []  // Initialize
+                            assessments: [], 
+                            profileData: []  
                         });
                     });
             })
            .then(() => {
-                // alert(i18next.t('alerts.registerSuccess'));
                 showNotification(i18next.t('alerts.registerSuccess'), 'success');
-                // User will be auto-logged in, onAuthStateChanged will update UI and close modals
             })
            .catch(err => {
-                // alert(i18next.t('alerts.registerFailed') + `\nError: ${err.message}`);
                 showNotification(i18next.t('alerts.registerFailed') + ` ${err.message}`, 'error');
             });
     });
@@ -1323,11 +1384,9 @@
     // --- Logout Button ---
     logoutBtnEl.addEventListener('click', () => {
         auth.signOut().then(() => {
-            localStorage.removeItem('tempProfile'); // Also clear temp profile on any logout
-            // alert(i18next.t('alerts.logoutSuccess'));
+            localStorage.removeItem('tempProfile'); 
             showNotification(i18next.t('alerts.logoutSuccess'), 'info');
-            showSection('about'); // Navigate to about page after logout
-            // onAuthStateChanged will update UI
+            showSection('about'); 
         });
     });
 
@@ -1340,42 +1399,37 @@
             return; 
         }
 
-        const code = Math.random().toString(36).substring(2, 10).toUpperCase(); // Generate random code
-        const expiresAt = new Date();
-        expiresAt.setDate(expiresAt.getDate() + 90); // Profile expires in 90 days
+        const code = Math.random().toString(36).substring(2, 10).toUpperCase(); 
+        const expiresAtDate = new Date();
+        expiresAtDate.setDate(expiresAtDate.getDate() + 90); 
 
-        // Check if username already exists in 'tempProfiles' collection
         db.collection('tempProfiles').where('username', '==', username).get().then(snapshot => {
             if (!snapshot.empty) {
                 showNotification("Username already taken. Please choose another one.", 'error');
                 return;
             }
 
-            // Add new temporary profile to Firestore
             db.collection('tempProfiles').add({
                 username: username,
                 code: code,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                expiresAt: firebase.firestore.Timestamp.fromDate(expiresAt),
-                assessments: [], // Initialize
-                profileData: []  // Initialize
+                expiresAt: firebase.firestore.Timestamp.fromDate(expiresAtDate),
+                assessments: [], 
+                profileData: []  
             }).then(docRef => {
-                // Store temp profile details in localStorage for session persistence
                 const tempProfileDetails = { 
                     username: username, 
                     code: code, 
-                    id: docRef.id, // Firestore document ID
-                    expiresAt: expiresAt.toISOString() 
+                    id: docRef.id, 
+                    expiresAt: expiresAtDate.toISOString() 
                 };
                 localStorage.setItem('tempProfile', JSON.stringify(tempProfileDetails));
                 
                 document.getElementById('tempProfileCodeDisplay').textContent = code;
                 document.getElementById('tempProfileCodeSection').style.display = 'block';
-                document.getElementById('tempProfileForm').style.display = 'none'; // Hide form
-                // alert(i18next.t('alerts.tempProfileCreated'));
+                document.getElementById('tempProfileForm').style.display = 'none'; 
                 showNotification(i18next.t('alerts.tempProfileCreated'), 'success');
-                // Manually trigger UI update for temp profile state
-                auth.onAuthStateChanged(null); // This will re-evaluate the auth state
+                auth.onAuthStateChanged(null); 
             }).catch(err => {
                 showNotification("Error creating temporary profile: " + err.message, 'error');
             });
@@ -1397,7 +1451,7 @@
                 }
                 let foundProfile = null;
                 let profileId = null;
-                snapshot.forEach(doc => { // Iterate through results (should be one if username is unique)
+                snapshot.forEach(doc => { 
                     if (doc.data().code === code) {
                         foundProfile = doc.data();
                         profileId = doc.id;
@@ -1408,14 +1462,12 @@
                     throw new Error(i18next.t('alerts.tempProfileLoginFailed'));
                 }
 
-                // Check if profile has expired
                 if (foundProfile.expiresAt.toDate() < new Date()) {
-                    db.collection('tempProfiles').doc(profileId).delete(); // Delete expired profile from Firestore
+                    db.collection('tempProfiles').doc(profileId).delete(); 
                     localStorage.removeItem('tempProfile');
                     throw new Error(i18next.t('alerts.tempProfileExpired'));
                 }
 
-                // Successful login with temp profile
                 const tempProfileDetails = { 
                     username: username, 
                     code: code, 
@@ -1423,19 +1475,14 @@
                     expiresAt: foundProfile.expiresAt.toDate().toISOString() 
                 };
                 localStorage.setItem('tempProfile', JSON.stringify(tempProfileDetails));
-                // alert(i18next.t('alerts.tempProfileLoginSuccess'));
                 showNotification(i18next.t('alerts.tempProfileLoginSuccess'), 'success');
                 closeModal('tempProfileLoginModal');
-                // Manually trigger UI update for temp profile state
-                auth.onAuthStateChanged(null); // This will re-evaluate the auth state and call updateProfileDisplay
+                auth.onAuthStateChanged(null); 
                 showSection('profile');
             }).catch(err => {
                 showNotification(err.message, 'error');
             });
     });
-    
-    // --- Function to check and apply active temporary profile on page load ---
-    // This is now handled within onAuthStateChanged logic
     
     // --- Profile Display Logic ---
     function updateProfileDisplay(user, tempProfileData = null) {
@@ -1446,77 +1493,82 @@
         const assessmentsListEl = document.getElementById('completedAssessmentsList');
         const dataDisplayEl = document.getElementById('profileDataDisplay');
 
-        // Set loading states initially
         assessmentsListEl.innerHTML = `<li>${i18next.t('profile.loadingAssessments')}</li>`;
         dataDisplayEl.innerHTML = `<p>${i18next.t('profile.loadingData')}</p>`;
-        // updateUIWithTranslations(); // Ensure loading messages are translated if not already
 
-        if (user) { // Firebase authenticated user
+        if (user) { 
             nameEl.textContent = user.displayName || 'User';
             emailEl.textContent = `Email: ${user.email}`;
             typeEl.textContent = i18next.t('profile.typePermanent');
             expiryEl.style.display = 'none';
 
-            // Fetch user data from Firestore
             db.collection('users').doc(user.uid).get().then(doc => {
                 if (doc.exists) {
                     const userData = doc.data();
                     renderAssessments(userData.assessments || [], assessmentsListEl);
                     renderProfileData(userData.profileData || [], dataDisplayEl);
-                } else { // Should not happen if user doc is created on signup/Google auth
+                } else { 
                     assessmentsListEl.innerHTML = `<li>${i18next.t('profile.noAssessmentsYet')}</li>`;
                     dataDisplayEl.innerHTML = `<p>${i18next.t('profile.noProfileDataYet')}</p>`;
                 }
-                // updateUIWithTranslations(); // Re-translate after dynamic content update
             }).catch(err => {
                 console.error("Error fetching user profile data:", err);
                 assessmentsListEl.innerHTML = `<li>Error loading assessments.</li>`;
                 dataDisplayEl.innerHTML = `<p>Error loading profile data.</p>`;
             });
 
-        } else if (tempProfileData && tempProfileData.id) { // Active Temporary profile
+        } else if (tempProfileData && tempProfileData.id) { 
             nameEl.textContent = tempProfileData.username;
             emailEl.textContent = i18next.t('profile.emailTemp');
             typeEl.textContent = i18next.t('profile.typeTemporary');
-            const expiryDate = tempProfileData.expiresAt.toDate ? tempProfileData.expiresAt.toDate() : new Date(tempProfileData.expiresAt);
-            expiryEl.textContent = `${i18next.t('profile.expiresOn')} ${expiryDate.toLocaleDateString()}`;
-            expiryEl.style.display = 'block';
             
-            // Fetch fresh temp profile data from Firestore for display
+            // Ensure expiresAt is a Date object before calling toLocaleDateString
+            let expiryDate;
+            if (tempProfileData.expiresAt && typeof tempProfileData.expiresAt === 'string') {
+                expiryDate = new Date(tempProfileData.expiresAt);
+            } else if (tempProfileData.expiresAt && tempProfileData.expiresAt.toDate) { // Firestore Timestamp
+                expiryDate = tempProfileData.expiresAt.toDate();
+            } else {
+                expiryDate = null; // Or handle as an error/unknown
+            }
+
+            if (expiryDate) {
+                expiryEl.textContent = `${i18next.t('profile.expiresOn')} ${expiryDate.toLocaleDateString()}`;
+                expiryEl.style.display = 'block';
+            } else {
+                expiryEl.style.display = 'none';
+            }
+            
             db.collection('tempProfiles').doc(tempProfileData.id).get().then(doc => {
                 if (doc.exists) {
                     const freshTempData = doc.data();
                     renderAssessments(freshTempData.assessments || [], assessmentsListEl);
                     renderProfileData(freshTempData.profileData || [], dataDisplayEl);
-                } else { // Temp profile somehow removed from DB but still in localStorage
+                } else { 
                      assessmentsListEl.innerHTML = `<li>${i18next.t('profile.noAssessmentsYet')}</li>`;
                     dataDisplayEl.innerHTML = `<p>${i18next.t('profile.noProfileDataYet')}</p>`;
-                    localStorage.removeItem('tempProfile'); // Clean up inconsistent state
+                    localStorage.removeItem('tempProfile'); 
                 }
-                // updateUIWithTranslations();
             }).catch(err => {
                 console.error("Error fetching temporary profile data:", err);
                 assessmentsListEl.innerHTML = `<li>Error loading assessments.</li>`;
                 dataDisplayEl.innerHTML = `<p>Error loading profile data.</p>`;
             });
 
-        } else { // Guest (no authenticated user, no active temp profile)
+        } else { 
             nameEl.textContent = i18next.t('profile.guestName');
             emailEl.textContent = i18next.t('profile.guestEmail');
-            typeEl.textContent = ""; // No type for guest
+            typeEl.textContent = ""; 
             expiryEl.style.display = 'none';
             assessmentsListEl.innerHTML = `<li>${i18next.t('profile.noAssessmentsLoggedIn')}</li>`;
             dataDisplayEl.innerHTML = `<p>${i18next.t('profile.noDataLoggedIn')}</p>`;
-            // updateUIWithTranslations();
         }
     }
 
-    // Helper function to render completed assessments to the profile page
     function renderAssessments(assessments, listEl) {
-        listEl.innerHTML = ""; // Clear previous list
+        listEl.innerHTML = ""; 
         if (!assessments || assessments.length === 0) {
             listEl.innerHTML = `<li>${i18next.t('profile.noAssessmentsYet')}</li>`;
-            // updateUIWithTranslations();
             return;
         }
         assessments.forEach(a => {
@@ -1527,21 +1579,18 @@
         });
     }
 
-    // Helper function to render profile data items (like assessment answers)
     function renderProfileData(profileItems, displayEl) {
-        displayEl.innerHTML = ""; // Clear previous data
+        displayEl.innerHTML = ""; 
         if (!profileItems || profileItems.length === 0) {
             displayEl.innerHTML = `<p>${i18next.t('profile.noProfileDataYet')}</p>`;
-            // updateUIWithTranslations();
             return;
         }
         profileItems.forEach(item => {
             let html = '<div class="mb-2 pb-2 border-b border-[var(--border-color-lavender)]">';
-            // Handling for social media import structure
             if (item.source && item.details && item.details.raw) { 
                 html += `<p><strong>Source:</strong> ${item.source}</p>`;
                 let count = 0;
-                for (const key in item.details.raw) { // Display a few raw data keys as examples
+                for (const key in item.details.raw) { 
                     if (count < 3 && typeof item.details.raw[key] !== 'object') { 
                          html += `<p class="truncate"><strong>${key.replace(/_/g, ' ')}:</strong> ${String(item.details.raw[key]).substring(0,100)}</p>`;
                          count++;
@@ -1550,11 +1599,11 @@
                 if (item.importedAt && item.importedAt.toDate) {
                      html += `<p class="text-xs italic">Imported on: ${item.importedAt.toDate().toLocaleDateString()}</p>`;
                 }
-            } else if (item.questionKey && item.answerKey) { // For assessment answers from profile builder
+            } else if (item.questionKey && item.answerKey) { 
                 const questionText = i18next.t(item.questionKey) || "Question";
-                const answerText = i18next.t(item.answerKey) || item.answerKey; // Fallback to key if translation missing
+                const answerText = i18next.t(item.answerKey) || item.answerKey; 
                 html += `<p><strong>${questionText}:</strong> ${answerText} (Weight: ${item.weight || 'N/A'})</p>`;
-            } else if (item.question && item.answer) { // Fallback for older or generic structure
+            } else if (item.question && item.answer) { 
                  html += `<p><strong>${item.question}:</strong> ${item.answer} (Weight: ${item.weight || 'N/A'})</p>`;
             }
             html += '</div>';
@@ -1563,25 +1612,25 @@
     }
 
     // --- Quick Compatibility Quiz Logic ---
-    let currentQuickCompatQuiz = null; // Stores the current quiz state
-    const quickCompatQuestions = { // Question pool for quick compatibility
-        basic: [ // 5 questions
+    let currentQuickCompatQuiz = null; 
+    const quickCompatQuestions = { 
+        basic: [ 
             { qKey: "assessments.quickCompat.questions.q_financial_stability", optsKey: ["assessments.quickCompat.options.opt_not_important", "assessments.quickCompat.options.opt_somewhat_important", "assessments.quickCompat.options.opt_very_important"] },
             { qKey: "assessments.quickCompat.questions.q_indoors_outdoors", optsKey: ["assessments.quickCompat.options.opt_indoors", "assessments.quickCompat.options.opt_outdoors", "assessments.quickCompat.options.opt_both"] },
             { qKey: "assessments.quickCompat.questions.q_personal_space", optsKey: ["assessments.quickCompat.options.opt_rarely", "assessments.quickCompat.options.opt_sometimes", "assessments.quickCompat.options.opt_often"] },
             { qKey: "assessments.quickCompat.questions.q_spontaneity_planning", optsKey: ["assessments.quickCompat.options.opt_spontaneity", "assessments.quickCompat.options.opt_planning", "assessments.quickCompat.options.opt_both"] },
             { qKey: "assessments.quickCompat.questions.q_family_involvement", optsKey: ["assessments.quickCompat.options.opt_not_important", "assessments.quickCompat.options.opt_somewhat_important", "assessments.quickCompat.options.opt_very_important"] }
         ],
-        intermediate: [ // 10 questions (first 5 + 5 more)
-            ...Object.values(quickCompatQuestions.basic), // Spread basic questions
+        intermediate: [ 
+            ...quickCompatQuestions.basic, 
             { qKey: "assessments.quickCompat.questions.q_comm_style", optsKey: ["assessments.quickCompat.options.opt_direct", "assessments.quickCompat.options.opt_indirect", "assessments.quickCompat.options.opt_both"] },
             { qKey: "assessments.quickCompat.questions.q_conflict_resolution", optsKey: ["assessments.quickCompat.options.opt_discuss_now", "assessments.quickCompat.options.opt_cool_off", "assessments.quickCompat.options.opt_both"] },
             { qKey: "assessments.quickCompat.questions.q_social_circle", optsKey: ["assessments.quickCompat.options.opt_small_circle", "assessments.quickCompat.options.opt_large_network", "assessments.quickCompat.options.opt_both"] },
             { qKey: "assessments.quickCompat.questions.q_travel_preference", optsKey: ["assessments.quickCompat.options.opt_relaxing", "assessments.quickCompat.options.opt_adventure", "assessments.quickCompat.options.opt_both"] },
             { qKey: "assessments.quickCompat.questions.q_dietary_habits", optsKey: ["assessments.quickCompat.options.opt_anything", "assessments.quickCompat.options.opt_specific_diet", "assessments.quickCompat.options.opt_both"] }
         ],
-        advanced: [ // 15 questions (first 10 + 5 more)
-            ...Object.values(quickCompatQuestions.intermediate), // Spread intermediate questions
+        advanced: [ 
+            ...quickCompatQuestions.intermediate, 
             { qKey: "assessments.quickCompat.questions.q_long_term_goals", optsKey: ["assessments.quickCompat.options.opt_career_focus", "assessments.quickCompat.options.opt_family_focus", "assessments.quickCompat.options.opt_balance_both"] },
             { qKey: "assessments.quickCompat.questions.q_parenting_style", optsKey: ["assessments.quickCompat.options.opt_strict", "assessments.quickCompat.options.opt_lenient", "assessments.quickCompat.options.opt_authoritative"] },
             { qKey: "assessments.quickCompat.questions.q_spirituality", optsKey: ["assessments.quickCompat.options.opt_not_spiritual", "assessments.quickCompat.options.opt_somewhat_spiritual", "assessments.quickCompat.options.opt_very_spiritual"] },
@@ -1590,7 +1639,6 @@
         ]
     };
 
-    // Event listeners for Quick Compatibility level selection
     document.querySelectorAll('#quickCompatLevelSelector button').forEach(button => {
         button.addEventListener('click', () => {
             const level = button.dataset.level;
@@ -1598,7 +1646,6 @@
         });
     });
 
-    // Start or reset the Quick Compatibility quiz
     function startQuickCompatQuiz(level) {
         currentQuickCompatQuiz = {
             level: level,
@@ -1612,7 +1659,6 @@
         loadQuickCompatQuestion();
     }
 
-    // Load the current question for Quick Compatibility quiz
     function loadQuickCompatQuestion() {
         if (!currentQuickCompatQuiz || currentQuickCompatQuiz.currentIndex >= currentQuickCompatQuiz.questions.length) {
             showQuickCompatResults();
@@ -1628,16 +1674,14 @@
             btn.onclick = () => selectQuickCompatOption(btn, optKey);
             optionsArea.appendChild(btn);
         });
-        // Update progress
         document.getElementById('quickCompatCounter').textContent = currentQuickCompatQuiz.currentIndex + 1;
         document.getElementById('quickCompatTotal').textContent = currentQuickCompatQuiz.questions.length;
         document.getElementById('quickCompatProgressBar').style.width = `${((currentQuickCompatQuiz.currentIndex + 1) / currentQuickCompatQuiz.questions.length) * 100}%`;
-        document.getElementById('quickCompatWeight').value = 3; // Reset weight
+        document.getElementById('quickCompatWeight').value = 3; 
         document.getElementById('quickCompatWeightValue').textContent = 3;
         document.getElementById('quickCompatFeedbackArea').textContent = '';
     }
 
-    // Handle option selection in Quick Compatibility quiz
     function selectQuickCompatOption(selectedButton, optionKey) {
         document.querySelectorAll('#quickCompatOptionsArea button').forEach(btn => btn.classList.remove('selected'));
         selectedButton.classList.add('selected');
@@ -1648,12 +1692,10 @@
         };
     }
     
-    // Update weight display for Quick Compatibility
     document.getElementById('quickCompatWeight').addEventListener('input', function() {
         document.getElementById('quickCompatWeightValue').textContent = this.value;
     });
 
-    // Handle "Next" button click in Quick Compatibility quiz
     document.getElementById('quickCompatNextBtn').addEventListener('click', () => {
         if (currentQuickCompatQuiz.answers[currentQuickCompatQuiz.currentIndex]) {
             currentQuickCompatQuiz.currentIndex++;
@@ -1663,7 +1705,6 @@
         }
     });
     
-    // Show results for Quick Compatibility quiz (placeholder)
     function showQuickCompatResults() {
         document.getElementById('quickCompatQuizArea').style.display = 'none';
         document.getElementById('quickCompatResultArea').style.display = 'block';
@@ -1672,20 +1713,18 @@
         saveAssessmentResults('Quick Compatibility', currentQuickCompatQuiz.answers);
     }
 
-    // Reset Quick Compatibility quiz to select level again
     function resetQuickCompatQuiz() {
         currentQuickCompatQuiz = null;
         document.getElementById('quickCompatQuizArea').style.display = 'none';
         document.getElementById('quickCompatResultArea').style.display = 'none';
         document.getElementById('quickCompatLevelSelector').style.display = 'block';
-        // Clear progress bar and counters if needed
         document.getElementById('quickCompatProgressBar').style.width = '0%';
         document.getElementById('quickCompatCounter').textContent = '1';
     }
 
     // --- Relationship Profile Builder Quiz Logic ---
-    let currentDetailsQuiz = null; // Stores the current profile builder state
-    const detailsQuestions = [ // Questions for the profile builder
+    let currentDetailsQuiz = null; 
+    const detailsQuestions = [ 
         { qKey: "assessments.profileBuilder.questions.profileBuilder.q_love_language_give", optsKey: ["assessments.profileBuilder.options.words", "assessments.profileBuilder.options.acts", "assessments.profileBuilder.options.gifts", "assessments.profileBuilder.options.quality_time", "assessments.profileBuilder.options.touch"] },
         { qKey: "assessments.profileBuilder.questions.profileBuilder.q_love_language_receive", optsKey: ["assessments.profileBuilder.options.words", "assessments.profileBuilder.options.acts", "assessments.profileBuilder.options.gifts", "assessments.profileBuilder.options.quality_time", "assessments.profileBuilder.options.touch"] },
         { qKey: "assessments.profileBuilder.questions.profileBuilder.q_financial_transparency", optsKey: ["assessments.profileBuilder.options.1", "assessments.profileBuilder.options.2", "assessments.profileBuilder.options.3", "assessments.profileBuilder.options.4", "assessments.profileBuilder.options.5"] },
@@ -1698,7 +1737,6 @@
         { qKey: "assessments.profileBuilder.questions.profileBuilder.q_household_responsibilities", optsKey: ["assessments.profileBuilder.options.strictly_50_50", "assessments.profileBuilder.options.based_on_time_skill", "assessments.profileBuilder.options.flexible_circumstances", "assessments.profileBuilder.options.outsource_some"] }
     ];
     
-    // Start or reset the Relationship Profile Builder quiz
     function startDetailsQuiz() {
         currentDetailsQuiz = {
             questions: detailsQuestions,
@@ -1710,7 +1748,6 @@
         loadDetailsQuestion();
     }
 
-    // Load the current question for Relationship Profile Builder
     function loadDetailsQuestion() {
         if (!currentDetailsQuiz || currentDetailsQuiz.currentIndex >= currentDetailsQuiz.questions.length) {
             showDetailsResults();
@@ -1726,16 +1763,14 @@
             btn.onclick = () => selectDetailsOption(btn, optKey);
             optionsArea.appendChild(btn);
         });
-        // Update progress
         document.getElementById('detailsCounter').textContent = currentDetailsQuiz.currentIndex + 1;
         document.getElementById('detailsTotal').textContent = currentDetailsQuiz.questions.length;
         document.getElementById('detailsProgressBar').style.width = `${((currentDetailsQuiz.currentIndex + 1) / currentDetailsQuiz.questions.length) * 100}%`;
-        document.getElementById('detailsWeight').value = 3; // Reset weight
+        document.getElementById('detailsWeight').value = 3; 
         document.getElementById('detailsWeightValue').textContent = 3;
         document.getElementById('detailsFeedbackArea').textContent = '';
     }
     
-    // Handle option selection in Relationship Profile Builder
     function selectDetailsOption(selectedButton, optionKey) {
         document.querySelectorAll('#detailsOptionsArea button').forEach(btn => btn.classList.remove('selected'));
         selectedButton.classList.add('selected');
@@ -1746,12 +1781,10 @@
         };
     }
 
-    // Update weight display for Relationship Profile Builder
     document.getElementById('detailsWeight').addEventListener('input', function() {
         document.getElementById('detailsWeightValue').textContent = this.value;
     });
 
-    // Handle "Next" button click in Relationship Profile Builder
     document.getElementById('detailsNextBtn').addEventListener('click', () => {
         if (currentDetailsQuiz.answers[currentDetailsQuiz.currentIndex]) {
             currentDetailsQuiz.currentIndex++;
@@ -1761,17 +1794,14 @@
         }
     });
 
-    // Show results for Relationship Profile Builder (placeholder)
     function showDetailsResults() {
         document.getElementById('relationshipDetailsQuizArea').style.display = 'none';
         document.getElementById('detailsResultArea').style.display = 'block';
         const feedbackText = `${i18next.t('assessments.profileBuilder.results.completedWith')} ${currentDetailsQuiz.answers.length} ${i18next.t('assessments.profileBuilder.results.answers')}. Your profile is updated!`;
         document.getElementById('detailsFinalFeedback').textContent = feedbackText;
-        // Save these answers to the user's profileData in Firestore
         saveProfileBuilderData(currentDetailsQuiz.answers);
     }
     
-    // Reset Relationship Profile Builder quiz (restarts from question 1)
     function resetDetailsQuiz() {
         startDetailsQuiz();
     }
@@ -1782,9 +1812,9 @@
         const tempProfile = JSON.parse(localStorage.getItem('tempProfile'));
         let profileRef;
 
-        if (currentUser) { // Logged-in Firebase user
+        if (currentUser) { 
             profileRef = db.collection('users').doc(currentUser.uid);
-        } else if (tempProfile && tempProfile.id) { // Active temporary profile
+        } else if (tempProfile && tempProfile.id) { 
             profileRef = db.collection('tempProfiles').doc(tempProfile.id);
         } else {
             showNotification("No active profile to save assessment to.", "error");
@@ -1796,11 +1826,11 @@
                 assessments: firebase.firestore.FieldValue.arrayUnion({
                     type: assessmentType,
                     date: firebase.firestore.Timestamp.now(),
-                    answers: answers // Store the raw answers array
+                    answers: answers 
                 })
             });
             showNotification(`${assessmentType} results saved!`, 'success');
-            updateProfileDisplay(currentUser, tempProfile); // Refresh profile display
+            updateProfileDisplay(currentUser, tempProfile); 
         } catch (error) {
             console.error("Error saving assessment:", error);
             showNotification(`Error saving ${assessmentType} results: ${error.message}`, 'error');
@@ -1821,33 +1851,20 @@
             showNotification("No active profile to save data to.", "error");
             return;
         }
-
-        // Transform answers to a more storable format if needed, or store as is
-        // For profileData, we might want to overwrite or merge intelligently.
-        // Here, we'll add each answer as a separate item in the profileData array.
+        
         const newProfileDataItems = profileBuilderAnswers.map(ans => ({
-            questionKey: ans.questionKey, // Store the i18n key for the question
-            answerKey: ans.answerKey,     // Store the i18n key for the answer
+            questionKey: ans.questionKey, 
+            answerKey: ans.answerKey,     
             weight: ans.weight,
             timestamp: firebase.firestore.Timestamp.now()
         }));
 
         try {
-            // Atomically add new items to the 'profileData' array
-            // This replaces the previous approach of overwriting the entire array,
-            // to better support adding new data without losing existing unrelated data.
-            // However, for profile builder, you might want to replace old profile builder data.
-            // For simplicity, this example appends. A more robust solution might involve
-            // tagging profileData items by source (e.g., 'profileBuilder', 'socialImport')
-            // and replacing only the relevant tagged items.
-            
-            // Fetch current profileData
             const doc = await profileRef.get();
             let existingProfileData = [];
             if (doc.exists && doc.data().profileData) {
                 existingProfileData = doc.data().profileData;
             }
-            // Filter out old profile builder answers (if any) to avoid duplicates if re-taking
             const nonProfileBuilderData = existingProfileData.filter(item => 
                 !detailsQuestions.some(q => q.qKey === item.questionKey)
             );
@@ -1859,7 +1876,7 @@
             });
 
             showNotification("Profile data saved successfully!", 'success');
-            updateProfileDisplay(currentUser, tempProfile); // Refresh profile display
+            updateProfileDisplay(currentUser, tempProfile); 
         } catch (error) {
             console.error("Error saving profile data:", error);
             showNotification(`Error saving profile data: ${error.message}`, 'error');
@@ -1867,146 +1884,254 @@
     }
 
     // --- Resources Page Logic ---
-    const resourcesData = { // Data for the resources page, categorized
+    // Data populated from the "Comprehensive Relationship Services Database - South Africa.pdf"
+    const resourcesData = {
         dating: {
             icon: "fas fa-heart", titleKey: "resources.category.dating",
             items: [
                 { name: "Tinder", link: "https://tinder.com/", descriptionKey: "resources.datingDesc.tinder", tags: ["sa", "global", "app"] },
                 { name: "Bumble", link: "https://bumble.com/", descriptionKey: "resources.datingDesc.bumble", tags: ["sa", "global", "app", "women-first"] },
-                { name: "OkCupid", link: "https://www.okcupid.com/", descriptionKey: "resources.datingDesc.okcupid", tags: ["sa", "global", "lgbtqia+", "app"] },
                 { name: "Hinge", link: "https://hinge.co/", descriptionKey: "resources.datingDesc.hinge", tags: ["sa", "global", "app", "relationships"] },
-                { name: "Plenty of Fish (POF)", link: "https://www.pof.com/", descriptionKey: "resources.datingDesc.pof", tags: ["sa", "global", "free"] },
-                { name: "SouthAfrican Cupid", link: "https://www.southafricancupid.com/", descriptionKey: "resources.datingDesc.saCupid", tags: ["sa", "local", "niche"] },
-                { name: "AfroIntroductions", link: "https://www.afrointroductions.com/", descriptionKey: "resources.datingDesc.afroIntroductions", tags: ["africa", "niche"] },
-                { name: "Singles2Meet.co.za", link: "http://www.singles2meet.co.za/", descriptionKey: "resources.datingDesc.singles2meet", tags: ["sa", "local", "free"] },
-                { name: "SALT Christian Dating", link: "https://www.be-salt.com/", descriptionKey: "resources.datingDesc.salt", tags: ["sa", "global", "christian", "app"] },
-                { name: "Grindr", link: "https://www.grindr.com/", descriptionKey: "resources.datingDesc.grindr", tags: ["global", "lgbtq+", "app", "men"] },
-                { name: "HER", link: "https://weareher.com/", descriptionKey: "resources.datingDesc.her", tags: ["global", "lgbtq+", "app", "women", "queer"] },
-                { name: "MillionaireMatch", link: "https://www.millionairematch.com/", descriptionKey: "resources.datingDesc.millionaireMatch", tags: ["sa", "global", "premium", "niche"] }
+                { name: "OkCupid", link: "https://okcupid.com/", descriptionKey: "resources.datingDesc.okcupid", tags: ["sa", "global", "app"] },
+                { name: "Match.com", link: "https://match.com/", descriptionKey: "resources.datingDesc.matchCom", tags: ["sa", "global", "subscription"] },
+                { name: "Plenty of Fish (POF)", link: "https://pof.com/", descriptionKey: "resources.datingDesc.pof", tags: ["sa", "global", "free"] },
+                { name: "SA Dating", link: "#", descriptionKey: "resources.datingDesc.saDating", tags: ["sa", "local"] }, // Placeholder link
+                { name: "Meet South Africans", link: "#", descriptionKey: "resources.datingDesc.meetSouthAfricans", tags: ["sa", "local", "community"] }, // Placeholder link
+                { name: "Afro Romance", link: "#", descriptionKey: "resources.datingDesc.afroRomance", tags: ["sa", "interracial"] }, // Placeholder link
+                { name: "Single Muslims SA", link: "#", descriptionKey: "resources.datingDesc.singleMuslimsSA", tags: ["sa", "islamic", "local"] }, // Placeholder link
+                { name: "eHarmony", link: "https://eharmony.com/", descriptionKey: "resources.datingDesc.eHarmony", tags: ["sa", "global", "premium", "compatibility"] },
+                { name: "Christian Mingle", link: "https://christianmingle.com/", descriptionKey: "resources.datingDesc.christianMingle", tags: ["sa", "global", "christian"] },
+                { name: "JDate", link: "https://jdate.com/", descriptionKey: "resources.datingDesc.jdate", tags: ["sa", "global", "jewish"] },
+                { name: "Elite Singles", link: "https://elitesingles.com/", descriptionKey: "resources.datingDesc.eliteSingles", tags: ["sa", "global", "professional"] }
             ]
         },
-        assessment: {
-            icon: "fas fa-clipboard-check", titleKey: "resources.category.assessment",
+        personalityAssessments: {
+            icon: "fas fa-clipboard-check", titleKey: "resources.category.personalityAssessments",
             items: [
-                { name: "16Personalities", link: "https://www.16personalities.com/", descriptionKey: "resources.assessmentDesc.16personalities", tags: ["global", "free", "mbti"] },
-                { name: "The 5 Love Languages Quiz", link: "https://5lovelanguages.com/quizzes/love-language", descriptionKey: "resources.assessmentDesc.fiveLoveLanguages", tags: ["global", "free", "official"] },
-                { name: "Attachment Style Quiz (Attachment Project)", link: "https://www.attachmentproject.com/attachment-style-quiz/", descriptionKey: "resources.assessmentDesc.attachmentProjectQuiz", tags: ["global", "free"] },
-                { name: "Gottman Relationship Checkup", link: "https://checkup.gottman.com/", descriptionKey: "resources.assessmentDesc.gottmanCheckup", tags: ["global", "couples", "paid-options"] },
-                { name: "P.A.P.I. Assessment (Talogy)", link: "https://www.talogy.com/en/solutions/assessment-solutions/personality-assessment/papi/", descriptionKey: "resources.assessmentDesc.papi", tags: ["global", "corporate", "hr"] },
-                { name: "OCEAN (Big 5) Personality Test (InterACT Global)", link: "https://interact.global/ocean-big-5-personality-test/", descriptionKey: "resources.assessmentDesc.oceanBig5", tags: ["global", "corporate", "hr"] },
-                { name: "PsychCentral: Relationship Attachment Style Quiz", link: "https://psychcentral.com/quizzes/relationship-attachment-style-quiz", descriptionKey: "resources.assessmentDesc.psychCentralAttach", tags: ["global", "free", "quiz"] },
-                { name: "PsychCentral: Am I in Love or Lust Quiz", link: "https://psychcentral.com/quizzes/love-or-lust-quiz", descriptionKey: "resources.assessmentDesc.psychCentralLoveLust", tags: ["global", "free", "quiz"] }
-            ]
-        },
-        legal: {
-            icon: "fas fa-gavel", titleKey: "resources.category.legal",
-            items: [
-                { name: "Legal Aid South Africa", link: "https://legal-aid.co.za/", descriptionKey: "resources.legalDesc.legalAidSA", contact: "0800-110-110", tags: ["sa", "local", "free", "divorce", "advice"] },
-                { name: "Department of Home Affairs (DHA) - Marriages", link: "https://www.dha.gov.za/index.php/civic-services/marriage-certificates", descriptionKey: "resources.legalDesc.dha", tags: ["sa", "local", "government", "marriage"] },
-                { name: "Marriage Act 25 of 1961", link: "https://www.justice.gov.za/legislation/acts/1961-025.pdf", descriptionKey: "resources.legalDesc.marriageAct", tags: ["sa", "local", "legislation"] },
-                { name: "Civil Union Act 17 of 2006", link: "https://www.justice.gov.za/legislation/acts/2006-017.pdf", descriptionKey: "resources.legalDesc.civilUnionAct", tags: ["sa", "local", "legislation", "lgbtq+"] },
-                { name: "Recognition of Customary Marriages Act 120 of 1998", link: "https://www.justice.gov.za/legislation/acts/1998-120.pdf", descriptionKey: "resources.legalDesc.customaryMarriagesAct", tags: ["sa", "local", "legislation", "customary"] },
-                { name: "Divorce Act 70 of 1979", link: "https://www.justice.gov.za/legislation/acts/1979-070.pdf", descriptionKey: "resources.legalDesc.divorceAct", tags: ["sa", "local", "legislation", "divorce"] }
-            ]
-        },
-        counseling: {
-            icon: "fas fa-users", titleKey: "resources.category.counseling",
-            items: [
-                { name: "Psychology Today SA - Find a Therapist", link: "https://www.psychologytoday.com/za/counselling", descriptionKey: "resources.counselingDesc.psychologyTodaySA", tags: ["sa", "local", "directory", "therapy"] },
-                { name: "TherapyNow", link: "https://therapynow.co.za/", descriptionKey: "resources.counselingDesc.therapyNow", tags: ["sa", "local", "online", "in-person"] },
-                { name: "Kena Health", link: "https://kena.health/", descriptionKey: "resources.counselingDesc.kenaHealth", tags: ["sa", "local", "app", "telemedicine", "affordable"] },
-                { name: "LifeLine South Africa", link: "https://lifelinesa.co.za/", descriptionKey: "resources.counselingDesc.lifeLineSA", contact: "0861 322 322 / 011 422 4242", tags: ["sa", "local", "crisis", "helpline", "free"] },
-                { name: "SADAG (SA Depression & Anxiety Group)", link: "https://www.sadag.org/", descriptionKey: "resources.counselingDesc.sadag", tags: ["sa", "local", "mental-health", "helpline", "support"] },
-                { name: "FAMSA (Family and Marriage Society of SA)", link: "https://famsa.org.za/", descriptionKey: "resources.counselingDesc.famsa", tags: ["sa", "local", "family", "marriage", "ngo"] },
-                { name: "TalktoAngel", link: "https://www.talktoangel.com/", descriptionKey: "resources.counselingDesc.talkToAngel", tags: ["global", "online", "therapy"] }
+                { name: "16Personalities", link: "https://www.16personalities.com/", descriptionKey: "resources.personalityAssessmentsDesc.16personalities", tags: ["global", "free", "mbti"] },
+                { name: "Big Five Personality Test", link: "https://openpsychometrics.org/", descriptionKey: "resources.personalityAssessmentsDesc.bigFive", tags: ["global", "free", "scientific"] },
+                { name: "Enneagram Institute (Free Test)", link: "https://www.enneagraminstitute.com/", descriptionKey: "resources.personalityAssessmentsDesc.enneagramInstitute", tags: ["global", "free", "enneagram"] },
+                { name: "Love Language Quiz", link: "https://5lovelanguages.com/", descriptionKey: "resources.personalityAssessmentsDesc.loveLanguageQuiz", tags: ["global", "free", "communication"] },
+                { name: "Attachment Style Quiz", link: "#", descriptionKey: "resources.personalityAssessmentsDesc.attachmentStyleQuiz", tags: ["global", "free", "relationships"] }, // Placeholder, many providers
+                { name: "CliftonStrengths (Gallup)", link: "https://www.gallup.com/cliftonstrengths/en/home.aspx", descriptionKey: "resources.personalityAssessmentsDesc.cliftonStrengths", tags: ["global", "paid", "strengths"] },
+                { name: "DISC Assessment", link: "#", descriptionKey: "resources.personalityAssessmentsDesc.discAssessment", tags: ["global", "paid", "behavioral"] }, // Placeholder, many providers
+                { name: "Jung Typology Test (HumanMetrics)", link: "https://humanmetrics.com/personality", descriptionKey: "resources.personalityAssessmentsDesc.jungTypology", tags: ["global", "paid", "mbti"] },
+                { name: "Gottman Relationship Checkup", link: "https://www.gottman.com/couples/prd-checkup/", descriptionKey: "resources.personalityAssessmentsDesc.gottmanCheckup", tags: ["global", "couples", "evidence-based"] },
+                { name: "Prepare/Enrich", link: "https://www.prepare-enrich.com/", descriptionKey: "resources.personalityAssessmentsDesc.prepareEnrich", tags: ["global", "premarital", "marital", "counselors"] }
             ]
         },
         christian: {
             icon: "fas fa-cross", titleKey: "resources.category.christian",
             items: [
-                { name: "Focus on the Family Africa", link: "https://safamily.co.za/", descriptionKey: "resources.christianDesc.focusOnFamilySA", tags: ["sa", "local", "counseling", "marriage", "parenting"] },
-                { name: "The Marriage Course (Alpha SA)", link: "https://alphasa.co.za/the-marriage-course/", descriptionKey: "resources.christianDesc.marriageCourseAlpha", tags: ["sa", "local", "course", "premarital", "enrichment"] },
-                { name: "Love After Marriage (LAM) Workshop SA", link: "https://www.nothinghidden.org.za/workshops/love-after-marriage/", descriptionKey: "resources.christianDesc.lamWorkshop", tags: ["sa", "local", "workshop", "intimacy"] },
-                { name: "Christian Matrimony (SA Section)", link: "https://www.christianmatrimony.com/matrimonials/south-african-brides", descriptionKey: "resources.christianDesc.christianMatrimony", tags: ["sa", "global", "dating"] },
-                { name: "ChristianCafe.com", link: "https://www.christiancafe.com/", descriptionKey: "resources.christianDesc.christianCafe", tags: ["sa", "global", "dating", "trial"] },
-                { name: "CDFF (Christian Dating For Free)", link: "https://www.cdff.com/", descriptionKey: "resources.christianDesc.cdff", tags: ["global", "dating", "free", "app"] },
-                { name: "Bryan Stoudt Resources", link: "https://bryanstoudt.com/", descriptionKey: "resources.christianDesc.bryanStoudt", tags: ["global", "resources", "books", "purity"] }
+                { name: "eHarmony Christian Dating", link: "https://www.eharmony.com/dating-advice/christian-dating/", descriptionKey: "resources.christianDesc.eharmonyChristian", tags: ["global", "dating", "faith-based"] },
+                { name: "Christian Connection", link: "https://www.christianconnection.com/", descriptionKey: "resources.christianDesc.christianConnection", tags: ["global", "dating", "community"] },
+                { name: "Focus on the Family", link: "https://www.focusonthefamily.com/", descriptionKey: "resources.christianDesc.focusOnFamily", tags: ["global", "marriage", "resources", "guidance"] },
+                { name: "Christian Counsellors Association of SA", link: "#", descriptionKey: "resources.christianDesc.ccaSA", tags: ["sa", "local", "network"] }, // Placeholder
+                { name: "Rhema Family Church Counseling", link: "#", descriptionKey: "resources.christianDesc.rhemaCounseling", tags: ["sa", "local", "johannesburg"] }, // Placeholder
+                { name: "His People Church Counseling", link: "#", descriptionKey: "resources.christianDesc.hisPeopleCounseling", tags: ["sa", "local", "cape-town"] }, // Placeholder
+                { name: "Gateway Church Family Services", link: "#", descriptionKey: "resources.christianDesc.gatewayFamilyServices", tags: ["sa", "local", "multiple-locations"] }, // Placeholder
+                { name: "Love and Respect Assessment", link: "https://loveandrespect.com/", descriptionKey: "resources.christianDesc.loveRespectAssessment", tags: ["global", "assessment", "books"] },
+                { name: "Sacred Marriage Resources (Gary Thomas)", link: "https://garythomas.com/books/sacred-marriage/", descriptionKey: "resources.christianDesc.sacredMarriageResources", tags: ["global", "books", "marriage"] },
+                { name: "Marriage Course (Alpha International)", link: "https://themarriagecourse.org/", descriptionKey: "resources.christianDesc.marriageCourseAlpha", tags: ["global", "course", "enrichment"] },
+                { name: "Pre-Marriage Courses (Various Churches)", link: "#", descriptionKey: "resources.christianDesc.preMarriageCourseChurches", tags: ["local", "church-based"] } // Placeholder
             ]
         },
         astrology: {
             icon: "fas fa-star", titleKey: "resources.category.astrology",
             items: [
-                { name: "Co–Star Astrology", link: "https://www.costarastrology.com/", descriptionKey: "resources.astrologyDesc.coStar", tags: ["global", "app", "personalized", "compatibility"] },
-                { name: "The Pattern", link: "https://www.thepattern.com/", descriptionKey: "resources.astrologyDesc.thePattern", tags: ["global", "app", "insights", "bonds"] },
-                { name: "AstroMatrix", link: "https://astromatrix.org/", descriptionKey: "resources.astrologyDesc.astroMatrix", tags: ["global", "birth-chart", "synastry", "free"] },
-                { name: "TimePassages App", link: "https://astrograph.com/astrology-app/", descriptionKey: "resources.astrologyDesc.timePassagesApp", tags: ["global", "app", "birth-chart", "horoscopes"] }
+                { name: "AstroSeek", link: "https://horoscopes.astro-seek.com/", descriptionKey: "resources.astrologyDesc.astroSeek", tags: ["global", "free", "charts", "compatibility"] },
+                { name: "Cafe Astrology", link: "https://cafeastrology.com/", descriptionKey: "resources.astrologyDesc.cafeAstrology", tags: ["global", "free", "reports", "guides"] },
+                { name: "Astro.com", link: "https://www.astro.com/", descriptionKey: "resources.astrologyDesc.astroCom", tags: ["global", "free", "professional-charts", "analysis"] },
+                { name: "Co-Star", link: "https://www.costarastrology.com/", descriptionKey: "resources.astrologyDesc.coStar", tags: ["global", "app", "daily-insights"] },
+                { name: "Astrology SA", link: "#", descriptionKey: "resources.astrologyDesc.astrologySA", tags: ["sa", "local", "directory"] }, // Placeholder
+                { name: "Psychic World SA", link: "#", descriptionKey: "resources.astrologyDesc.psychicWorldSA", tags: ["sa", "local", "spiritual-advisors"] }, // Placeholder
+                { name: "African Astrology Network", link: "#", descriptionKey: "resources.astrologyDesc.africanAstrologyNetwork", tags: ["africa", "traditional", "western"] }, // Placeholder
+                { name: "Numerology Compatibility Calculators", link: "#", descriptionKey: "resources.astrologyDesc.numerology", tags: ["global", "online-tools"] }, // Placeholder
+                { name: "Tarot Relationship Spreads", link: "#", descriptionKey: "resources.astrologyDesc.tarotSpreads", tags: ["global", "online-tools"] }, // Placeholder
+                { name: "Crystal Healing for Relationships", link: "#", descriptionKey: "resources.astrologyDesc.crystalHealing", tags: ["local", "metaphysical"] } // Placeholder
             ]
         },
-        divorce: {
-            icon: "fas fa-balance-scale-left", titleKey: "resources.category.divorce",
+        counseling: {
+            icon: "fas fa-users", titleKey: "resources.category.counseling",
             items: [
-                { name: "Legal Aid SA - Divorce Guide", link: "https://legal-aid.co.za/self-help-divorce-guide/", descriptionKey: "resources.divorceDesc.legalAidDivorce", tags: ["sa", "local", "free", "guide", "uncontested"] },
-                { name: "Family Advocate Offices (Dept. of Justice)", link: "https://www.justice.gov.za/contact/contact_list_fam.html", descriptionKey: "resources.divorceDesc.familyAdvocate", tags: ["sa", "local", "government", "custody", "maintenance"] },
-                { name: "The Parent Centre - Co-Parenting", link: "https://theparentcentre.org.za/co-parenting-tips/", descriptionKey: "resources.divorceDesc.parentCentreCoParenting", tags: ["sa", "local", "ngo", "support"] },
-                { name: "Family Assist SA", link: "https://familyassist.co.za/", descriptionKey: "resources.divorceDesc.familyAssistSA", contact: "067 981 5314", tags: ["sa", "local", "mediation", "parenting-plans"] }
+                { name: "SAAMFT (SA Assoc. for Marriage & Family Therapy)", link: "#", descriptionKey: "resources.counselingDesc.saamft", tags: ["sa", "local", "professional-body"] }, // Placeholder
+                { name: "PsySSA (Psychological Society of SA)", link: "https://www.psyssa.com/", descriptionKey: "resources.counselingDesc.psyssa", tags: ["sa", "local", "professional-body"] },
+                { name: "SACSSP (SA Council for Social Service Professions)", link: "https://www.sacssp.co.za/", descriptionKey: "resources.counselingDesc.sacssp", tags: ["sa", "local", "regulatory-body"] },
+                { name: "LifeLine Southern Africa", link: "https://lifelinesa.co.za/", descriptionKey: "resources.counselingDesc.lifeLineSA", contact: "0861 322 322", tags: ["sa", "local", "crisis", "helpline", "national"] },
+                { name: "FAMSA (Family and Marriage Society of SA)", link: "https://famsa.org.za/", descriptionKey: "resources.counselingDesc.famsa", tags: ["sa", "local", "family", "marriage", "national"] },
+                { name: "Akeso Clinics", link: "https://www.akeso.co.za/", descriptionKey: "resources.counselingDesc.akesoClinics", tags: ["sa", "local", "mental-health", "private-clinics"] },
+                { name: "BetterHelp", link: "https://www.betterhelp.com/", descriptionKey: "resources.counselingDesc.betterHelp", tags: ["global", "online-therapy", "accessible-sa"] },
+                { name: "Talkspace", link: "https://www.talkspace.com/", descriptionKey: "resources.counselingDesc.talkspace", tags: ["global", "online-therapy", "text-based", "accessible-sa"] },
+                { name: "SA Online Therapy", link: "#", descriptionKey: "resources.counselingDesc.saOnlineTherapy", tags: ["sa", "local", "online-services"] } // Placeholder
             ]
         },
-        abuse: {
-            icon: "fas fa-shield-alt", titleKey: "resources.category.abuse",
+        legal: {
+            icon: "fas fa-gavel", titleKey: "resources.category.legal",
             items: [
-                { name: "National Shelter Movement of SA (NSMSA)", link: "https://www.nsmsa.org.za/", descriptionKey: "resources.abuseDesc.nsmsa", contact: "0800-001-005 (Toll-Free Helpline)", tags: ["sa", "local", "shelter", "helpline", "gbv"] },
-                { name: "Saartjie Baartman Centre for Women & Children", link: "https://saartjiebaartmancentre.org.za/", descriptionKey: "resources.abuseDesc.saartjieBaartman", contact: "021 633 1253", tags: ["sa", "local", "cape-town", "support", "one-stop"] },
-                { name: "SAPS GBV Command Centre", link: "https://www.saps.gov.za/resource_centre/gbv.php", descriptionKey: "resources.abuseDesc.gbvCommandCentre", contact: "0800-428-428 / 10111 (Emergency)", tags: ["sa", "local", "government", "helpline", "police"] },
-                { name: "Childline South Africa (Abuse Reporting)", link: "https://www.childlinesa.org.za/", descriptionKey: "resources.abuseDesc.childlineAbuse", contact: "116 / 0800-055-555", tags: ["sa", "local", "children", "helpline", "free"] },
-                { name: "TEARS Foundation", link: "https://tears.co.za/", descriptionKey: "resources.abuseDesc.tearsFoundation", contact: "*134*7355# (USSD Helpline)", tags: ["sa", "local", "crisis", "sexual-assault", "domestic-violence"] }
+                { name: "Marriage Act 25 of 1961", link: "https://www.justice.gov.za/legislation/acts/1961-025.pdf", descriptionKey: "resources.legalDesc.marriageAct1961", tags: ["sa", "legislation", "civil-marriage"] },
+                { name: "Recognition of Customary Marriages Act 120 of 1998", link: "https://www.justice.gov.za/legislation/acts/1998-120.pdf", descriptionKey: "resources.legalDesc.customaryMarriagesAct1998", tags: ["sa", "legislation", "traditional-marriage"] },
+                { name: "Civil Union Act 17 of 2006", link: "https://www.justice.gov.za/legislation/acts/2006-017.pdf", descriptionKey: "resources.legalDesc.civilUnionAct2006", tags: ["sa", "legislation", "same-sex", "civil-partnership"] },
+                { name: "Divorce Act 70 of 1979", link: "https://www.justice.gov.za/legislation/acts/1979-070.pdf", descriptionKey: "resources.legalDesc.divorceAct1979", tags: ["sa", "legislation", "divorce"] },
+                { name: "Legal Aid South Africa", link: "https://legal-aid.co.za/", descriptionKey: "resources.legalDesc.legalAidSA", contact: "0800 110 110", tags: ["sa", "free-legal-aid", "family-law"] },
+                { name: "Law Society of South Africa", link: "https://www.lssa.org.za/", descriptionKey: "resources.legalDesc.lawSocietySA", tags: ["sa", "attorney-referral", "family-law"] },
+                { name: "Family Law Attorneys (JHB Examples)", link: "#", descriptionKey: "resources.legalDesc.attorneysJHB", tags: ["sa", "johannesburg", "attorneys"] }, // Placeholder
+                { name: "Family Law Attorneys (CT Examples)", link: "#", descriptionKey: "resources.legalDesc.attorneysCT", tags: ["sa", "cape-town", "attorneys"] }, // Placeholder
+                { name: "Family Law Attorneys (DBN Examples)", link: "#", descriptionKey: "resources.legalDesc.attorneysDBN", tags: ["sa", "durban", "attorneys"] }, // Placeholder
+                { name: "Family Law Attorneys (PTA Examples)", link: "#", descriptionKey: "resources.legalDesc.attorneysPTA", tags: ["sa", "pretoria", "attorneys"] }, // Placeholder
+                { name: "Department of Home Affairs (Marriage Reg.)", link: "https://www.dha.gov.za/index.php/civic-services/marriage-certificates", descriptionKey: "resources.legalDesc.dhaMarriageReg", tags: ["sa", "government", "marriage-certificates"] },
+                { name: "Religious Marriage Officers", link: "#", descriptionKey: "resources.legalDesc.religiousMarriageOfficers", tags: ["sa", "denominations"] }, // Placeholder
+                { name: "Magistrate Courts (Civil Ceremonies)", link: "#", descriptionKey: "resources.legalDesc.magistrateCourts", tags: ["sa", "civil-ceremony"] } // Placeholder
+            ]
+        },
+        preMarriage: {
+            icon: "fas fa-ring", titleKey: "resources.category.preMarriage",
+            items: [
+                { name: "FAMSA Pre-Marriage Program", link: "https://famsa.org.za/", descriptionKey: "resources.preMarriageDesc.famsaPreMarriage", tags: ["sa", "course", "preparation"] },
+                { name: "Church-Based Pre-Marriage Programs", link: "#", descriptionKey: "resources.preMarriageDesc.churchPrograms", tags: ["sa", "denominations", "course"] }, // Placeholder
+                { name: "Private Counselor Pre-Marriage Services", link: "#", descriptionKey: "resources.preMarriageDesc.privateCounseling", tags: ["sa", "counseling", "couples"] }, // Placeholder
+                { name: "Wedding Planners Association of SA", link: "#", descriptionKey: "resources.preMarriageDesc.weddingPlannersSA", tags: ["sa", "wedding-planning"] }, // Placeholder
+                { name: "Bridal Magazine Resources", link: "#", descriptionKey: "resources.preMarriageDesc.bridalMagazines", tags: ["sa", "wedding-planning"] }, // Placeholder
+                { name: "Local Wedding Vendors Directories", link: "#", descriptionKey: "resources.preMarriageDesc.localVendors", tags: ["sa", "wedding-planning"] }, // Placeholder
+                { name: "Antenuptial Contract Attorneys", link: "#", descriptionKey: "resources.preMarriageDesc.ancAttorneys", tags: ["sa", "legal", "marriage-contracts"] }, // Placeholder
+                { name: "Financial Planners Association (FPI)", link: "https://www.fpi.co.za/", descriptionKey: "resources.preMarriageDesc.fpiSA", tags: ["sa", "financial-planning"] },
+                { name: "Independent Financial Advisors (Couples)", link: "#", descriptionKey: "resources.preMarriageDesc.independentFinancialAdvisors", tags: ["sa", "financial-planning"] } // Placeholder
+            ]
+        },
+        marriageEnhancement: {
+            icon: "fas fa-heartbeat", titleKey: "resources.category.marriageEnhancement",
+            items: [
+                { name: "Marriage Encounter Weekends", link: "https://wwme.org.za/", descriptionKey: "resources.marriageEnhancementDesc.marriageEncounter", tags: ["sa", "retreat", "enrichment"] },
+                { name: "Weekend to Remember (FamilyLife)", link: "https://www.familylife.com/weekend-to-remember/", descriptionKey: "resources.marriageEnhancementDesc.weekendToRemember", tags: ["global", "conference", "accessible-sa"] },
+                { name: "Local Church Marriage Retreats", link: "#", descriptionKey: "resources.marriageEnhancementDesc.localChurchRetreats", tags: ["sa", "denominations", "retreat"] }, // Placeholder
+                { name: "Gottman Method Workshops", link: "https://www.gottman.com/couples/workshops/", descriptionKey: "resources.marriageEnhancementDesc.gottmanWorkshops", tags: ["global", "evidence-based", "workshops"] },
+                { name: "Emotionally Focused Therapy (EFT) Workshops", link: "https://iceeft.com/", descriptionKey: "resources.marriageEnhancementDesc.eftWorkshops", tags: ["global", "therapy", "workshops"] },
+                { name: "Communication Skills Training", link: "#", descriptionKey: "resources.marriageEnhancementDesc.communicationTraining", tags: ["sa", "training", "skills"] }, // Placeholder
+                { name: "Book: The Seven Principles for Making Marriage Work", link: "#", descriptionKey: "resources.marriageEnhancementDesc.sevenPrinciplesBook", tags: ["book", "gottman"] }, // Placeholder for purchase link
+                { name: "Book: Hold Me Tight", link: "#", descriptionKey: "resources.marriageEnhancementDesc.holdMeTightBook", tags: ["book", "sue-johnson", "eft"] }, // Placeholder
+                { name: "Book: Love and Respect", link: "#", descriptionKey: "resources.marriageEnhancementDesc.loveRespectBook", tags: ["book", "emerson-eggerichs"] }, // Placeholder
+                { name: "Book: Sacred Marriage", link: "#", descriptionKey: "resources.marriageEnhancementDesc.sacredMarriageBook", tags: ["book", "gary-thomas"] } // Placeholder
             ]
         },
         familyPlanning: {
             icon: "fas fa-baby-carriage", titleKey: "resources.category.familyPlanning",
             items: [
-                { name: "National Dept. of Health - Contraception", link: "https://www.health.gov.za/", descriptionKey: "resources.familyPlanningDesc.deptHealthFP", tags: ["sa", "local", "government", "free", "contraception"] },
-                { name: "Marie Stopes South Africa", link: "https://www.mariestopes.org.za/", descriptionKey: "resources.familyPlanningDesc.marieStopesSA", contact: "0800 11 77 85", tags: ["sa", "local", "ngo", "contraception", "safe-abortion"] },
-                { name: "Private Fertility Clinics (Examples)", link: "#", descriptionKey: "resources.familyPlanningDesc.privateFertilityClinics", tags: ["sa", "local", "ivf", "iui", "fertility"] }, // Generic link, users should search locally
-                { name: "Nurture Egg Donation Agency", link: "https://nurture.co.za/", descriptionKey: "resources.familyPlanningDesc.nurtureEggDonation", tags: ["sa", "local", "fertility", "egg-donation", "support"] },
-                { name: "ABBA Adoptions", link: "https://abbaadoptions.co.za/", descriptionKey: "resources.familyPlanningDesc.abbaAdoptions", tags: ["sa", "local", "adoption", "ngo"] },
-                { name: "Bethany Christian Services (SA)", link: "https://bethany.org/locations/south-africa", descriptionKey: "resources.familyPlanningDesc.bethanySA", tags: ["sa", "local", "adoption", "foster-care", "ngo"] },
-                { name: "The Parent Centre - Parenting Support", link: "https://theparentcentre.org.za/", descriptionKey: "resources.familyPlanningDesc.parentCentreParenting", tags: ["sa", "local", "ngo", "parenting", "classes"] },
-                { name: "Triple P - Positive Parenting Program (SA)", link: "https://www.triplep-parenting.net/za-en/triple-p/", descriptionKey: "resources.familyPlanningDesc.tripleP", tags: ["sa", "local", "parenting", "program", "evidence-based"] }
+                { name: "Fertility Clinics of SA (General)", link: "#", descriptionKey: "resources.familyPlanningDesc.fertilityClinicsSA", tags: ["sa", "fertility", "clinics"] }, // Placeholder
+                { name: "Medfem Fertility Clinic (JHB)", link: "https://medfem.co.za/", descriptionKey: "resources.familyPlanningDesc.medfem", tags: ["sa", "johannesburg", "fertility"] },
+                { name: "Cape Fertility Clinic (CT)", link: "https://capefertility.co.za/", descriptionKey: "resources.familyPlanningDesc.capeFertility", tags: ["sa", "cape-town", "fertility"] },
+                { name: "Vitalab (Multiple Cities)", link: "https://vitalab.com/", descriptionKey: "resources.familyPlanningDesc.vitalab", tags: ["sa", "fertility", "multiple-locations"] },
+                { name: "Parenting Hub SA", link: "https://parentinghub.co.za/", descriptionKey: "resources.familyPlanningDesc.parentingHub", tags: ["sa", "parenting", "resources", "advice"] },
+                { name: "La Leche League SA", link: "https://www.llli.org/south-africa/", descriptionKey: "resources.familyPlanningDesc.laLecheLeagueSA", tags: ["sa", "breastfeeding", "support"] },
+                { name: "Perinatal Mental Health Project", link: "https://pmhp.za.org/", descriptionKey: "resources.familyPlanningDesc.perinatalMentalHealth", tags: ["sa", "maternal-mental-health"] },
+                { name: "Marie Stopes South Africa", link: "https://www.mariestopes.org.za/", descriptionKey: "resources.familyPlanningDesc.marieStopesSA", contact: "0800 11 77 85", tags: ["sa", "reproductive-health", "contraception", "counseling"] }
+            ]
+        },
+        crisisSupport: {
+            icon: "fas fa-life-ring", titleKey: "resources.category.crisisSupport",
+            items: [
+                { name: "Tears Foundation (Domestic Violence)", link: "https://tears.co.za/", descriptionKey: "resources.crisisSupportDesc.tearsFoundation", contact: "010 590 5920 / *134*7355#", tags: ["sa", "domestic-violence", "helpline"] },
+                { name: "POWA (People Opposing Women Abuse)", link: "https://powa.co.za/", descriptionKey: "resources.crisisSupportDesc.powa", tags: ["sa", "womens-rights", "gbv", "crisis"] },
+                { name: "LifeLine SA (Crisis Hotline)", link: "https://lifelinesa.co.za/", descriptionKey: "resources.crisisSupportDesc.lifeLineCrisis", contact: "0861 322 322", tags: ["sa", "emotional-support", "helpline", "24-7"] },
+                { name: "SADAG (SA Depression & Anxiety Group)", link: "https://www.sadag.org/", descriptionKey: "resources.crisisSupportDesc.sadag", contact: "0800 567 567 (Suicide)", tags: ["sa", "mental-health", "suicide-prevention", "helpline"] },
+                { name: "Narcotics Anonymous SA", link: "https://na.org.za/", descriptionKey: "resources.crisisSupportDesc.naSA", tags: ["sa", "addiction", "support-group"] },
+                { name: "Alcoholics Anonymous SA", link: "https://aasouthafrica.org.za/", descriptionKey: "resources.crisisSupportDesc.aaSA", tags: ["sa", "addiction", "support-group"] },
+                { name: "SANCA (SA National Council on Alcoholism & Drug Dependence)", link: "https://sancanational.info/", descriptionKey: "resources.crisisSupportDesc.sanca", tags: ["sa", "substance-abuse", "counseling", "family-support"] }
+            ]
+        },
+        separationDivorce: {
+            icon: "fas fa-balance-scale-left", titleKey: "resources.category.separationDivorce",
+            items: [
+                { name: "Collaborative Divorce Attorneys", link: "#", descriptionKey: "resources.separationDivorceDesc.collaborativeDivorceAttorneys", tags: ["sa", "divorce", "mediation"] }, // Placeholder
+                { name: "Family Law Specialists (Litigation)", link: "#", descriptionKey: "resources.separationDivorceDesc.familyLawSpecialists", tags: ["sa", "divorce", "attorneys"] }, // Placeholder
+                { name: "Legal Aid Divorce Services", link: "https://legal-aid.co.za/", descriptionKey: "resources.separationDivorceDesc.legalAidDivorce", tags: ["sa", "divorce", "free-legal-aid"] },
+                { name: "Divorce Mediation Association of SA", link: "#", descriptionKey: "resources.separationDivorceDesc.divorceMediationSA", tags: ["sa", "divorce", "mediation", "association"] }, // Placeholder
+                { name: "ADRASA (Alternative Dispute Resolution Assoc. of SA)", link: "#", descriptionKey: "resources.separationDivorceDesc.adrasa", tags: ["sa", "mediation", "dispute-resolution"] }, // Placeholder
+                { name: "Independent Family Mediators", link: "#", descriptionKey: "resources.separationDivorceDesc.independentMediators", tags: ["sa", "divorce", "mediation", "private-practice"] }, // Placeholder
+                { name: "Divorce Financial Planners", link: "#", descriptionKey: "resources.separationDivorceDesc.divorceFinancialPlanners", tags: ["sa", "divorce", "financial-planning"] }, // Placeholder
+                { name: "Forensic Accountants (Divorce)", link: "#", descriptionKey: "resources.separationDivorceDesc.forensicAccountants", tags: ["sa", "divorce", "asset-valuation"] }, // Placeholder
+                { name: "Actuaries (Pension Valuation in Divorce)", link: "#", descriptionKey: "resources.separationDivorceDesc.actuariesDivorce", tags: ["sa", "divorce", "pension-funds"] }, // Placeholder
+                { name: "Family Advocate's Office (Dept. of Justice)", link: "https://www.justice.gov.za/contact/contact_list_fam.html", descriptionKey: "resources.separationDivorceDesc.familyAdvocateOffice", tags: ["sa", "government", "child-custody", "maintenance"] },
+                { name: "Office of the Family Advocate (Child Rep.)", link: "https://www.justice.gov.za/vg/children/coc_advoc.html", descriptionKey: "resources.separationDivorceDesc.officeFamilyAdvocateChildRep", tags: ["sa", "government", "child-representation"] }
+            ]
+        },
+        postDivorce: {
+            icon: "fas fa-walking", titleKey: "resources.category.postDivorce",
+            items: [
+                { name: "DivorceCare", link: "https://www.divorcecare.org/", descriptionKey: "resources.postDivorceDesc.divorceCare", tags: ["global", "support-group", "christian-based", "recovery"] },
+                { name: "Single Parents SA", link: "#", descriptionKey: "resources.postDivorceDesc.singleParentsSA", tags: ["sa", "community", "online", "offline"] }, // Placeholder
+                { name: "Fresh Start Divorce Recovery", link: "#", descriptionKey: "resources.postDivorceDesc.freshStartDivorce", tags: ["sa", "support-group", "recovery"] }, // Placeholder
+                { name: "OurFamilyWizard (Co-Parenting App)", link: "https://www.ourfamilywizard.com/", descriptionKey: "resources.postDivorceDesc.ourFamilyWizard", tags: ["global", "app", "co-parenting", "communication"] },
+                { name: "Co-Parenting Counselors", link: "#", descriptionKey: "resources.postDivorceDesc.coParentingCounselors", tags: ["sa", "therapy", "specialized"] }, // Placeholder
+                { name: "Parenting Coordinators", link: "#", descriptionKey: "resources.postDivorceDesc.parentingCoordinators", tags: ["sa", "court-appointed", "facilitators"] }, // Placeholder
+                { name: "Divorced Dating SA", link: "#", descriptionKey: "resources.postDivorceDesc.divorcedDatingSA", tags: ["sa", "dating", "specialized-platforms"] }, // Placeholder
+                { name: "Single Parent Dating Groups", link: "#", descriptionKey: "resources.postDivorceDesc.singleParentDatingGroups", tags: ["sa", "dating", "social-meetups"] }, // Placeholder
+                { name: "Therapy for Dating After Divorce", link: "#", descriptionKey: "resources.postDivorceDesc.therapyPostDivorceDating", tags: ["sa", "counseling", "relationship-readiness"] } // Placeholder
             ]
         },
         lgbtq: {
             icon: "fas fa-rainbow", titleKey: "resources.category.lgbtq",
             items: [
-                { name: "OUT LGBT Well-being", link: "https://out.org.za/", descriptionKey: "resources.lgbtqDesc.outWellbeing", contact: "012 430 3272", tags: ["sa", "local", "health", "advocacy", "msm"] },
-                { name: "Triangle Project", link: "https://triangle.org.za/", descriptionKey: "resources.lgbtqDesc.triangleProject", contact: "(021) 712-6699", tags: ["sa", "local", "cape-town", "support", "community"] },
-                { name: "Grindr App", link: "https://www.grindr.com/", descriptionKey: "resources.lgbtqDesc.grindrApp", tags: ["global", "app", "dating", "social"] },
-                { name: "HER App", link: "https://weareher.com/", descriptionKey: "resources.lgbtqDesc.herApp", tags: ["global", "app", "dating", "community", "women", "queer"] },
-                { name: "Taimi App", link: "https://taimi.com/", descriptionKey: "resources.lgbtqDesc.taimiApp", tags: ["global", "app", "dating", "social", "inclusive"] },
-                { name: "Believr App", link: "https://www.believr.app/", descriptionKey: "resources.lgbtqDesc.believrApp", tags: ["global", "app", "dating", "christian", "values"] },
-                { name: "GALA Queer Archive", link: "https://gala.co.za/", descriptionKey: "resources.lgbtqDesc.galaArchive", tags: ["sa", "local", "archive", "history", "research"] }
+                { name: "Triangle Project", link: "https://triangle.org.za/", descriptionKey: "resources.lgbtqDesc.triangleProject", tags: ["sa", "cape-town", "rights", "support", "health"] },
+                { name: "OUT LGBT Well-being", link: "https://out.org.za/", descriptionKey: "resources.lgbtqDesc.outWellbeing", tags: ["sa", "pretoria", "advocacy", "support", "health"] },
+                { name: "GALA Queer Archive", link: "https://gala.co.za/", descriptionKey: "resources.lgbtqDesc.gala", tags: ["sa", "archive", "history", "community-resources"] },
+                { name: "Pink Therapy Directory", link: "https://pinktherapy.com/", descriptionKey: "resources.lgbtqDesc.pinkTherapy", tags: ["global", "directory", "lgbtq-friendly-counselors"] },
+                { name: "Association for LGBTI Psychologists", link: "#", descriptionKey: "resources.lgbtqDesc.lgbtiPsychologists", tags: ["sa", "professional-network"] }, // Placeholder
+                { name: "Civil Union Registration Services", link: "#", descriptionKey: "resources.lgbtqDesc.civilUnionRegServices", tags: ["sa", "legal", "same-sex-marriage"] }, // Placeholder
+                { name: "LGBTQ+ Rights Attorneys", link: "#", descriptionKey: "resources.lgbtqDesc.lgbtqRightsAttorneys", tags: ["sa", "legal", "discrimination", "family-law"] }, // Placeholder
+                { name: "LGBTQ+ Friendly Adoption Services", link: "#", descriptionKey: "resources.lgbtqDesc.lgbtqAdoptionServices", tags: ["sa", "adoption", "agencies"] } // Placeholder
+            ]
+        },
+        culturalTraditional: {
+            icon: "fas fa-globe-africa", titleKey: "resources.category.culturalTraditional",
+            items: [
+                { name: "Traditional Healers Organization", link: "#", descriptionKey: "resources.culturalTraditionalDesc.traditionalHealersOrg", tags: ["sa", "cultural-customs", "marriage"] }, // Placeholder
+                { name: "Customary Marriage Registration (DHA)", link: "https://www.dha.gov.za/index.php/civic-services/marriage-certificates", descriptionKey: "resources.culturalTraditionalDesc.customaryMarriageRegDHA", tags: ["sa", "government", "traditional-marriage"] },
+                { name: "Cultural Community Centers", link: "#", descriptionKey: "resources.culturalTraditionalDesc.culturalCommunityCentres", tags: ["sa", "ethnic-groups", "support"] }, // Placeholder
+                { name: "Interfaith Marriage Counselors", link: "#", descriptionKey: "resources.culturalTraditionalDesc.interfaithMarriageCounselors", tags: ["sa", "therapy", "specialized"] }, // Placeholder
+                { name: "Cultural Integration Workshops", link: "#", descriptionKey: "resources.culturalTraditionalDesc.culturalIntegrationWorkshops", tags: ["sa", "community", "multicultural"] }, // Placeholder
+                { name: "Language Exchange Programs", link: "#", descriptionKey: "resources.culturalTraditionalDesc.languageExchange", tags: ["sa", "multicultural-couples"] }, // Placeholder
+                { name: "Hindu Marriage Services", link: "#", descriptionKey: "resources.culturalTraditionalDesc.hinduMarriageServices", tags: ["sa", "hindu-community", "tamil", "telugu", "gujarati"] }, // Placeholder
+                { name: "Islamic Marriage Services (Nikah)", link: "#", descriptionKey: "resources.culturalTraditionalDesc.islamicMarriageServices", tags: ["sa", "islamic-community", "nikah", "counseling"] }, // Placeholder
+                { name: "Jewish Community Services (Marriage Support)", link: "#", descriptionKey: "resources.culturalTraditionalDesc.jewishCommunityServices", tags: ["sa", "jewish-community", "family-support"] }, // Placeholder
+                { name: "African Traditional Marriage Specialists", link: "#", descriptionKey: "resources.culturalTraditionalDesc.africanTraditionalMarriage", tags: ["sa", "ethnic-groups", "specialists"] } // Placeholder
+            ]
+        },
+        additionalGov: { // Combined "Government Departments", "Educational Institutions", "Technology Tools", "Financial Services" from PDF
+            icon: "fas fa-university", titleKey: "resources.category.additionalGov",
+            items: [
+                { name: "Department of Social Development (DSD)", link: "https://www.dsd.gov.za/", descriptionKey: "resources.additionalGovDesc.dsd", tags: ["sa", "government", "family-preservation", "social-grants"] },
+                { name: "Department of Home Affairs (DHA)", link: "https://www.dha.gov.za/", descriptionKey: "resources.additionalGovDesc.dhaGeneral", tags: ["sa", "government", "marriage-reg", "immigration"] },
+                { name: "University Family Therapy Programs", link: "#", descriptionKey: "resources.additionalGovDesc.uniFamilyTherapy", tags: ["sa", "education", "reduced-fee-clinics"] }, // Placeholder
+                { name: "Community College Relationship Courses", link: "#", descriptionKey: "resources.additionalGovDesc.communityCollegeCourses", tags: ["sa", "education", "continuing-education"] }, // Placeholder
+                { name: "Relationship Apps (e.g., Lasting, Paired)", link: "#", descriptionKey: "resources.additionalGovDesc.relationshipApps", tags: ["global", "apps", "tools"] }, // Placeholder
+                { name: "Communication Apps (e.g., Couple, Love Nudge)", link: "#", descriptionKey: "resources.additionalGovDesc.communicationApps", tags: ["global", "apps", "tools"] }, // Placeholder
+                { name: "Calendar Sharing Tools", link: "#", descriptionKey: "resources.additionalGovDesc.calendarSharing", tags: ["global", "tools", "google-calendar", "apple-family"] }, // Placeholder
+                { name: "Joint Banking Services (SA Banks)", link: "#", descriptionKey: "resources.additionalGovDesc.jointBanking", tags: ["sa", "finance", "banks"] }, // Placeholder
+                { name: "Insurance for Couples", link: "#", descriptionKey: "resources.additionalGovDesc.couplesInsurance", tags: ["sa", "finance", "life-insurance", "health-insurance"] }, // Placeholder
+                { name: "Investment Planning for Couples", link: "#", descriptionKey: "resources.additionalGovDesc.investmentPlanningCouples", tags: ["sa", "finance", "retirement", "savings"] }, // Placeholder
+                { name: "Estate Planning for Couples", link: "#", descriptionKey: "resources.additionalGovDesc.estatePlanningCouples", tags: ["sa", "legal", "finance", "wills", "trusts"] } // Placeholder
             ]
         },
         emergency: {
-            icon: "fas fa-phone-volume", titleKey: "resources.category.emergency",
+            icon: "fas fa-exclamation-triangle", titleKey: "resources.category.emergency",
             items: [
-                { name: "SAPS Emergency", link: "tel:10111", descriptionKey: "resources.emergencyDesc.sapsEmergency", contact: "10111", tags: ["sa", "local", "police"] },
-                { name: "GBV Command Centre", link: "tel:0800428428", descriptionKey: "resources.emergencyDesc.gbvHelpline", contact: "0800 428 428", tags: ["sa", "local", "crisis", "gbv"] },
-                { name: "LifeLine SA Crisis Line", link: "tel:0861322322", descriptionKey: "resources.emergencyDesc.lifeLineCrisis", contact: "0861 322 322 / 011 422 4242", tags: ["sa", "local", "counselling", "crisis"] },
-                { name: "SADAG Suicide Crisis Helpline", link: "tel:0800567567", descriptionKey: "resources.emergencyDesc.sadagSuicide", contact: "0800 567 567", tags: ["sa", "local", "suicide", "mental-health"] },
-                { name: "Childline SA Toll-Free", link: "tel:116", descriptionKey: "resources.emergencyDesc.childlineEmergency", contact: "116 / 0800 055 555", tags: ["sa", "local", "children", "crisis"] },
-                { name: "National Shelter Movement Helpline", link: "tel:0800001005", descriptionKey: "resources.emergencyDesc.nsmsaShelterHelpline", contact: "0800 001 005", tags: ["sa", "local", "shelter", "abuse"] }
+                { name: "LifeLine SA (24/7 Emotional Support)", link: "tel:0861322322", descriptionKey: "resources.emergencyDesc.lifeLineSAEmergency", contact: "0861 322 322", tags: ["sa", "helpline", "crisis"] },
+                { name: "SADAG Suicide Helpline", link: "tel:0800567567", descriptionKey: "resources.emergencyDesc.sadagSuicideHelpline", contact: "0800 567 567", tags: ["sa", "helpline", "suicide-prevention"] },
+                { name: "Tears Foundation (Domestic Violence)", link: "tel:0105905920", descriptionKey: "resources.emergencyDesc.tearsFoundationEmergency", contact: "010 590 5920 / *134*7355#", tags: ["sa", "helpline", "domestic-violence"] },
+                { name: "Gender-Based Violence Command Centre", link: "tel:0800428428", descriptionKey: "resources.emergencyDesc.gbvCommandCentreEmergency", contact: "0800 428 428", tags: ["sa", "helpline", "gbv"] },
+                { name: "Police Emergency", link: "tel:10111", descriptionKey: "resources.emergencyDesc.policeEmergency", contact: "10111", tags: ["sa", "emergency-service"] },
+                { name: "Legal Aid SA (Helpline)", link: "tel:0800110110", descriptionKey: "resources.emergencyDesc.legalAidSAEmergency", contact: "0800 110 110", tags: ["sa", "helpline", "legal-aid"] }
             ]
         }
     };
+
     const resourceCategoriesContainerEl = document.getElementById('resourceCategoriesContainer');
     const resourceDetailViewEl = document.getElementById('resourceDetailView');
     const resourceDetailTitleEl = document.getElementById('resourceDetailTitle');
     const resourceItemListEl = document.getElementById('resourceItemList');
     const backToCategoriesBtnEl = document.getElementById('backToCategoriesBtn');
 
-    // Function to display resource categories on the Resources page
     function displayResourceCategories() {
-        resourceCategoriesContainerEl.innerHTML = ''; // Clear previous categories
+        resourceCategoriesContainerEl.innerHTML = ''; 
         Object.keys(resourcesData).forEach(categoryKey => {
             const category = resourcesData[categoryKey];
             const card = document.createElement('div');
@@ -2018,30 +2143,26 @@
             card.onclick = () => displayResourceItems(categoryKey);
             resourceCategoriesContainerEl.appendChild(card);
         });
-        resourceCategoriesContainerEl.style.display = 'grid'; // Show categories
-        resourceDetailViewEl.style.display = 'none';    // Hide detail view
-        // updateUIWithTranslations(); // Ensure new dynamic content is translated
+        resourceCategoriesContainerEl.style.display = 'grid'; 
+        resourceDetailViewEl.style.display = 'none';    
     }
 
-    // Function to display items within a selected resource category
     function displayResourceItems(categoryKey) {
         const category = resourcesData[categoryKey];
-        resourceDetailTitleEl.textContent = i18next.t(category.titleKey); // Set title of detail view
-        resourceDetailViewEl.dataset.currentCategory = categoryKey; // Store current category for language refresh
-        resourceItemListEl.innerHTML = ''; // Clear previous items
+        resourceDetailTitleEl.textContent = i18next.t(category.titleKey); 
+        resourceDetailViewEl.dataset.currentCategory = categoryKey; 
+        resourceItemListEl.innerHTML = ''; 
 
         if (category.items && category.items.length > 0) {
             category.items.forEach(item => {
                 const itemCard = document.createElement('div');
-                // Reusing value-prop-card styling for consistency
                 itemCard.className = 'value-prop-card'; 
                 let itemHtml = `<h5 class="text-lg font-semibold" style="color: var(--accent-teal-bright);">${item.name}</h5>`;
                 
-                // Get description using the i18n key, with a fallback
                 const descriptionText = i18next.t(item.descriptionKey, { defaultValue: "Detailed information available via the link." });
                 itemHtml += `<p class="text-sm text-gray-300 mb-2">${descriptionText}</p>`;
 
-                if (item.link && item.link !== "#") { // Ensure link is valid
+                if (item.link && item.link !== "#") { 
                     itemHtml += `<a href="${item.link}" target="_blank" class="btn btn-secondary !text-xs !py-1 !px-2">${i18next.t('resources.visitSite')} <i class="fas fa-external-link-alt ml-1"></i></a>`;
                 }
                 if (item.contact) {
@@ -2053,12 +2174,10 @@
         } else {
             resourceItemListEl.innerHTML = `<p data-i18n="resources.noItemsInCategory">${i18next.t('resources.noItemsInCategory')}</p>`;
         }
-        resourceCategoriesContainerEl.style.display = 'none'; // Hide category grid
-        resourceDetailViewEl.style.display = 'block';     // Show detail view
-        // updateUIWithTranslations(); // Ensure new dynamic content is translated
+        resourceCategoriesContainerEl.style.display = 'none'; 
+        resourceDetailViewEl.style.display = 'block';     
     }
     
-    // Event listener for "Back to Categories" button
     backToCategoriesBtnEl.addEventListener('click', displayResourceCategories);
 
 
@@ -2097,7 +2216,6 @@
             if (file.name.endsWith('.json')) {
                 jsonData = JSON.parse(fileContent);
             } else if (file.name.endsWith('.zip')) {
-                // Basic ZIP handling placeholder - proper JS unzipping library (e.g., JSZip) would be needed for real implementation.
                 showNotification(i18next.t('alerts.zipParsingNotImplemented'), 'warning');
                 importFeedbackEl.textContent = i18next.t('alerts.zipParsingNotImplemented');
                 return;
@@ -2106,29 +2224,25 @@
                 importFeedbackEl.textContent = i18next.t('alerts.unsupportedFileFormat');
                 return;
             }
-
-            // Assuming jsonData is an object or an array of objects.
-            // We'll store it as a single item in profileData with a source tag.
-            // A more sophisticated approach would parse specific fields.
+            
             const importDataItem = {
-                source: `social_media_import_${file.name.split('.')[0]}`, // e.g., social_media_import_linkedin
+                source: `social_media_import_${file.name.split('.')[0]}`, 
                 importedAt: firebase.firestore.Timestamp.now(),
                 details: {
                     fileName: file.name,
                     fileType: file.type,
-                    raw: jsonData // Store the entire JSON data
+                    raw: jsonData 
                 }
             };
             
-            // Update Firestore: Add this new item to the profileData array
             await profileRef.update({
                 profileData: firebase.firestore.FieldValue.arrayUnion(importDataItem)
             });
 
             showNotification(i18next.t('alerts.importSuccess'), 'success');
             importFeedbackEl.textContent = i18next.t('alerts.importSuccess');
-            socialMediaFileInputEl.value = ''; // Clear the file input
-            updateProfileDisplay(currentUser, tempProfile); // Refresh profile display
+            socialMediaFileInputEl.value = ''; 
+            updateProfileDisplay(currentUser, tempProfile); 
 
         } catch (error) {
             console.error("Error importing social media data:", error);
@@ -2141,7 +2255,7 @@
     const notificationsAreaEl = document.getElementById('notificationsArea');
     const notificationListEl = document.getElementById('notificationList');
 
-    function showNotification(message, type = 'info') { // type can be 'info', 'success', 'warning', 'error'
+    function showNotification(message, type = 'info') { 
         const item = document.createElement('div');
         item.className = 'notification-item p-2 mb-2 rounded text-sm';
         item.textContent = message;
@@ -2154,30 +2268,26 @@
             default: item.classList.add('bg-blue-500', 'text-white'); break;
         }
         
-        // If it's the welcome message, clear it before adding new one
         if (notificationListEl.children.length === 1 && notificationListEl.firstElementChild.dataset.i18n === "notifications.welcome") {
             notificationListEl.innerHTML = '';
         }
         
-        notificationListEl.prepend(item); // Add new notification at the top
+        notificationListEl.prepend(item); 
         notificationsAreaEl.style.display = 'block';
 
-        // Auto-hide notification after some time
         setTimeout(() => {
             item.style.opacity = '0';
             setTimeout(() => {
                 item.remove();
                 if (notificationListEl.children.length === 0) {
                     notificationsAreaEl.style.display = 'none';
-                     // Optionally, re-add default welcome message if list is empty
-                    // notificationListEl.innerHTML = `<div class="notification-item" data-i18n="notifications.welcome">${i18next.t('notifications.welcome')}</div>`;
                 }
-            }, 500); // Delay for fade out animation
-        }, 5000); // Hide after 5 seconds
+            }, 500); 
+        }, 5000); 
     }
 
 
-    // --- Search Functionality (Basic Placeholder) ---
+    // --- Search Functionality ---
     const searchInputEl = document.getElementById('searchInput');
     const searchResultsEl = document.getElementById('searchResults');
     const searchSubmitBtnEl = document.getElementById('searchSubmitBtn');
@@ -2189,7 +2299,7 @@
 
     async function performSearch() {
         const query = searchInputEl.value.trim().toLowerCase();
-        searchResultsEl.innerHTML = ''; // Clear previous results
+        searchResultsEl.innerHTML = ''; 
 
         if (!query) {
             searchResultsEl.innerHTML = `<p>${i18next.t('search.noQuery')}</p>`;
@@ -2199,7 +2309,6 @@
         searchResultsEl.innerHTML = `<p>${i18next.t('search.searching')}</p>`;
         let foundResults = [];
 
-        // 1. Search Resource Data
         Object.values(resourcesData).forEach(category => {
             category.items.forEach(item => {
                 const itemName = item.name.toLowerCase();
@@ -2216,14 +2325,12 @@
             });
         });
         
-        // 2. Search Section Titles/Content (Basic)
         document.querySelectorAll('.content-section').forEach(section => {
             const sectionTitleEl = section.querySelector('h1, h2');
             const sectionTitle = sectionTitleEl ? sectionTitleEl.textContent.toLowerCase() : '';
             const sectionId = section.id;
             
             if (sectionTitle.includes(query) || section.textContent.toLowerCase().includes(query)) {
-                 // Avoid adding duplicates if already found by more specific search
                 if (!foundResults.some(r => r.id === sectionId && r.type === 'Section')) {
                     foundResults.push({
                         type: 'Section',
@@ -2236,14 +2343,8 @@
             }
         });
 
-        // 3. Search User Profiles (Requires Firestore query, more complex, placeholder for now)
-        // This would involve querying 'users' and 'tempProfiles' collections.
-        // For privacy, only allow searching public aspects or if admin.
-        // Example: if (query.length > 2) { /* Firestore query logic */ }
-
-        // Display results
         if (foundResults.length > 0) {
-            searchResultsEl.innerHTML = ''; // Clear "Searching..."
+            searchResultsEl.innerHTML = ''; 
             foundResults.forEach(result => {
                 const div = document.createElement('div');
                 div.className = 'p-2 border-b border-[var(--border-color-lavender)]';
@@ -2251,12 +2352,12 @@
                 if (result.category) html += ` - <em>${result.category}</em>`;
                 html += `<p class="text-xs">${result.description.substring(0, 100)}...</p>`;
                 
-                if (result.link) {
+                if (result.link && result.link !== "#") {
                     const linkEl = document.createElement('a');
                     linkEl.href = result.link;
                     linkEl.target = "_blank";
                     linkEl.className = "text-sm text-[var(--accent-teal-bright)] hover:underline";
-                    linkEl.textContent = "Visit Link";
+                    linkEl.textContent = i18next.t('resources.visitSite');
                     div.innerHTML = html;
                     div.appendChild(document.createElement('br'));
                     div.appendChild(linkEl);
@@ -2276,23 +2377,12 @@
             searchResultsEl.innerHTML = `<p>${i18next.t('search.noResults')}</p>`;
         }
     }
-// --- Firebase Configuration ---
-const firebaseConfig = {
-  apiKey: "AIzaSyAW0SakPbUUfpK-gD4SHMIQzlEhpMLzUbI",
-  authDomain: "lifesyncapp-391ab.firebaseapp.com",
-  projectId: "lifesyncapp-391ab",
-  storageBucket: "lifesyncapp-391ab.appspot.com", // Standard format
-  messagingSenderId: "617714109567",
-  appId: "1:617714109567:web:b7f3cf016d6f7348b1434a",
-  measurementId: "G-7XKHR48S14"
-};
+
 
     // --- Initial Page Load Setup ---
     document.addEventListener('DOMContentLoaded', () => {
-        showSection('about'); // Show the 'about' section by default
-        startDetailsQuiz();   // Initialize the profile builder quiz (it won't show until navigated to)
-        // i18next initialization and initial UI translation is handled by i18next.init callback
-        // checkTempProfile(); // Check for active temp profile, now handled by onAuthStateChanged
+        showSection('about'); 
+        startDetailsQuiz();   
     });
 
 </script>
